@@ -14,37 +14,28 @@
 #		will update its own location, and this gameplay loop will exit
 #	2) there is a celestial object (planet, asteroid, etc) on the square, and the ship crashes and game ends.
 #	3) there is a wormhole on the square. this is the most complicated case, because the Map will need to return
-#		a few things: 
+#		a few things:
 #			a) the location (game_square data type) where the ship encountered the wormhole
 #						(so the ship can calculate how much of its original move it still has to execute after its wormhole jump)
 #			b) the location (game_square data type) that the wormhole will teleport the ship to.
 #	4) BadMax's ship is on the square we've warped to, and we need to do a dice-roll
 #	5) i'm sure there are other things. abandoned ships, etc. i dont' think we have to deal with them now.
 #
-#	this means that some_complex_data_type is really complicated. since it has to store a bunch of different information. 
+#	this means that some_complex_data_type is really complicated. since it has to store a bunch of different information.
 #	there's probably a better way to do this with dynamic binding? or maybe the control structure could be simpler.
 
 
-#	current iussues I see here from my end are: 
+#	current iussues I see here from my end are:
 #		defining these data types in a way that makes sense to everybody in the group, and will work with all our features
-#		the function (here called map.check_destination_square) will be pretty complex. i'm definitely not sure that the way 
+#		the function (here called map.check_destination_square) will be pretty complex. i'm definitely not sure that the way
 #			I've thought of doing this is the best one. So if anyone has an idea they think is better, i'm all ears
 #		need to figure out a way to code this (recursively?) so that the ship can handle multiple wormhole interactions in a single jump.
 
+
+#i've changed this stuff around a little bit and added Ship.js. I have no idea what i'm doing in javascript.
+#gonna go watch some youtube tutorials. at this point neither ship nor map is a class, which we will definitely have to change!
 <html>
-	<head>
-		<script>
-			function main_gameplay_loop(map, some_wormhole_flag){
-				while(alive){
-					polar_coordinates user_destination = get_polar_input()
-					game_square destination = calculate_destination_square(user_destination)
-					some_complex_data_type map_response = map.check_destination_square(destination)
-					if(map_response === wormhole)
-						main_gameplay_loop(map, some_wormhole_flag) # recursive call to finish ship's move after wormhole jump happens
-					else if(map_response === crash)
-						alive = false						
-				}
-			}		
-		</script>
-	</head>
+    <body>
+        <script src = "./Ship.js"></script>
+    </body>
 </html>
