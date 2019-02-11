@@ -1,43 +1,54 @@
-function  move(alive, map, remaining_move){
-  p_coords = prompt_polar_input();
-  dest = calc_destination(location, p_coords, map);
-  map_response = map.check_destination_square(dest);
+class Ship
+{
+    constructor(health)
+    {
+        this.health = health;
+        this.fuel = 0;
+        this.sizeX =40;
+        this.sizeY = 40;
+        this.posX = 10;//Math.floor(Math.random() * 127);
+        this.posY = 10;//Math.floor(Math.random() * 127);
+        this.delayMove = 500;
+    }
 
-  switch(map_response.squaretype){
-    case "empty":
-      //map.updateLocation(dest);
-      //above may be unnecessary as map could update location in the previous check_destination_square call
-      break;
-    case "celestial":
-      alive = false;
-      break;
-    case "wormhole":
-      //new_dest = calc_destination(map_response.wormhole_location, )
-      //not gonna worry about this right now, not of great importance
+    damage(dmg)
+    {
+        this.health = this.health - dmg;
+    }
 
-      //map.updateLocation(dest);
-      //above may be unnecessary as map could update location in the previous check_destination_square call
-      break;
+    get Health()
+    {
+        return this.health;
+    }
 
-  return alive;
-}
+    move(x, y)
+    {
+        if(x < 0) { x = 0; }
+        if(y < 0) { y = 0; }       
+        var until = new Date().getTime() + this.delayMove;
+        while((new Date().getTime() < until)) {};
+        
+        this.posX = x;
+        this.posY = y;
+    }
 
-//assumes a method in map something like
-//get_location(){
-//  return {x: x, y: y}
-//}
+    get PosX()
+    {
+        return this.posX;
+    }
 
+    get PosY()
+    {
+        return this.posY;
+    }
 
-function calc_destination(location, p_coords, map){
-    x = location.x += p_coords.dist*(Math.cos((p_coords.angle*Math.PI)/180);
-    y = location.y += p_coords.dist*(Math.sin((p_coords.angle*Math.PI)/180);
-    return {x: x, y: y};
-}
+    get SizeX()
+    {
+        return this.sizeX;
+    }
 
-function prompt_polar_input(){
-  angle = prompt("Degrees of turn for next move: ");
-  angle = eval(angle);
-  dist = prompt("Number of spaces to move: ");
-  dist = eval(dist);
-  return {angle: angle, dist: dist};
+    get SizeY()
+    {
+        return this.sizeY;
+    }
 }
