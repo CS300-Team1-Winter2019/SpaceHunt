@@ -4,10 +4,10 @@ class Ship
     {
         this.health = health;
         this.fuel = 0;
-        this.sizeX =40;
-        this.sizeY = 40;
-        this.posX = 10;//Math.floor(Math.random() * 127);
-        this.posY = 10;//Math.floor(Math.random() * 127);
+        this.sizeX =50;
+        this.sizeY = 50;
+        this.posX =125;//Math.floor(Math.random() * 127);
+        this.posY = 125;//Math.floor(Math.random() * 127);
         this.delayMove = 500;
     }
 
@@ -50,5 +50,15 @@ class Ship
     get SizeY()
     {
         return this.sizeY;
+    }
+
+    set PosX(val)
+    {
+        this.posX = val;
+    }
+
+    set PosY(val)
+    {
+        this.posY = val;
     }
 }
