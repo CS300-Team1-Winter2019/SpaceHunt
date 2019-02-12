@@ -1,14 +1,11 @@
-var gameMap = [];
 var ctx = null;
 var UI = null;
 var cameraSize =32;
 var ts = 800/cameraSize;  //25px
 var ship = new Ship(1000);
-var maxPlanets = 200;
-var maxWorms = 50;
-var maxStations = 500;
+var map = new Map();
 
-var objects = 
+var objects =
 {
     wormHole    :["red", 0],
     planet      :["green", 1],
@@ -23,57 +20,8 @@ var objects =
         else if(index == 1) { this.currColor = "green"; }
         else if(index == 2) { this.currColor = "purple"; }
         else { this.currColor = "blue"; }
-    } 
-};
-
-
-function createMap()
-{
-    for(var i = 0; i < 128; i++)
-    {
-        var row = [];
-        for(var j = 0; j < 128; j++)
-        {
-            //Random position at which something will be placed
-            var randPlacer = Math.floor(Math.random() * 125); 
-            //number of things e.g.: planets, holes, stations etc = # of colors
-            var maxChoices = 4;
-            //Gives a starting range for random num: e.g: 2-4
-            var startAt = 0; 
-
-            if(i == 0 || j == 0 || i == 127 || j == 127)
-                row.push(0);
-            else
-            {
-                if(i == randPlacer || j == randPlacer)
-                {
-                    if(maxWorms <= 0) { maxChoices--; startAt = 1; }
-                    if(maxPlanets <= 0) { maxChoices--; startAt = 2; }
-                    if(maxStations <= 0) { maxChoices--; startAt = 3; }
-
-                    choice = Math.floor((Math.random() * maxChoices) + startAt);
-                    
-                    if(choice == 0) { maxWorms--; }
-                    if(choice == 1) { maxPlanets--; }
-                    if(choice == 2) { maxStations--; }
-
-                    row.push(choice);                   
-                }
-                else   
-                    row.push(3);
-            }
-        }
-        gameMap.push(row);
     }
-} 
-
-window.onload = function()
-{
-    createMap();
-    ctx = document.getElementById('game').getContext("2d");
-    requestAnimationFrame(drawGame);
-    //ctx.font = "bold 10pt sans-serif";
-}
+};
 
 //!!!!Unused code for submit button!!!
 /*
@@ -95,6 +43,12 @@ function processMove(e)
 }
 */
 
+window.onload = function()
+{
+    ctx = document.getElementById('game').getContext("2d");
+    requestAnimationFrame(drawGame);
+    //ctx.font = "bold 10pt sans-serif";
+}
 
 document.addEventListener("keydown", move);
 
@@ -121,13 +75,13 @@ function move(e)
                 ship.PosY = ship.PosY+1;
             break;
     }
-    requestAnimationFram(drawGame);
+    requestAnimationFrame(drawGame);
 }
 function drawGame()
 {
     var offX = 0;
     var offY = 0;
-    
+
     //Case 1: offset top left(x,y) to not display out of bounds "black" map
     //Basically display starts a bit lower to not go out of bounds
     if(ship.PosX - 16 < 0) { offX = (16 - ship.PosX); }
@@ -138,29 +92,29 @@ function drawGame()
     if(ship.PosX + 16 > 128) { offX = -(ship.PosX - 112); }
     if(ship.PosY + 16 > 128) { offY = -(ship.PosY - 112); }
 
-    var pos = 
+    var pos =
     {
         x: 0,
-        y: 0
+        y: 0,
     }
 
     for(var x = 0; x < cameraSize; x++)
-    {       
-        for(var y = 0; y < cameraSize; y++)     
-        {           
-            
+    {
+        for(var y = 0; y < cameraSize; y++)
+        {
+
             pos.x =  Math.round((ship.PosX) - cameraSize/2) + x + offX;
             pos.y =  Math.round((ship.PosY) - cameraSize/2) + y + offY;
 
-            var tile = gameMap[pos.x][pos.y];
-            
-            
+            var tile = map.getPos(pos.x, pos.y);
+
+
             if(pos.x == ship.PosX && pos.y == ship.PosY)
             {
                 ctx.fillStyle = "black";
                 ctx.fillRect(x * ts, y * ts, ts, ts);
-            }             
-            else           
+            }
+            else
             {
                 objects.updateColor(tile);
                 ctx.fillStyle = objects.currColor;
