@@ -1,9 +1,9 @@
 var ctx = null;
-var UI = null;
 var cameraSize =32;
-var ts = 800/cameraSize;  //25px
+var ts = 600/cameraSize;  
 var ship = new Ship(1000);
-var map = new Map();
+var gameMap = new Map();
+document.addEventListener("keydown", move);
 
 var objects =
 {
@@ -23,34 +23,11 @@ var objects =
     }
 };
 
-//!!!!Unused code for submit button!!!
-/*
-var move = document.getElementById('moving');
-
-if(move.attachEvent)
-{
-    move.attachEvent("submit", processMove);
-}
-else
-{
-    move.addEventListener("submit", processMove);
-}
-
-function processMove(e)
-{
-    if(e.preventDefault) { e.preventDefault(); }
-
-}
-*/
-
 window.onload = function()
 {
     ctx = document.getElementById('game').getContext("2d");
     requestAnimationFrame(drawGame);
-    //ctx.font = "bold 10pt sans-serif";
 }
-
-document.addEventListener("keydown", move);
 
 function move(e)
 {
@@ -75,7 +52,7 @@ function move(e)
                 ship.PosY = ship.PosY+1;
             break;
     }
-    requestAnimationFrame(drawGame);
+    drawGame;
 }
 function drawGame()
 {
@@ -106,22 +83,37 @@ function drawGame()
             pos.x =  Math.round((ship.PosX) - cameraSize/2) + x + offX;
             pos.y =  Math.round((ship.PosY) - cameraSize/2) + y + offY;
 
-            var tile = map.getPos(pos.x, pos.y);
-
+            var tile = gameMap.getTile(pos.x, pos.y);
 
             if(pos.x == ship.PosX && pos.y == ship.PosY)
             {
                 ctx.fillStyle = "black";
                 ctx.fillRect(x * ts, y * ts, ts, ts);
+
+                //TODO: set scanner range in ship, to calculate visibility instead of +-1
+                for(var i = -1; i < 2; i++)
+                {
+                    for(var j = -1; j < 2; j++)
+                    {
+                        if(pos.x + i >=0 && pos.x + i <= 127 && pos.y + j >= 0 && pos.y + j <= 127)
+                        {  
+                            var sensTile = gameMap.getTile(pos.x + i, pos.y + j);
+                            sensTile.vis = true;
+                        }
+                    }
+                }
             }
             else
             {
-                objects.updateColor(tile);
-                ctx.fillStyle = objects.currColor;
-                ctx.fillRect(x * ts, y * ts, ts, ts);
+                if(!tile.vis) { ctx.fillStyle = "pink"; }
+                else
+                {
+                    objects.updateColor(tile.val);
+                    ctx.fillStyle = objects.currColor;
+                }
+                ctx.fillRect(x * ts, y * ts, ts, ts); 
             }
         }
     }
-    //ship.move(ship.PosX-1, ship.PosY-1);
     requestAnimationFrame(drawGame);
 }
