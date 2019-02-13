@@ -1,0 +1,23 @@
+<script>
+M = prompt("Enter energy"); //using getenergy() function
+N = prompt("Enter supplies"); //using getsupply() function
+
+function check_energy(a){
+	if(a<=0){
+		alert("Your energy is run out! LOL");
+		return true;
+	}
+}
+function check_supply(a){
+	if(a<=0){
+		alert("Your supply is run out! LOL");
+		return true;
+	}
+}
+
+if(check_energy(M) || check_supply(N))
+	alert("Game over"); //call gameover() function.
+else
+	alert("continue");
+
+</script>
