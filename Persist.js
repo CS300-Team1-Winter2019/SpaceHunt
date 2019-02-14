@@ -5,18 +5,18 @@
 // Determine whether state has been set on a prior visit.
 function testPersist()
 {
-	if(localStorage.getItem("gameMap") == false)
-		return false;
-	return true;
+	if("gameMap" in localStorage)
+		return true;
+	return false;
 }
 
 
 // Loads a prior state.
 function loadState()
 {
-	gameMap = localStorage.getItem("gameMap");
-	context = localStorage.getItem("context");
-	Ship = localStorage.getItem("ship");
+	gameMap = JSON.parse(localStorage.getItem("gameMap"));
+	context = JSON.parse(localStorage.getItem("context"));
+	Ship = JSON.parse(localStorage.getItem("ship"));
 }
 
 
@@ -24,7 +24,7 @@ function loadState()
 // Will need a check to see if browser is compatible.
 function saveState()
 {
-	localStorage.setItem("gameMap",gameMap);
-	localStorage.setItem("context", ctx);
-	localStorage.setItem("ship", Ship);
+	localStorage.setItem("gameMap",JSON.stringify(gameMap));
+	localStorage.setItem("context", JSON.stringify(ctx));
+	localStorage.setItem("ship", JSON.stringify(Ship));
 }
