@@ -75,7 +75,7 @@ function move(e)
                 ship.PosY = ship.PosY+1;
             break;
     }
-    collision(ship.PosX,ship.PosY);
+    collison(ship.PosX,ship.PosY);
     drawGame();
 }
 
