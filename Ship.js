@@ -8,7 +8,7 @@ class Ship
         this.sizeY = 50;
         this.posX =120;//Math.floor(Math.random() * 127);
         this.posY = 120;//Math.floor(Math.random() * 127);
-        this.delayMove = 500;
+        this.delayMove = 100;
     }
 
     damage(dmg)

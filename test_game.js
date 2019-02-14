@@ -22,104 +22,41 @@ var objects =
         else { this.currColor = "blue"; }
     }
 };
-
 ctx = document.getElementById('game').getContext("2d");
 drawGame();
 
-//currently not called
-function getUserInput(){
-  var angle = prompt("Angle: ");
-  var magnitude = prompt("Magnitude: ");
-  return {angle: angle, magnitude: magnitude};
-}
-
-
-
 startMove();
-function startMove()
-{
-    var userInput = {angle: 120, magnitude: 60}
-    var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
-    var gm = setInterval(function(){shipMoveTest(gm, runRise.x, runRise.y)}, 100);
+function startMove(){
+  var userInput = {angle: 120, magnitude: 60}
+  var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
+  var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
+  var xUnitVector = runRise.x/Math.abs(runRise.x);
+  var yUnitVector = runRise.y/Math.abs(runRise.y);
 
-    var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
-
-    var run = runRise.x;
-    var rise = runRise.y;
-
-    //need these in forthcoming for loops
-    var runAbs = Math.abs(run);
-    var riseAbs = Math.abs(rise);
-
-    //saving the directions that we're actually moving
-
-
-
-
-/*    var gm = setInterval(function(){
-        foo(gm, 115, 115);
-    }, 100);
-    */
+  var gm = setInterval(function(){bar(gm, newPos.x, xUnitVector, newPos.y, yUnitVector);}, 1);
 }
 
-
-var shipMoveTest(gm, run, runAbs, rise, riseAbs, ){
-
-  var xUnitVector = (run/runAbs);
-  var yUnitVector = (rise/riseAbs);
-
-  if(run != 0 && rise != 0){
-    var numTiles = riseAbs + runAbs;
-    for(var i = 0; i < numTiles; i+=2)
-    {
-//        ship.PosY += yUnitVector;
-//          drawGame();
-//        ship.PosX += xUnitVector;
-//          drawGame();
-
-        if(2*(newPos.x - ship.PosX) < (newPos.y - ship.PosY)){
-//          ship.PosX += xUnitVector;
-//            drawGame();
-          i++;
-        }
-        else if(2*(newPos.y - ship.PosY) < (newPos.x - ship.PosX)){
-//          ship.PosY += yUnitVector;
-//            drawGame();
-          i++;
-        }
-    }
-  }
-  else if(run == 0){
-    for(var i = 0; i < riseAbs; i++){
-//      ship.PosY += yUnitVector;
-//        drawGame();
-    }
-  }
-  else if(rise == 0){
-    for(var i = 0; i < runAbs; i++){
-//      ship.PosX += xUnitVector;
-//        drawGame();
-    }
-  }
-}
-
-
-
-var foo = function(gm, newX, newY)
+var bar = function(gm, newX, xUnitVector, newY, yUnitVector)
 {
-    if(ship.posX != newX || ship.posY != newY)
-    {
-        ship.move(ship.posX - 1, ship.posY -1);
+    if(ship.PosX != newX){
+        ship.move(ship.PosX+xUnitVector, ship.PosY);
         drawGame();
     }
-    else clearInterval(gm);
+    if(Math.abs(2*(ship.PosX-newX)) < Math.abs(ship.PosY-newY)){
+        ship.move(ship.PosX+xUnitVector, ship.PosY);
+        drawGame();
+    }
+    if(ship.PosY != newY){
+        ship.move(ship.PosX, ship.PosY+yUnitVector);
+        drawGame();
+    }
+    if(Math.abs(2*(ship.PosY-newY)) < Math.abs(ship.PosX-newX)){
+        ship.move(ship.PosX, ship.PosY+yUnitVector);
+        drawGame();
+    }
+    if(ship.PosX == newX && ship.PosY == newY)
+      clearInterval(gm);
 }
-
-
-
-
-shipMove();
-
 //currently not called
 function getUserInput(){
   var angle = prompt("Angle: ");
