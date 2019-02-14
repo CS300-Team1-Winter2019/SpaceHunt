@@ -1,8 +1,25 @@
 var ctx = null;
 var cameraSize =32;
-var ts = 600/cameraSize;  
-var ship = new Ship(1000);
-var gameMap = new Map();
+var ts = 600/cameraSize;
+var gameMap = null;
+var ship = null;
+
+window.onload = function()
+{
+    if(testPersist())
+    {
+        loadState();
+    }
+    else
+    {
+        ship = new Ship(1000);
+        gameMap = new Map();
+        ctx = document.getElementById('game').getContext("2d");
+        //ctx.font = "bold 10pt sans-serif";
+    }
+    requestAnimationFrame(drawGame);
+}
+
 document.addEventListener("keydown", move);
 
 var objects =
@@ -23,11 +40,13 @@ var objects =
     }
 };
 
+/*
 window.onload = function()
 {
     ctx = document.getElementById('game').getContext("2d");
     requestAnimationFrame(drawGame);
 }
+*/
 
 function move(e)
 {
