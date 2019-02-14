@@ -6,8 +6,8 @@ class Ship
         this.fuel = 0;
         this.sizeX =50;
         this.sizeY = 50;
-        this.posX =125;//Math.floor(Math.random() * 127);
-        this.posY = 125;//Math.floor(Math.random() * 127);
+        this.posX =120;//Math.floor(Math.random() * 127);
+        this.posY = 120;//Math.floor(Math.random() * 127);
         this.delayMove = 500;
     }
 
@@ -25,6 +25,8 @@ class Ship
     {
         if(x < 0) { x = 0; }
         if(y < 0) { y = 0; }
+        if(x > 126) { x = 126; }
+        if(y > 126) { y = 126; }
         var until = new Date().getTime() + this.delayMove;
         while((new Date().getTime() < until)) {};
 
