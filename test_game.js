@@ -1,6 +1,6 @@
 var ctx = null;
 var cameraSize =32;
-var ts = 600/cameraSize;  
+var ts = 600/cameraSize;
 var ship = new Ship(1000);
 var gameMap = new Map();
 document.addEventListener("keydown", move);
@@ -29,6 +29,87 @@ window.onload = function()
     requestAnimationFrame(drawGame);
 }
 
+shipMove();
+
+//currently not called
+function getUserInput(){
+  var angle = prompt("Angle: ");
+  var magnitude = prompt("Magnitude: ");
+  return {angle: angle, magnitude: magnitude};
+}
+
+function shipMove()
+{
+  //should this function live inside ship or here in test_game?
+  //var userInput = getUserInput(); //this function should return an object {angle: ?, magnitude: ?}
+
+  //CHANGE THESE VALUES FOR TESTING
+  var userInput = {angle: 150, magnitude: 10};
+
+  var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
+  var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
+
+  //accepting some messiness here for readability and cleanliness of other functions.
+  var run = runRise.x;
+  var rise = runRise.y;
+
+  //need these in forthcoming for loops
+  var runAbs = Math.abs(run);
+  var riseAbs = Math.abs(rise);
+
+  //saving the directions that we're actually moving
+  var xUnitVector = (run/runAbs);
+  var yUnitVector = (rise/riseAbs);
+
+/*
+  //this isn't being used right now but I might change the way things work later. feel free to disregard
+  //if they're divisible evenly we can make movement cleaner by finding reduced fraction
+  while((rise%run == 0 || run%rise == 0) && (riseAbs > 1) && (runAbs > 1))
+  {
+    //rise>run combined with logic in while loop implies rise is evenly divisible by run
+    if(rise > run){rise /= run;}
+    //otherwise(since while condition was true) run is evenly divisible by rise
+    else{run /= rise;}
+  }
+*/
+
+
+//try uncommenting drawGame after you've run it. ship starts at original starting point again.
+    if(run != 0 && rise != 0){
+      var numTiles = riseAbs + runAbs;
+      for(var i = 0; i < numTiles; i+=2)
+      {
+          ship.PosY += yUnitVector;
+//          drawGame();
+          ship.PosX += xUnitVector;
+//          drawGame();
+
+          if(2*(newPos.x - ship.PosX) < (newPos.y - ship.PosY)){
+            ship.PosX += xUnitVector;
+//            drawGame();
+            i++;
+          }
+          else if(2*(newPos.y - ship.PosY) < (newPos.x - ship.PosX)){
+            ship.PosY += yUnitVector;
+//            drawGame();
+            i++;
+          }
+      }
+    }
+    else if(run == 0){
+      for(var i = 0; i < riseAbs; i++){
+        ship.PosY += yUnitVector;
+//        drawGame();
+      }
+    }
+    else if(rise == 0){
+      for(var i = 0; i < runAbs; i++){
+        ship.PosX += xUnitVector;
+//        drawGame();
+      }
+    }
+}
+
 function move(e)
 {
     e.preventDefault();
@@ -52,7 +133,7 @@ function move(e)
                 ship.PosY = ship.PosY+1;
             break;
     }
-    drawGame;
+  //  drawGame;
 }
 function drawGame()
 {
@@ -96,7 +177,7 @@ function drawGame()
                     for(var j = -1; j < 2; j++)
                     {
                         if(pos.x + i >=0 && pos.x + i <= 127 && pos.y + j >= 0 && pos.y + j <= 127)
-                        {  
+                        {
                             var sensTile = gameMap.getTile(pos.x + i, pos.y + j);
                             sensTile.vis = true;
                         }
@@ -111,7 +192,7 @@ function drawGame()
                     objects.updateColor(tile.val);
                     ctx.fillStyle = objects.currColor;
                 }
-                ctx.fillRect(x * ts, y * ts, ts, ts); 
+                ctx.fillRect(x * ts, y * ts, ts, ts);
             }
         }
     }
