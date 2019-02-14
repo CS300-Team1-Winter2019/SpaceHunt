@@ -33,23 +33,86 @@ function getUserInput(){
   return {angle: angle, magnitude: magnitude};
 }
 
+
+
 startMove();
 function startMove()
 {
-    var gm = setInterval(function(){
+    var userInput = {angle: 120, magnitude: 60}
+    var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
+    var gm = setInterval(function(){shipMoveTest(gm, runRise.x, runRise.y)}, 100);
+
+/*    var gm = setInterval(function(){
         foo(gm, 115, 115);
     }, 100);
+    */
 }
+
+
+var shipMoveTest(gm, newX, newY){
+
+}
+
+
 
 var foo = function(gm, newX, newY)
 {
     if(ship.posX != newX || ship.posY != newY)
     {
         ship.move(ship.posX - 1, ship.posY -1);
-        drawGame(); 
+        drawGame();
     }
     else clearInterval(gm);
 }
+
+
+
+
+function shipMove()
+{
+
+    //CHANGE THESE VALUES FOR TESTING
+    //var userInput = {angle: 150, magnitude: 10};
+    var userInput = {angle: 120, magnitude: 60}
+
+    //should this function live inside ship or here in test_game?
+    //var userInput = getUserInput(); //this function should return an object {angle: ?, magnitude: ?}
+    var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
+    var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
+
+    //accepting some messiness here for readability and cleanliness of other functions.
+    var run = runRise.x;
+    var rise = runRise.y;
+
+    //need these in forthcoming for loops
+    var runAbs = Math.abs(run);
+    var riseAbs = Math.abs(rise);
+
+    //saving the directions that we're actually moving
+    var xUnitVector = (run/runAbs);
+    var yUnitVector = (rise/riseAbs);
+
+    //accepting some messiness here for readability and cleanliness of other functions.
+    var run = runRise.x;
+    var rise = runRise.y;
+
+    while(ship.posX != newPos.x || ship.posY != newPos.y)
+    {
+        for(var i = 0; i > run; i--)
+        {
+            ship.posX = ship.posX - 1;
+            drawGame();
+        }
+        for(var j = 0; j > rise; j--)
+        {
+            ship.posY = ship.posY - 1;
+            drawGame();
+        }
+    }
+}
+
+
+
 
 function move(e)
 {
