@@ -71,8 +71,33 @@ function move(e)
                 ship.PosY = ship.PosY+1;
             break;
     }
+    collision(ship.PosX,ship.PosY);
     drawGame;
 }
+
+function collison(x,y)
+{
+    var tile = gameMap.getTile(x, y);
+    var obj = tile.val;
+    switch(obj) {
+        case 0: 
+            obj = 0;
+            alert ('this is a wormhome,dead');
+            break;
+        case 1:
+            obj = 1;
+            alert('this is planet');
+            break;
+        case 2:
+            obj = 2;
+            alert('this is station');
+            break;
+        case 3:
+            obj = 3; // space, so keep moving
+            break;
+    }
+}
+
 function drawGame()
 {
     var offX = 0;
