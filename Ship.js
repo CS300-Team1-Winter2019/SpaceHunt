@@ -14,6 +14,17 @@ class Ship
         this.credits = 1000;
     }
 
+    copyShip(obj)
+    {
+        this.health = obj.health;
+        this.fuel = obj.fuel;
+        this.sizeX = obj.sizeX;
+        this.sizeY = obj.sizeY;
+        this.posX = obj.posX;//Math.floor(Math.random() * 127);
+        this.posY = obj.posY;//Math.floor(Math.random() * 127);
+        this.delayMove = 500;
+    }
+
 /*
     constructor(health, settings)
     {

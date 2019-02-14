@@ -14,10 +14,17 @@ function testPersist()
 // Loads a prior state.
 function loadState()
 {
-	gameMap = JSON.parse(localStorage.getItem("gameMap"));
-	context = JSON.parse(localStorage.getItem("context"));
-	Ship = JSON.parse(localStorage.getItem("ship"));
+	var map_form = JSON.parse(localStorage.getItem("gameMap"));
+	gameMap = new Map();
+	gameMap.copyMap(map_form);
+
+	ctx = JSON.parse(localStorage.getItem("context"));
+
+	var ship_form = JSON.parse(localStorage.getItem("ship"));
+	ship = new Ship(1000);
+	ship.copyShip(ship_form);
 }
+
 
 
 // Save relevant state variables.

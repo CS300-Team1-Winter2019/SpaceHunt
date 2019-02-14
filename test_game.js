@@ -4,6 +4,9 @@ var ts = 600/cameraSize;
 var gameMap = null;
 var ship = null;
 
+// Ensure that if state has been previously saved,
+// that state is loaded. If not, new game and ship
+// is created. 
 window.onload = function()
 {
     if(testPersist())
@@ -14,9 +17,10 @@ window.onload = function()
     {
         ship = new Ship(1000);
         gameMap = new Map();
-        ctx = document.getElementById('game').getContext("2d");
+        //ctx = document.getElementById('game').getContext("2d");
         //ctx.font = "bold 10pt sans-serif";
     }
+    ctx = document.getElementById('game').getContext("2d");
     requestAnimationFrame(drawGame);
 }
 
@@ -159,5 +163,14 @@ function drawGame()
             }
         }
     }
+    saveState();
     requestAnimationFrame(drawGame);
+}
+
+
+// This will modify the map based on the sensor when 
+// the button is pressed...no button yet.
+function activate_sensor()
+{
+
 }
