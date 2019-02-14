@@ -42,6 +42,20 @@ function startMove()
     var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
     var gm = setInterval(function(){shipMoveTest(gm, runRise.x, runRise.y)}, 100);
 
+    var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
+
+    var run = runRise.x;
+    var rise = runRise.y;
+
+    //need these in forthcoming for loops
+    var runAbs = Math.abs(run);
+    var riseAbs = Math.abs(rise);
+
+    //saving the directions that we're actually moving
+
+
+
+
 /*    var gm = setInterval(function(){
         foo(gm, 115, 115);
     }, 100);
@@ -49,8 +63,44 @@ function startMove()
 }
 
 
-var shipMoveTest(gm, newX, newY){
+var shipMoveTest(gm, run, runAbs, rise, riseAbs, ){
 
+  var xUnitVector = (run/runAbs);
+  var yUnitVector = (rise/riseAbs);
+
+  if(run != 0 && rise != 0){
+    var numTiles = riseAbs + runAbs;
+    for(var i = 0; i < numTiles; i+=2)
+    {
+//        ship.PosY += yUnitVector;
+//          drawGame();
+//        ship.PosX += xUnitVector;
+//          drawGame();
+
+        if(2*(newPos.x - ship.PosX) < (newPos.y - ship.PosY)){
+//          ship.PosX += xUnitVector;
+//            drawGame();
+          i++;
+        }
+        else if(2*(newPos.y - ship.PosY) < (newPos.x - ship.PosX)){
+//          ship.PosY += yUnitVector;
+//            drawGame();
+          i++;
+        }
+    }
+  }
+  else if(run == 0){
+    for(var i = 0; i < riseAbs; i++){
+//      ship.PosY += yUnitVector;
+//        drawGame();
+    }
+  }
+  else if(rise == 0){
+    for(var i = 0; i < runAbs; i++){
+//      ship.PosX += xUnitVector;
+//        drawGame();
+    }
+  }
 }
 
 
@@ -68,48 +118,69 @@ var foo = function(gm, newX, newY)
 
 
 
-function shipMove()
-{
+shipMove();
 
-    //CHANGE THESE VALUES FOR TESTING
-    //var userInput = {angle: 150, magnitude: 10};
-    var userInput = {angle: 120, magnitude: 60}
-
-    //should this function live inside ship or here in test_game?
-    //var userInput = getUserInput(); //this function should return an object {angle: ?, magnitude: ?}
-    var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
-    var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
-
-    //accepting some messiness here for readability and cleanliness of other functions.
-    var run = runRise.x;
-    var rise = runRise.y;
-
-    //need these in forthcoming for loops
-    var runAbs = Math.abs(run);
-    var riseAbs = Math.abs(rise);
-
-    //saving the directions that we're actually moving
-    var xUnitVector = (run/runAbs);
-    var yUnitVector = (rise/riseAbs);
-
-    //accepting some messiness here for readability and cleanliness of other functions.
-    var run = runRise.x;
-    var rise = runRise.y;
-
-    while(ship.posX != newPos.x || ship.posY != newPos.y)
-    {
-        for(var i = 0; i > run; i--)
-        {
-            ship.posX = ship.posX - 1;
-            drawGame();
-        }
-        for(var j = 0; j > rise; j--)
-        {
-            ship.posY = ship.posY - 1;
-            drawGame();
-        }
-    }
+//currently not called
+function getUserInput(){
+  var angle = prompt("Angle: ");
+  var magnitude = prompt("Magnitude: ");
+  return {angle: angle, magnitude: magnitude};
 }
+
+function shipMove(){
+  //should this function live inside ship or here in test_game?
+  //var userInput = getUserInput(); //this function should return an object {angle: ?, magnitude: ?}
+  //CHANGE THESE VALUES FOR TESTING
+  var userInput = {angle: 150, magnitude: 10};
+  var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
+  var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
+  //accepting some messiness here for readability and cleanliness of other functions.
+  var run = runRise.x;
+  var rise = runRise.y;
+  //need these in forthcoming for loops
+  var runAbs = Math.abs(run);
+  var riseAbs = Math.abs(rise);
+  //saving the directions that we're actually moving
+  var xUnitVector = (run/runAbs);
+  var yUnitVector = (rise/riseAbs);
+
+//try uncommenting drawGame after you've run it. ship starts at original starting point again.
+    if(run != 0 && rise != 0){
+      var numTiles = riseAbs + runAbs;
+      for(var i = 0; i < numTiles; i+=2)
+      {
+          ship.PosY += yUnitVector;
+//          drawGame();
+          ship.PosX += xUnitVector;
+//          drawGame();
+
+          if(2*(newPos.x - ship.PosX) < (newPos.y - ship.PosY)){
+            ship.PosX += xUnitVector;
+//            drawGame();
+            i++;
+          }
+          else if(2*(newPos.y - ship.PosY) < (newPos.x - ship.PosX)){
+            ship.PosY += yUnitVector;
+//            drawGame();
+            i++;
+          }
+      }
+    }
+    else if(run == 0){
+      for(var i = 0; i < riseAbs; i++){
+        ship.PosY += yUnitVector;
+//        drawGame();
+      }
+    }
+    else if(rise == 0){
+      for(var i = 0; i < runAbs; i++){
+        ship.PosX += xUnitVector;
+//        drawGame();
+      }
+    }
+  }
+
+
 
 
 
