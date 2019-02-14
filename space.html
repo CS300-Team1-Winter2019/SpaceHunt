@@ -2,13 +2,13 @@
     <head>
         <title>Space Game</title>
         <style>
-            canvas 
+            canvas
             {
                 padding: 0;
                 margin: auto;
                 display: block;
-                width: 800px;
-                height: 800px;
+                width: 600px;
+                height: 600px;
                 position: absolute;
                 top: 0;
                 bottom: 0;
@@ -17,19 +17,11 @@
             }
         </style>
     </head>
-    <body> 
-        <canvas id="game" width="800" height="800"></canvas>
+    <body>
+        <canvas id="game" width="600" height="600"></canvas>
+        <script src = "./Map.js"></script>
         <script src = "./Ship.js"></script>
         <script src = "./test_game.js"></script>
         <form id="moving">
-            <select name="degrees">
-                <option value="90">90</option>
-                <option value="180">180</option>
-            </select>
-            Distance:
-            <input type="text" name="distance">
-            <br><br>
-            <input type="submit">
-        </form>
     </body>
 </html>
