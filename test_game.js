@@ -4,6 +4,7 @@ var ts = 600/cameraSize;
 var ship = new Ship(1000);
 var gameMap = new Map();
 document.addEventListener("keydown", move);
+document.addEventListener("click", shipMove)
 
 var objects =
 {
@@ -29,7 +30,7 @@ window.onload = function()
     requestAnimationFrame(drawGame);
 }
 
-shipMove();
+//shipMove();
 
 //currently not called
 function getUserInput(){
@@ -38,8 +39,14 @@ function getUserInput(){
   return {angle: angle, magnitude: magnitude};
 }
 
-function shipMove()
+function movePause(){
+  var until = new Date().getTime() + 100;
+  while((new Date().getTime() < until)) {};
+}
+
+function shipMove(e)
 {
+  //e.preventDefault();
   //should this function live inside ship or here in test_game?
   //var userInput = getUserInput(); //this function should return an object {angle: ?, magnitude: ?}
 
@@ -80,18 +87,22 @@ function shipMove()
       for(var i = 0; i < numTiles; i+=2)
       {
           ship.PosY += yUnitVector;
-//          drawGame();
+          drawGame();
+          movePause();
           ship.PosX += xUnitVector;
-//          drawGame();
+          drawGame();
+          movePause();
 
           if(2*(newPos.x - ship.PosX) < (newPos.y - ship.PosY)){
             ship.PosX += xUnitVector;
-//            drawGame();
+            drawGame();
+            movePause();
             i++;
           }
           else if(2*(newPos.y - ship.PosY) < (newPos.x - ship.PosX)){
             ship.PosY += yUnitVector;
-//            drawGame();
+            drawGame();
+            movePause();
             i++;
           }
       }
@@ -99,13 +110,15 @@ function shipMove()
     else if(run == 0){
       for(var i = 0; i < riseAbs; i++){
         ship.PosY += yUnitVector;
-//        drawGame();
+        drawGame();
+        movePause();
       }
     }
     else if(rise == 0){
       for(var i = 0; i < runAbs; i++){
         ship.PosX += xUnitVector;
-//        drawGame();
+        drawGame();
+        movePause();
       }
     }
 }
@@ -133,7 +146,7 @@ function move(e)
                 ship.PosY = ship.PosY+1;
             break;
     }
-  //  drawGame;
+    //drawGame();
 }
 function drawGame()
 {
@@ -196,5 +209,5 @@ function drawGame()
             }
         }
     }
-    requestAnimationFrame(drawGame);
+    window.requestAnimationFrame(drawGame);
 }
