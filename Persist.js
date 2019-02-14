@@ -18,7 +18,7 @@ function loadState()
 	gameMap = new Map();
 	gameMap.copyMap(map_form);
 
-	ctx = JSON.parse(localStorage.getItem("context"));
+	//ctx = JSON.parse(localStorage.getItem("context"));
 
 	var ship_form = JSON.parse(localStorage.getItem("ship"));
 	ship = new Ship(1000);
@@ -32,6 +32,6 @@ function loadState()
 function saveState()
 {
 	localStorage.setItem("gameMap",JSON.stringify(gameMap));
-	localStorage.setItem("context", JSON.stringify(ctx));
-	localStorage.setItem("ship", JSON.stringify(Ship));
+	//localStorage.setItem("context", JSON.stringify(ctx));
+	localStorage.setItem("ship", JSON.stringify(ship));
 }
