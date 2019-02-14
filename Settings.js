@@ -1,6 +1,6 @@
 //Currently untested
 class Settings {
-    
+
     //Constructor sets all values to the ones specified by the assignment
     // Since there are a lot of miscellanious variables, I figured we would change them by hand
     // rather than write a constructor that initializes them. I am willing to change this
@@ -59,5 +59,5 @@ class Settings {
     set noDeath(value) {
         this.noDeath = value;
     }
-    
+
 }

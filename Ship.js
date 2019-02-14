@@ -14,6 +14,7 @@ class Ship
         this.credits = 1000;
     }
 
+/*
     constructor(health, settings)
     {
       this.health = health;
@@ -27,7 +28,7 @@ class Ship
       this.supplies = settings.startSupplies;
       this.credits = settings.startCredits;
     }
-
+*/
 
     damage(dmg)
     {

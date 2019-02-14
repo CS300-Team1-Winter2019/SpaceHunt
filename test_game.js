@@ -72,7 +72,7 @@ function move(e)
             break;
     }
     collision(ship.PosX,ship.PosY);
-    drawGame;
+    drawGame();
 }
 
 function collison(x,y)
@@ -80,7 +80,7 @@ function collison(x,y)
     var tile = gameMap.getTile(x, y);
     var obj = tile.val;
     switch(obj) {
-        case 0: 
+        case 0:
             obj = 0;
             alert ('this is a wormhome,dead');
             break;
@@ -140,7 +140,7 @@ function drawGame()
                     for(var j = -1; j < 2; j++)
                     {
                         if(pos.x + i >=0 && pos.x + i <= 127 && pos.y + j >= 0 && pos.y + j <= 127)
-                        {  
+                        {
                             var sensTile = gameMap.getTile(pos.x + i, pos.y + j);
                             sensTile.vis = true;
                         }
@@ -155,7 +155,7 @@ function drawGame()
                     objects.updateColor(tile.val);
                     ctx.fillStyle = objects.currColor;
                 }
-                ctx.fillRect(x * ts, y * ts, ts, ts); 
+                ctx.fillRect(x * ts, y * ts, ts, ts);
             }
         }
     }
