@@ -1,4 +1,5 @@
 var ctx = null;
+var ctx2 = null;
 var cameraSize =32;
 var ts = 600/cameraSize;
 var ship = new Ship(1000);
@@ -27,6 +28,8 @@ var objects =
 window.onload = function()
 {
     ctx = document.getElementById('game').getContext("2d");
+    ctx2 = document.getElementById('menu').getContext("2d");
+    requestAnimationFrame(menuTest);
     requestAnimationFrame(drawGame);
 }
 
@@ -210,4 +213,13 @@ function drawGame()
         }
     }
     window.requestAnimationFrame(drawGame);
+}
+
+function menuTest(){
+  for(var x = 0; x < 300; x++){
+    for(var y = 0; y < 600; y++){
+      ctx2.fillStyle = "black";
+      ctx2.fillRect(x * ts, y * ts, ts, ts);
+    }
+  }
 }
