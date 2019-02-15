@@ -23,5 +23,12 @@
         <script src = "./Ship.js"></script>
         <script src = "./test_game.js"></script>
         <form id="moving">
+        <form id="userInterface" onSubmit="JavaScript:startMove()">
+          Which angle would you like to move?
+          <input type="text" name="angle" value="0"/>
+          How far would you like to move?
+          <input type="text" name="magnitude" value="0"/>
+          <input name="Submit" type="submit" value="submit"/>
+        </form>
     </body>
 </html>
