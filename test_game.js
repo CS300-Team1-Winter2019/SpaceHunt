@@ -37,10 +37,10 @@ function startMove(){
   var xUnitVector = runRise.x/Math.abs(runRise.x);
   var yUnitVector = runRise.y/Math.abs(runRise.y);
 
-  var gm = setInterval(function(){bar(gm, newPos.x, xUnitVector, newPos.y, yUnitVector);}, 1);
+  var gm = setInterval(function(){shipMove(gm, newPos.x, xUnitVector, newPos.y, yUnitVector);}, 1);
 }
 
-var bar = function(gm, newX, xUnitVector, newY, yUnitVector)
+var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
 {
     if(ship.PosX != newX){
         ship.move(ship.PosX+xUnitVector, ship.PosY);
@@ -73,67 +73,6 @@ function getUserInput(){
   var magnitude = prompt("Magnitude: ");
   return {angle: angle, magnitude: magnitude};
 }
-
-
-
-function shipMove(){
-  //should this function live inside ship or here in test_game?
-  var userInput = getUserInput(); //this function should return an object {angle: ?, magnitude: ?}
-  //CHANGE THESE VALUES FOR TESTING
-  var userInput = {angle: 150, magnitude: 10};
-  var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
-  var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
-//  console.log(newPos.x)
-  //accepting some messiness here for readability and cleanliness of other functions.
-  var run = runRise.x;
-  var rise = runRise.y;
-  //need these in forthcoming for loops
-  var runAbs = Math.abs(run);
-  var riseAbs = Math.abs(rise);
-  //saving the directions that we're actually moving
-  var xUnitVector = (run/runAbs);
-  var yUnitVector = (rise/riseAbs);
-
-//try uncommenting drawGame after you've run it. ship starts at original starting point again.
-    if(run != 0 && rise != 0){
-      var numTiles = riseAbs + runAbs;
-      for(var i = 0; i < numTiles; i+=2)
-      {
-          ship.PosY += yUnitVector;
-//          drawGame();
-          ship.PosX += xUnitVector;
-//          drawGame();
-
-          if(2*(newPos.x - ship.PosX) < (newPos.y - ship.PosY)){
-            ship.PosX += xUnitVector;
-//            drawGame();
-            i++;
-          }
-          else if(2*(newPos.y - ship.PosY) < (newPos.x - ship.PosX)){
-            ship.PosY += yUnitVector;
-//            drawGame();
-            i++;
-          }
-      }
-    }
-    else if(run == 0){
-      for(var i = 0; i < riseAbs; i++){
-        ship.PosY += yUnitVector;
-//        drawGame();
-      }
-    }
-    else if(rise == 0){
-      for(var i = 0; i < runAbs; i++){
-        ship.PosX += xUnitVector;
-//        drawGame();
-      }
-    }
-  }
-
-
-
-
-
 
 function move(e)
 {
