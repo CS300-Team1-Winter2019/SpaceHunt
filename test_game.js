@@ -30,6 +30,8 @@ function startMove(){
   var userInput = {angle: 120, magnitude: 60}
   var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
   var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
+  console.log("NEW POSITION: ");
+  console.log(newPos);
   var xUnitVector = runRise.x/Math.abs(runRise.x);
   var yUnitVector = runRise.y/Math.abs(runRise.y);
 
@@ -41,19 +43,25 @@ var bar = function(gm, newX, xUnitVector, newY, yUnitVector)
     if(ship.PosX != newX){
         ship.move(ship.PosX+xUnitVector, ship.PosY);
         drawGame();
+        if(ship.PosX != newX && (Math.abs(1.5*(ship.PosX-newX)) < Math.abs(ship.PosY-newY))){
+            ship.move(ship.PosX+xUnitVector, ship.PosY);
+            drawGame();
+        }
+      var currPos = {x: ship.PosX, y: ship.PosY};
+      console.log(currPos);
     }
-    if(Math.abs(2*(ship.PosX-newX)) < Math.abs(ship.PosY-newY)){
-        ship.move(ship.PosX+xUnitVector, ship.PosY);
-        drawGame();
-    }
+
     if(ship.PosY != newY){
         ship.move(ship.PosX, ship.PosY+yUnitVector);
         drawGame();
+        if(ship.PosY != newY && (Math.abs(1.5*(ship.PosY-newY)) < Math.abs(ship.PosX-newX))) {
+            ship.move(ship.PosX, ship.PosY+yUnitVector);
+            drawGame();
+        }
+      var currPos = {x: ship.PosX, y: ship.PosY};
+      console.log(currPos);
     }
-    if(Math.abs(2*(ship.PosY-newY)) < Math.abs(ship.PosX-newX)){
-        ship.move(ship.PosX, ship.PosY+yUnitVector);
-        drawGame();
-    }
+
     if(ship.PosX == newX && ship.PosY == newY)
       clearInterval(gm);
 }
@@ -64,13 +72,16 @@ function getUserInput(){
   return {angle: angle, magnitude: magnitude};
 }
 
+
+
 function shipMove(){
   //should this function live inside ship or here in test_game?
-  //var userInput = getUserInput(); //this function should return an object {angle: ?, magnitude: ?}
+  var userInput = getUserInput(); //this function should return an object {angle: ?, magnitude: ?}
   //CHANGE THESE VALUES FOR TESTING
   var userInput = {angle: 150, magnitude: 10};
   var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
   var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
+//  console.log(newPos.x)
   //accepting some messiness here for readability and cleanliness of other functions.
   var run = runRise.x;
   var rise = runRise.y;
@@ -153,7 +164,7 @@ function move(e)
 
 function drawGame()
 {
-    console.log(7);
+  //  console.log(7);
     var offX = 0;
     var offY = 0;
 
