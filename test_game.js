@@ -4,6 +4,9 @@ var ts = 600/cameraSize;
 var gameMap = null;
 var ship = null;
 
+// Ensure that if state has been previously saved,
+// that state is loaded. If not, new game and ship
+// is created. 
 window.onload = function()
 {
     if(testPersist())
@@ -14,9 +17,10 @@ window.onload = function()
     {
         ship = new Ship(1000);
         gameMap = new Map();
-        ctx = document.getElementById('game').getContext("2d");
+        //ctx = document.getElementById('game').getContext("2d");
         //ctx.font = "bold 10pt sans-serif";
     }
+    ctx = document.getElementById('game').getContext("2d");
     requestAnimationFrame(drawGame);
 }
 
@@ -71,8 +75,33 @@ function move(e)
                 ship.PosY = ship.PosY+1;
             break;
     }
-    drawGame;
+    collison(ship.PosX,ship.PosY);
+    drawGame();
 }
+
+function collison(x,y)
+{
+    var tile = gameMap.getTile(x, y);
+    var obj = tile.val;
+    switch(obj) {
+        case 0:
+            obj = 0;
+            alert ('this is a wormhome,dead');
+            break;
+        case 1:
+            obj = 1;
+            alert('this is planet');
+            break;
+        case 2:
+            obj = 2;
+            alert('this is station');
+            break;
+        case 3:
+            obj = 3; // space, so keep moving
+            break;
+    }
+}
+
 function drawGame()
 {
     var offX = 0;
@@ -115,7 +144,7 @@ function drawGame()
                     for(var j = -1; j < 2; j++)
                     {
                         if(pos.x + i >=0 && pos.x + i <= 127 && pos.y + j >= 0 && pos.y + j <= 127)
-                        {  
+                        {
                             var sensTile = gameMap.getTile(pos.x + i, pos.y + j);
                             sensTile.vis = true;
                         }
@@ -130,9 +159,18 @@ function drawGame()
                     objects.updateColor(tile.val);
                     ctx.fillStyle = objects.currColor;
                 }
-                ctx.fillRect(x * ts, y * ts, ts, ts); 
+                ctx.fillRect(x * ts, y * ts, ts, ts);
             }
         }
     }
+    saveState();
     requestAnimationFrame(drawGame);
+}
+
+
+// This will modify the map based on the sensor when 
+// the button is pressed...no button yet.
+function activate_sensor()
+{
+
 }

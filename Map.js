@@ -63,6 +63,15 @@ class Map
         }
     }
 
+    // "Constructor" which takes an object, so it can be loaded from localStorage.
+    copyMap(obj)
+    {
+        this.map = obj.map;
+        this.maxPlanets = obj.maxPlanets;
+        this.maxWorms = obj.maxWorms;
+        this.maxStations = obj.maxStations;
+    }
+
     //Returns Tile object
     getTile(x, y)
     {
