@@ -43,7 +43,7 @@ var bar = function(gm, newX, xUnitVector, newY, yUnitVector)
     if(ship.PosX != newX){
         ship.move(ship.PosX+xUnitVector, ship.PosY);
         drawGame();
-        if(ship.PosX != newX && (Math.abs(1.5*(ship.PosX-newX)) < Math.abs(ship.PosY-newY))){
+        if(ship.PosX != newX && (Math.abs((ship.PosX-newX)) > 1.5*Math.abs(ship.PosY-newY))){
             ship.move(ship.PosX+xUnitVector, ship.PosY);
             drawGame();
         }
@@ -54,7 +54,7 @@ var bar = function(gm, newX, xUnitVector, newY, yUnitVector)
     if(ship.PosY != newY){
         ship.move(ship.PosX, ship.PosY+yUnitVector);
         drawGame();
-        if(ship.PosY != newY && (Math.abs(1.5*(ship.PosY-newY)) < Math.abs(ship.PosX-newX))) {
+        if(ship.PosY != newY && (Math.abs((ship.PosY-newY)) > 1.5*Math.abs(ship.PosX-newX))) {
             ship.move(ship.PosX, ship.PosY+yUnitVector);
             drawGame();
         }
