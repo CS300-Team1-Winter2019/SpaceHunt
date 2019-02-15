@@ -6,7 +6,8 @@ var ship = null;
 
 // Ensure that if state has been previously saved,
 // that state is loaded. If not, new game and ship
-// is created. 
+// is created.
+// is created.
 window.onload = function()
 {
     if(testPersist())
@@ -51,6 +52,51 @@ window.onload = function()
     requestAnimationFrame(drawGame);
 }
 */
+//UNCOMMENT THE FUNCTION BELOW TO DUPLICATE ERROR
+//startMove();
+function startMove(){
+  //can hardcode in different angles and distances
+  var userInput = {angle: 120, magnitude: 60}
+//this is what I'd like to use eventually: var userInput = {angle: document.getElementById("userInterface").elements["angle"], magnitude: document.getElementById("userInterface").elements["magnitude"]};
+
+  //figures out how many units along x-axis and how many units along y-axis we have to go
+  //this function call is where i'm having issues
+  var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
+  var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
+  console.log("NEW POSITION: ");
+  console.log(newPos);
+  var xUnitVector = runRise.x/Math.abs(runRise.x);
+  var yUnitVector = runRise.y/Math.abs(runRise.y);
+
+  var gm = setInterval(function(){shipMove(gm, newPos.x, xUnitVector, newPos.y, yUnitVector);}, 1);
+}
+
+var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
+{
+    if(ship.PosX != newX){
+        ship.move(ship.PosX+xUnitVector, ship.PosY);
+        drawGame();
+        if(ship.PosX != newX && (Math.abs((ship.PosX-newX)) > 1.5*Math.abs(ship.PosY-newY))){
+            ship.move(ship.PosX+xUnitVector, ship.PosY);
+            drawGame();
+        }
+    }
+
+    if(ship.PosY != newY){
+        ship.move(ship.PosX, ship.PosY+yUnitVector);
+        drawGame();
+        if(ship.PosY != newY && (Math.abs((ship.PosY-newY)) > 1.5*Math.abs(ship.PosX-newX))) {
+            ship.move(ship.PosX, ship.PosY+yUnitVector);
+            drawGame();
+        }
+    }
+
+    if(ship.PosX == newX && ship.PosY == newY)
+      clearInterval(gm);
+}
+
+
+
 
 function move(e)
 {
@@ -168,7 +214,7 @@ function drawGame()
 }
 
 
-// This will modify the map based on the sensor when 
+// This will modify the map based on the sensor when
 // the button is pressed...no button yet.
 function activate_sensor()
 {

@@ -44,6 +44,14 @@ class Ship
     }
 */
 
+    calculateXY(userInput){     //this argument should be an object {angle: ?, magnitude: ?}
+      var convertedAngle = (userInput.angle * (Math.PI/180));
+
+      var coords = {x: Math.round(Math.cos(convertedAngle)*userInput.magnitude),
+                    y: Math.round(-(Math.sin(convertedAngle)*userInput.magnitude))};
+      return coords;
+    }
+
     damage(dmg)
     {
         this.health = this.health - dmg;
