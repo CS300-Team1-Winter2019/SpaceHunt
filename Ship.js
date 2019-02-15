@@ -23,6 +23,9 @@ class Ship
         this.posX = obj.posX;//Math.floor(Math.random() * 127);
         this.posY = obj.posY;//Math.floor(Math.random() * 127);
         this.delayMove = 500;
+        this.energy = obj.energy;
+        this.supplies = obj.supplies;
+        this.credits = obj.credits;
     }
 
 /*
@@ -45,6 +48,14 @@ class Ship
     {
         this.health = this.health - dmg;
     }
+
+    // Added for sensor to be able to reduce
+    // supplies.
+    consume_supplies(percentage)
+    {
+        this.supplies -= this.supplies * percentage;
+    }
+
 
     get Health()
     {
