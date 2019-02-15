@@ -22,13 +22,24 @@
         <script src = "./Map.js"></script>
         <script src = "./Ship.js"></script>
         <script src = "./test_game.js"></script>
+
+        <script>
+          function calling_move(){
+            startMove();
+            return true;
+          }
+        </script>
+
         <form id="moving">
-        <form id="userInterface" onSubmit="JavaScript:startMove()">
+
+        <form id="userInterface" onsubmit="return startMove()">
           Which angle would you like to move?
           <input type="text" name="angle" value="0"/>
           How far would you like to move?
           <input type="text" name="magnitude" value="0"/>
-          <input name="Submit" type="submit" value="submit"/>
+          <input name="submit" type="submit" value="submit"/>
         </form>
+
+
     </body>
 </html>

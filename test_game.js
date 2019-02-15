@@ -25,11 +25,11 @@ var objects =
 ctx = document.getElementById('game').getContext("2d");
 drawGame();
 
-//startMove();
+startMove();
 function startMove(){
-//  var userInput = {angle: 120, magnitude: 60}
-  document.getElementById("userInterface").elements["angle"]
-  var userInput = {angle: document.getElementById("userInterface").elements["angle"], magnitude: document.getElementById("userInterface").elements["magnitude"]};
+  console.log("test");
+  var userInput = {angle: 120, magnitude: 60}
+//  var userInput = {angle: document.getElementById("userInterface").elements["angle"], magnitude: document.getElementById("userInterface").elements["magnitude"]};
   var runRise = ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
   var newPos = {x: ship.PosX+runRise.x, y: ship.PosY+runRise.y};
   console.log("NEW POSITION: ");
