@@ -1,6 +1,6 @@
 <script>
-M = prompt("Enter energy"); //using getenergy() function
-N = prompt("Enter supplies"); //using getsupply() function
+//M = prompt("Enter energy"); //using getenergy() function
+//N = prompt("Enter supplies"); //using getsupply() function
 
 function check_energy(a){
 	if(a<=0){
@@ -14,10 +14,14 @@ function check_supply(a){
 		return true;
 	}
 }
-
-if(check_energy(M) || check_supply(N))
-	alert("Game over"); //call gameover() function.
+//You guys can use check_supply_enerygy function anytime
+//just call: check_supply_enerygy(ship.energy,ship,supplies)
+check_supply_energy(curr_Energy,curr_Supply){
+	//alert("check_supply_energy TESTING...")
+if(check_energy(curr_Energy) || check_supply(curr_Supply))
+	alert("Game Over"); //call gameover() function if you want add.
 else
 	alert("continue");
+}
 
 </script>
