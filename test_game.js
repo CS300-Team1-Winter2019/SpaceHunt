@@ -225,5 +225,21 @@ function drawGame()
 // the button is pressed...no button yet.
 function activate_sensor()
 {
+    var pos_x = ship.PosX;
+    var pos_y = ship.PosY;
 
+    for(var i = -2; i < 3; i++)
+    {
+        for(var j = -2; j < 3; j++)
+        {
+            if(pos_x + i >=0 && pos_x + i <= 127 && pos_y + j >= 0 && pos_y + j <= 127)
+            {
+                var sensTile = gameMap.getTile(pos_x + i, pos_y + j);
+                sensTile.vis = true;
+            }
+        }
+    }
+    ship.consume_supplies(0.02);
+    saveState();
+    requestAnimationFrame(drawGame);
 }
