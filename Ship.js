@@ -22,7 +22,7 @@ class Ship
         this.sizeY = obj.sizeY;
         this.posX = obj.posX;//Math.floor(Math.random() * 127);
         this.posY = obj.posY;//Math.floor(Math.random() * 127);
-        this.delayMove = 500;
+        this.delayMove = 100;
     }
 
 /*
