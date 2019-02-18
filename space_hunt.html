@@ -2,6 +2,7 @@
     <head>
         <script src="Map.js"></script>
         <script src="Ship.js"></script>
+        <script src="Persist.js"></script>
         <script src="Game.js"></script>
         <script src='Menu.js'></script> 
         <title>Space Hunt</title>
@@ -107,14 +108,14 @@
             canvas 
             {
                 background-color: pink;
-                height: 800px;
-                width: 800px;
+                height: 608px;
+                width: 608px;
             }
             #main
             {
                 display: none;
             }
-            #newGame, #backBtn, #settBtn, #creditBtn
+            #newGame, #backBtn, #settBtn, #creditBtn, #loadBtn
             {
                 text-align: center;
                 vertical-align: middle;
@@ -176,13 +177,13 @@
             #distScroll
             {
                 display: none;  
-                width: 55%;
+                width: 35%;
                 float: right;
             }
             #degreeScroll
             {
                 display: none;  
-                width: 55%;
+                width: 35%;
                 float: right;
             }
         </style>
@@ -209,6 +210,7 @@
 
         <div id="theHead">Welcome to Space Hunt!</div>
         <div id="newGame" onclick="runGame()" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'">New Game</div>
+        <div id="loadBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="load()">Load</div>
         <div id="settBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="settMen()">Settings</div>
         <div id="creditBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="showCredits()">Credits</div>
         <div id="credits">Testing</div>

@@ -50,6 +50,21 @@ function callSensor()
     activate_sensor();
 }
 
+function loadSaved(fS, iE, iS, iC, fW, uG, mS)
+{
+    if(testPersist())
+    {
+        loadState();
+        gameVars.gameMap.copyMap(getMap());
+        gameVars.ship = getShip();
+
+        console.log(gameVars.gameMap);
+        gameVars.ctx = document.getElementById('game').getContext("2d");
+        drawGame();
+    }
+    else createGame(fS, iE, iS, iC, fW, uG, mS);
+}
+
 function createGame(fS, iE, iS, iC, fW, uG, mS)
 {
     gameVars.fix_start = fS;
@@ -187,6 +202,7 @@ function move(e)
 
 function drawGame()
 {
+    console.log(gameVars.mapSize);
     var ts = gameVars.Ts;
     var offX = 0;
     var offY = 0;
@@ -262,6 +278,8 @@ function drawGame()
     
     gameVars.ctx.fillStyle = "#7FFF00";
     gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 520, 30)
+
+    saveState();
 }
 
 // This will modify the map based on the sensor when
@@ -283,7 +301,7 @@ function activate_sensor()
         }
     }
     gameVars.ship.consume_supplies(0.02);
-    //saveState();
+    saveState();
     //requestAnimationFrame(drawGame);
     drawGame();
 }

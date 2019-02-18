@@ -74,9 +74,9 @@ class Map
     copyMap(obj)
     {
         this.map = obj.map;
+        this.mapSize = obj.mapSize;
         this.maxPlanets = obj.maxPlanets;
         this.maxWorms = obj.maxWorms;
         this.maxStations = obj.maxStations;
     }
-
 }

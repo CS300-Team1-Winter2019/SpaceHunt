@@ -131,3 +131,9 @@ function submitSensor()
 {
     callSensor();
 }
+
+function load()
+{
+    loadSaved(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
+              init_game.fix_wormhole, init_game.unlim_game, init_game.map_size);
+}
