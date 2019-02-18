@@ -14,7 +14,7 @@ var gameVars =
     //Vals supplied by Settings in the menu - 
     //will be supplied in the create game and updated here
     fix_start:      false,
-    init_energy:    100,
+    init_energy:    1000,
     init_supplies:  100,
     init_credits:   1000,
     fix_wormhole:   false,
@@ -41,14 +41,13 @@ function updateDistance(newVal)
 //Calls this function when user wants to move (submit movement is pushed)
 function startMovement()
 {
-    console.log(currDistance);
-    console.log(currDegree);
+    startMove(currDistance, currDegree);
 }
 
 //Calls this function when user wants to use sensor (sensor button is pushed)
 function callSensor()
 {
-    console.log("called sensor");
+    activate_sensor();
 }
 
 function createGame(fS, iE, iS, iC, fW, uG, mS)
@@ -61,7 +60,7 @@ function createGame(fS, iE, iS, iC, fW, uG, mS)
     gameVars.unlim_game = uG;
     gameVars.mapSize = mS;
 
-    gameVars.ship = new Ship(1000);
+    gameVars.ship = new Ship(fS, iE, iS, iC, mS);
     gameVars.gameMap = new Map(mS); 
     gameVars.ctx = document.getElementById('game').getContext("2d");
     drawGame();  
@@ -85,32 +84,75 @@ var objects =
     }
 };
 
-//currently not called
-function getUserInput(){
-  var angle = prompt("Angle: ");
-  var magnitude = prompt("Magnitude: ");
-  return {angle: angle, magnitude: magnitude};
-}
-
-startMove();
-function startMove()
+function collison(x,y)
 {
-    var gm = setInterval(function(){
-        foo(gm, 115, 115);
-    }, 100);
-}
-
-var foo = function(gm, newX, newY)
-{
-    //Complains that initial ship is null
-    if(gameVars.ship!= null)
+    var tile = gameVars.gameMap.getTile(x, y);
+    var obj = tile.val;
+    switch(obj) 
     {
-        if(gameVars.ship.posX != newX || gameVars.ship.posY != newY)
+        case 0:
+            obj = 0;
+            alert ('this is a wormhome,dead');
+            break;
+        case 1:
+            obj = 1;
+            alert('this is planet');
+            break;
+        case 2:
+            obj = 2;
+            alert('this is station');
+            break;
+        case 3:
+            obj = 3; // space, so keep moving
+            break;
+    }
+}
+
+function startMove(dist, degr)
+{
+    //can hardcode in different angles and distances
+    var userInput = {angle: degr, magnitude: dist}
+    //this is what I'd like to use eventually: var userInput = {angle: document.getElementById("userInterface").elements["angle"], magnitude: document.getElementById("userInterface").elements["magnitude"]};
+  
+    //figures out how many units along x-axis and how many units along y-axis we have to go
+    //this function call is where i'm having issues
+    var runRise = gameVars.ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
+    var newPos = {x: gameVars.ship.posX + runRise.x, y: gameVars.ship.posY + runRise.y};
+
+    var xUnitVector = runRise.x/Math.abs(runRise.x);
+    var yUnitVector = runRise.y/Math.abs(runRise.y);
+  
+    var gm = setInterval(function(){shipMove(gm, newPos.x, xUnitVector, newPos.y, yUnitVector);}, 1);
+}
+
+var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
+{
+    if(gameVars.ship.posX != newX)
+    {
+        gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
+        drawGame();
+        if(gameVars.ship.posX != newX && (Math.abs((gameVars.ship.posX-newX)) > 1.5*Math.abs(gameVars.ship.posY-newY)))
         {
-            gameVars.ship.move(gameVars.ship.posX - 1, gameVars.ship.posY -1);
-            drawGame(); 
+            gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
+            drawGame();
         }
-        else clearInterval(gm);
+    }
+
+    if(gameVars.ship.posY != newY)
+    {
+        gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
+        drawGame();
+        if(gameVars.ship.posY != newY && (Math.abs((gameVars.ship.posY-newY)) > 1.5*Math.abs(gameVars.ship.posX-newX))) 
+        {
+            gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
+            drawGame();
+        }
+    }
+
+    if(gameVars.ship.posX == newX && gameVars.ship.posY == newY)
+    {
+        alert("Arrived");
+        clearInterval(gm);
     }
 }
 
@@ -121,20 +163,20 @@ function move(e)
     switch(e.keyCode)
     {
         case 37:
-            if(gameVars.ship.PosX - 1 >= 0 && gameVars.ship.PosX - 1 <= gameVars.mapSize-1)
-                gameVars.ship.PosX = gameVars.ship.PosX-1;
+            if(gameVars.ship.posX - 1 >= 0 && gameVars.ship.posX - 1 <= gameVars.mapSize-1)
+                gameVars.ship.posX = gameVars.ship.posX-1;
             break;
         case 38:
-            if(gameVars.ship.PosY - 1 >= 0 && gameVars.ship.PosY - 1 <= gameVars.mapSize-1)
-                gameVars.ship.PosY = gameVars.ship.PosY-1;
+            if(gameVars.ship.posY - 1 >= 0 && gameVars.ship.posY - 1 <= gameVars.mapSize-1)
+                gameVars.ship.posY = gameVars.ship.posY-1;
             break;
         case 39:
-            if(gameVars.ship.PosX + 1 >= 0 && gameVars.ship.PosX + 1 <= gameVars.mapSize-1)
-                gameVars.ship.PosX = gameVars.ship.PosX+1;
+            if(gameVars.ship.posX + 1 >= 0 && gameVars.ship.posX + 1 <= gameVars.mapSize-1)
+                gameVars.ship.posX = gameVars.ship.posX+1;
             break;
         case 40:
-            if(gameVars.ship.PosY + 1 >= 0 && gameVars.ship.PosY + 1 <= gameVars.mapSize-1)
-                gameVars.ship.PosY = gameVars.ship.PosY+1;
+            if(gameVars.ship.posY + 1 >= 0 && gameVars.ship.posY + 1 <= gameVars.mapSize-1)
+                gameVars.ship.posY = gameVars.ship.posY+1;
             break;
         case 32:
             
@@ -151,13 +193,13 @@ function drawGame()
 
     //Case 1: offset top left(x,y) to not display out of bounds "black" map
     //Basically display starts a bit lower to not go out of bounds
-    if(gameVars.ship.PosX - 16 < 0) { offX = (16 - gameVars.ship.PosX); }
-    if(gameVars.ship.PosY - 16 < 0) { offY = (16 - gameVars.ship.PosY); }
+    if(gameVars.ship.posX - 16 < 0) { offX = (16 - gameVars.ship.posX); }
+    if(gameVars.ship.posY - 16 < 0) { offY = (16 - gameVars.ship.posY); }
 
     //Case 2: offset top left(x,y) to not display out of bounds "black" mao
     //Basically display starts a bit higher to not go out of bounds
-    if(gameVars.ship.PosX + 16 > gameVars.mapSize) { offX = -(gameVars.ship.PosX - (gameVars.mapSize - 16)); }
-    if(gameVars.ship.PosY + 16 > gameVars.mapSize) { offY = -(gameVars.ship.PosY - (gameVars.mapSize - 16)); }
+    if(gameVars.ship.posX + 16 > gameVars.mapSize) { offX = -(gameVars.ship.posX - (gameVars.mapSize - 16)); }
+    if(gameVars.ship.posY + 16 > gameVars.mapSize) { offY = -(gameVars.ship.posY - (gameVars.mapSize - 16)); }
 
     var pos =
     {
@@ -170,12 +212,12 @@ function drawGame()
         for(var y = 0; y < gameVars.cameraSize; y++)
         {
 
-            pos.x =  Math.round((gameVars.ship.PosX) - gameVars.cameraSize/2) + x + offX;
-            pos.y =  Math.round((gameVars.ship.PosY) - gameVars.cameraSize/2) + y + offY;
+            pos.x =  Math.round((gameVars.ship.posX) - gameVars.cameraSize/2) + x + offX;
+            pos.y =  Math.round((gameVars.ship.posY) - gameVars.cameraSize/2) + y + offY;
 
             var tile = gameVars.gameMap.getTile(pos.x, pos.y);
 
-            if(pos.x == gameVars.ship.PosX && pos.y == gameVars.ship.PosY)
+            if(pos.x == gameVars.ship.posX && pos.y == gameVars.ship.posY)
             {
                 gameVars.ctx.fillStyle = "black";
                 gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
@@ -195,7 +237,6 @@ function drawGame()
             }
             else
             {
-                //console.log(tile);
                 if(!tile.vis) { gameVars.ctx.fillStyle = "pink"; }
                 else
                 {
@@ -206,4 +247,43 @@ function drawGame()
             }
         }
     }
+
+    gameVars.ctx.fillStyle = "#7FFF00";
+    gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 30);
+    
+    gameVars.ctx.fillStyle = "#7FFF00";
+    gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 45);
+    
+    gameVars.ctx.fillStyle = "#7FFF00";
+    gameVars.ctx.fillText("Supplies: " + gameVars.ship.supplies, 20, 60);
+    
+    gameVars.ctx.fillStyle = "#7FFF00";
+    gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 75);
+    
+    gameVars.ctx.fillStyle = "#7FFF00";
+    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 520, 30)
+}
+
+// This will modify the map based on the sensor when
+// the button is pressed...no button yet.
+function activate_sensor()
+{
+    var pos_x = gameVars.ship.posX;
+    var pos_y = gameVars.ship.posY;
+
+    for(var i = -2; i < 3; i++)
+    {
+        for(var j = -2; j < 3; j++)
+        {
+            if(pos_x + i >=0 && pos_x + i <= gameVars.mapSize-1 && pos_y + j >= 0 && pos_y + j <= gameVars.mapSize-1)
+            {
+                var sensTile = gameVars.gameMap.getTile(pos_x + i, pos_y + j);
+                sensTile.vis = true;
+            }
+        }
+    }
+    gameVars.ship.consume_supplies(0.02);
+    //saveState();
+    //requestAnimationFrame(drawGame);
+    drawGame();
 }

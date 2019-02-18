@@ -1,7 +1,7 @@
 var init_game = 
 {
     fix_start:        false,
-    init_energy:      100,
+    init_energy:      1000,
     init_supplies:    100,
     init_credits:     1000,
     fix_wormhole:     false,
@@ -129,5 +129,5 @@ function changeDegree(newDegree)
 
 function submitSensor()
 {
-    callSendor();
+    callSensor();
 }

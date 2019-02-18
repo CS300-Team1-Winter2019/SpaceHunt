@@ -1,24 +1,36 @@
 class Ship
 {
-    constructor(health)
+    constructor(fix_start, init_energy, init_supp, init_creds, map_size)
     {
-        this.health = health;
-        this.fuel = 0;
-        this.sizeX =50;
+        this.health = 10000;
+        this.sizeX = 50;
         this.sizeY = 50;
-        this.posX =120;//Math.floor(Math.random() * 127);
-        this.posY = 120;//Math.floor(Math.random() * 127);
+        this.posX = 1; //Math.floor(Math.random() * 127); ->uncomment when random start
+        this.posY = 1; //Math.floor(Math.random() * 127); ->uncomment when random start
+        this.delayMove = 150;
+
+        this.energy = init_energy;;
+        this.supplies = init_supp;
+        this.credits = init_creds;
+
+        if(!fix_start)
+        {
+            this.posX = Math.floor(Math.random() * (map_size - 2));
+            this.posY = Math.floor(Math.random() * (map_size - 2));
+        }
+    }
+
+    copyShip(obj)
+    {
+        this.health = obj.health;
+        this.sizeX = obj.sizeX;
+        this.sizeY = obj.sizeY;
+        this.posX = obj.posX;
+        this.posY = obj.posY;
         this.delayMove = 500;
-    }
-
-    damage(dmg)
-    {
-        this.health = this.health - dmg;
-    }
-
-    get Health()
-    {
-        return this.health;
+        this.energy = obj.energy;
+        this.supplies = obj.supplies;
+        this.credits = obj.credits;
     }
 
     move(x, y)
@@ -34,7 +46,8 @@ class Ship
         this.posY = y;
     }
 
-    calculateXY(userInput)          //this argument should be an object {angle: ?, magnitude: ?}
+    //this argument should be an object {angle: ?, magnitude: ?}
+    calculateXY(userInput) 
     {
 
       var convertedAngle = (userInput.angle * (Math.PI/180))
@@ -44,33 +57,10 @@ class Ship
       return coords;
     }
 
-    get PosX()
+    // Added for sensor to be able to reduce
+    // supplies.
+    consume_supplies(percentage)
     {
-        return this.posX;
-    }
-
-    get PosY()
-    {
-        return this.posY;
-    }
-
-    get SizeX()
-    {
-        return this.sizeX;
-    }
-
-    get SizeY()
-    {
-        return this.sizeY;
-    }
-
-    set PosX(val)
-    {
-        this.posX = val;
-    }
-
-    set PosY(val)
-    {
-        this.posY = val;
+        this.supplies -= this.supplies * percentage;
     }
 }
