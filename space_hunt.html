@@ -1,0 +1,262 @@
+<html>
+    <head>
+        <script src="Map.js"></script>
+        <script src="Ship.js"></script>
+        <script src="Game.js"></script>
+        <script src='Menu.js'></script> 
+        <title>Space Hunt</title>
+        <style>
+            input[type=range] 
+            {
+                -webkit-appearance: none;
+                width: 35%;
+                height:15px;
+                -webkit-border-radius: 1em;
+                border-radius: 1em;
+
+                -webkit-background-clip: padding;
+                background-clip: padding-box;
+                border: 1px solid #aaa;
+                background: #eee;
+            }
+
+            input[type="range"]::-webkit-slider-thumb 
+            {
+                -webkit-appearance: none;
+                width: 28px;
+                height: 28px;
+                border: 1px solid #044062;
+                background: #396b9e;
+                background-image: linear-gradient(#5f9cc5,#396b9e);
+                -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.2);
+                box-shadow: 0 1px 3px rgba(0,0,0,.2);    
+                cursor: pointer;
+                -webkit-border-radius: 1em;
+                border-radius: 1em;
+                border-top: 1px solid #fff;
+                border-color: rgba(255,255,255,.3);
+            }
+
+
+            .switch 
+            {
+                position: relative;
+                display: inline-block;
+                width: 40px;
+                height: 20px;
+            }
+
+            .switch input 
+            { 
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider 
+            {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+            .slider:before 
+            {
+                position: absolute;
+                content: "";
+                height: 15px;
+                width: 15px;
+                left: 2px;
+                bottom: 2px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+            input:checked + .slider 
+            {
+                background-color: #2196F3;
+            }
+
+            input:focus + .slider 
+            {
+                box-shadow: 0 0 1px #2196F3;
+            }
+
+            input:checked + .slider:before 
+            {
+                -webkit-transform: translateX(20px);
+                -ms-transform: translateX(20px);
+                transform: translateX(20px);
+            }
+
+            body 
+            {
+                background: #202028;
+                color: #fff;
+                font-family: sans-serif;
+                font-size: 2em;
+                text-align: center;
+            }
+            canvas 
+            {
+                background-color: pink;
+                height: 800px;
+                width: 800px;
+            }
+            #main
+            {
+                display: none;
+            }
+            #newGame, #backBtn, #settBtn, #creditBtn
+            {
+                text-align: center;
+                vertical-align: middle;
+                border: 2px solid goldenrod;
+                border-radius: 7px;
+                background-color: gold;
+                color: orangeRed;
+                font-size: 32px;
+                font-weight: bold;
+                font-family: "Courier New";
+                width: 5em;
+                margin: 5px auto;     
+            }
+            #theHead
+            {
+                margin: auto;
+                color: orange;
+                font-size: 2em;
+                font-family: "Courier New";
+            }
+            #credits
+            {
+                margin: auto;
+                color: orange;
+                font-size: 1em;
+                font-family: "Courier New";
+                display: none;
+                background-color: inherit;
+            }
+            #backBtn
+            {
+                display: none;
+            }
+            .stngs
+            {
+                display: none;
+            }
+
+
+            #subBtn, #sensBtn
+            {
+                text-align: center;
+                vertical-align: middle;
+                border: 2px solid red;
+                border-radius: 7px;
+                background-color: greenyellow;
+                color: rgb(72, 54, 235);
+                font-size: 32px;
+                font-weight: bold;
+                font-family: "Courier New";
+                width: 5em;
+                margin: 5px auto;   
+
+                display:none;
+                float: right;
+                width: 55%;
+               
+            }
+            #distScroll
+            {
+                display: none;  
+                width: 55%;
+                float: right;
+            }
+            #degreeScroll
+            {
+                display: none;  
+                width: 55%;
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div id="distScroll">
+                <p>Distance:</p>
+                0<input type="range" min="0" max="100" value="0" step="5" oninput="changeDistance(this.value)">
+                <output id="distanceOut"></output>
+            </div>
+            <div id="degreeScroll">
+                <p>Degree:</p>
+                0<input type="range" min="0" max="360" value="0" step="30" oninput="changeDegree(this.value)">
+                <output id="degreeOut"></output>
+            </div>
+        </div>
+        <div>
+            <div id="subBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="submitCourse()">Submit Course Destination</div>
+        </div>
+        <div>
+            <div id="sensBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="submitSensor()">Engage Sensor Activity</div>
+        </div>
+
+        <div id="theHead">Welcome to Space Hunt!</div>
+        <div id="newGame" onclick="runGame()" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'">New Game</div>
+        <div id="settBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="settMen()">Settings</div>
+        <div id="creditBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="showCredits()">Credits</div>
+        <div id="credits">Testing</div>
+        <div id="main">
+        <div id="score"></div>
+        <canvas id="game" width="608" height="608"></canvas>
+        </div>
+        <div class="stngs">
+            <p>Initial Energy:</p>
+            100<input type="range" min="100" max="1000" value="100" step="100" oninput="changeEnergy(this.value)">
+            <output id="energyOut"></output>
+        </div>
+        <div class="stngs">
+            <p>Initial Supplies:</p>
+            100<input type="range" min="100" max="1000" value="100" step="100" oninput="changeSupplies(this.value)">
+            <output id="suppliesOut"></output>
+        </div>
+        <div class="stngs">
+            <p>Initial Credits:</p>
+            1000<input type="range" min="1000" max="10000" value="1000" step="1000" oninput="changeCredits(this.value)">
+            <output id="creditsOut"></output>
+        </div>
+        <div class="stngs">
+            <p>Ininitial Map Size (N x M):</p>
+            128<input type="range" min="128" max="1024" value="132" step="32" oninput="changeMap(this.value)">
+            <output id="mapOut"></output>
+        </div>
+        <div class="stngs">
+            <p>Fixed Starting Position</p>
+            <label class="switch">
+                <input type="checkbox" oninput="changeStartPos(this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="stngs">
+            <p>Fixed Wormhole Behavior</p>
+            <label class="switch">
+                <input type="checkbox" oninput="changeWormBehav(this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="stngs">
+            <p>Unlimited Play</p>
+            <label class="switch">
+                <input type="checkbox" oninput="changeUnlim(this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div id="backBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="goBack()">Back</div>
+    </body>
+<html> 

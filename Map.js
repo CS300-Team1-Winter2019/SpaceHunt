@@ -9,20 +9,21 @@ class Tile
 
 class Map
 {
-    constructor()
+    constructor(mS)
     {
+        this.mapSize = mS;
         this.map = [];
         this.maxPlanets = 200;
         this.maxWorms = 50;
         this.maxStations = 500;
 
-        for(var i = 0; i < 128; i++)
+        for(var i = 0; i < this.mapSize; i++)
         {
             var row = [];
-            for(var j = 0; j < 128; j++)
+            for(var j = 0; j < this.mapSize; j++)
             {
                 //Random position at which something will be placed
-                var randPlacer = Math.floor(Math.random() * 125);
+                var randPlacer = Math.floor(Math.random() * this.mapSize - 2);
                 //number of things e.g.: planets, holes, stations etc = # of colors
                 var maxChoices = 4;
                 //Gives a starting range for random num: e.g: 2-4
@@ -30,7 +31,7 @@ class Map
                 //Create new tile
                 var newTile = new Tile();
 
-                if(i == 0 || j == 0 || i == 127 || j == 127)
+                if(i == 0 || j == 0 || i == this.mapSize - 1 || j == this.mapSize - 1)
                 {
                     newTile.val = 0;
                     row.push(newTile);
