@@ -29,14 +29,14 @@ function testPersist()
 function loadState()
 {
     var map_form = JSON.parse(localStorage.getItem("gameMap"));
-	if(gameMap == null) gameMap = new Map();
-	gameMap.copyMap(map_form);
+    gameVars.gameMap = new Map();
+	gameVars.gameMap.copyMap(map_form);
 
 	//ctx = JSON.parse(localStorage.getItem("context"));
 
 	var ship_form = JSON.parse(localStorage.getItem("ship"));
-	if(ship == null) ship = new Ship();
-    ship.copyShip(ship_form);
+    gameVars.ship = new Ship();
+    gameVars.ship.copyShip(ship_form);
 }
 
 

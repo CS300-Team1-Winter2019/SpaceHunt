@@ -134,6 +134,17 @@ function submitSensor()
 
 function load()
 {
+    document.getElementById("newGame").style.display = "none";
+    document.getElementById("theHead").style.display = "none";       
+    document.getElementById("credits").style.display = "none";       
+    document.getElementById("main").style.display = "block";
+    document.getElementById("creditBtn").style.display = "none";
+    document.getElementById("settBtn").style.display = "none";
     loadSaved(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size);
+    document.getElementById("distScroll").style.display = "block";
+    document.getElementById("degreeScroll").style.display = "block";
+    document.getElementById("subBtn").style.display = "block";
+    document.getElementById("sensBtn").style.display = "block";
+    drawGame();
 }

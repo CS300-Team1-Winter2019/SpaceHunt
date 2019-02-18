@@ -55,10 +55,6 @@ function loadSaved(fS, iE, iS, iC, fW, uG, mS)
     if(testPersist())
     {
         loadState();
-        gameVars.gameMap.copyMap(getMap());
-        gameVars.ship = getShip();
-
-        console.log(gameVars.gameMap);
         gameVars.ctx = document.getElementById('game').getContext("2d");
         drawGame();
     }
