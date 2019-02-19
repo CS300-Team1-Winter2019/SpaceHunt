@@ -122,11 +122,17 @@ function collison(x,y)
 function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
+    if(gameVars.ship.energy <= 0){
+      alert("Out of energy, game over!");
+    }
 }
 
 function decreaseSupplies()
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
+    if(gameVars.ship.supplies <= 0){
+      alert("Out of supplies, game over!");
+    }
 }
 
 function startMove(dist, degr)
