@@ -17,6 +17,7 @@ var runGame = function()
     document.getElementById("main").style.display = "block";
     document.getElementById("creditBtn").style.display = "none";
     document.getElementById("settBtn").style.display = "none";
+    document.getElementById("loadBtn").style.display = "none";
 
     createGame(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
                init_game.fix_wormhole, init_game.unlim_game, init_game.map_size);
@@ -35,6 +36,7 @@ var showCredits = function()
     document.getElementById("credits").style.display = "block";
     document.getElementById("backBtn").style.display = "block";
     document.getElementById("settBtn").style.display = "none";
+    document.getElementById("loadBtn").style.display = "none";
 
     var sett = document.getElementsByClassName("stngs");
     for(var i = 0; i < sett.length; i++)
@@ -49,6 +51,7 @@ var goBack = function()
     document.getElementById("newGame").style.display = "block";
     document.getElementById("settBtn").style.display = "block";
     document.getElementById("creditBtn").style.display = "block";
+    document.getElementById("loadBtn").style.display = "block";
 
     var sett = document.getElementsByClassName("stngs");
     for(var i = 0; i < sett.length; i++)
@@ -62,6 +65,7 @@ var settMen = function()
     document.getElementById("newGame").style.display = "none";
     document.getElementById("credits").style.display = "none";
     document.getElementById("settBtn").style.display = "none";
+    document.getElementById("loadBtn").style.display = "none";
 
     var sett = document.getElementsByClassName("stngs");
 
@@ -140,8 +144,11 @@ function load()
     document.getElementById("main").style.display = "block";
     document.getElementById("creditBtn").style.display = "none";
     document.getElementById("settBtn").style.display = "none";
+    document.getElementById("loadBtn").style.display = "none";
+
     loadSaved(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size);
+
     document.getElementById("distScroll").style.display = "block";
     document.getElementById("degreeScroll").style.display = "block";
     document.getElementById("subBtn").style.display = "block";

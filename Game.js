@@ -119,6 +119,16 @@ function collison(x,y)
     }
 }
 
+function decreaseEnergy(dist)
+{
+    gameVars.ship.energy -= 10*Math.abs(dist);
+}
+
+function decreaseSupplies()
+{
+    gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
+}
+
 function startMove(dist, degr)
 {
     //can hardcode in different angles and distances
@@ -141,10 +151,20 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
     if(gameVars.ship.posX != newX)
     {
         gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
+
+        //collision(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
+        decreaseEnergy(xUnitVector);
+        decreaseSupplies();
+
         drawGame();
         if(gameVars.ship.posX != newX && (Math.abs((gameVars.ship.posX-newX)) > 1.5*Math.abs(gameVars.ship.posY-newY)))
         {
             gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
+
+            //collision(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
+            decreaseEnergy(xUnitVector);
+            decreaseSupplies();
+
             drawGame();
         }
     }
@@ -152,10 +172,20 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
     if(gameVars.ship.posY != newY)
     {
         gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
+
+        //collision(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
+        decreaseEnergy(yUnitVector);
+        decreaseSupplies();
+
         drawGame();
         if(gameVars.ship.posY != newY && (Math.abs((gameVars.ship.posY-newY)) > 1.5*Math.abs(gameVars.ship.posX-newX))) 
         {
             gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
+
+            //collision(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
+            decreaseEnergy(yUnitVector);
+            decreaseSupplies();
+
             drawGame();
         }
     }
