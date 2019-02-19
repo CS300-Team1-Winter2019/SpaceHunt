@@ -37,8 +37,8 @@ class Ship
     {
         if(x < 0) { x = 0; }
         if(y < 0) { y = 0; }
-        if(x > 126) { x = 126; }
-        if(y > 126) { y = 126; }
+        if(x > 127) { x = 127; }
+        if(y > 127) { y = 127; }
         var until = new Date().getTime() + this.delayMove;
         while((new Date().getTime() < until)) {};
 
@@ -47,7 +47,7 @@ class Ship
     }
 
     //this argument should be an object {angle: ?, magnitude: ?}
-    calculateXY(userInput) 
+    calculateXY(userInput)
     {
 
       var convertedAngle = (userInput.angle * (Math.PI/180))

@@ -164,6 +164,7 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
         decreaseSupplies();
 
         drawGame();
+        //if(ship still needs to move left/right AND ship's remaining movement left/right is more than 1.5x remaining movement up/down)
         if(gameVars.ship.posX != newX && (Math.abs((gameVars.ship.posX-newX)) > 1.5*Math.abs(gameVars.ship.posY-newY)))
         {
             gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
@@ -175,7 +176,7 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
             drawGame();
         }
     }
-
+//    if(ship still needs to move up/down AND ship hasn't hit top of map AND ship hasn't hit bottom of map)
     if((gameVars.ship.posY != newY) && (gameVars.ship.posY+yUnitVector >= 0) && (gameVars.ship.posY+yUnitVector < gameVars.mapSize))
     {
         gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
