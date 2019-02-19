@@ -1,9 +1,9 @@
 document.addEventListener("keydown", move);
 
 
-//!!!EVERYTHING you might need is already in here. 
-//Just grab it and use for your functions. 
-var gameVars = 
+//!!!EVERYTHING you might need is already in here.
+//Just grab it and use for your functions.
+var gameVars =
 {
     ctx:            null,
     cameraSize:     32,
@@ -11,7 +11,7 @@ var gameVars =
     ship:           null,
     gameMap:        null,
 
-    //Vals supplied by Settings in the menu - 
+    //Vals supplied by Settings in the menu -
     //will be supplied in the create game and updated here
     fix_start:      false,
     init_energy:    1000,
@@ -72,9 +72,9 @@ function createGame(fS, iE, iS, iC, fW, uG, mS)
     gameVars.mapSize = mS;
 
     gameVars.ship = new Ship(fS, iE, iS, iC, mS);
-    gameVars.gameMap = new Map(mS); 
+    gameVars.gameMap = new Map(mS);
     gameVars.ctx = document.getElementById('game').getContext("2d");
-    drawGame();  
+    drawGame();
 }
 
 var objects =
@@ -99,7 +99,7 @@ function collison(x,y)
 {
     var tile = gameVars.gameMap.getTile(x, y);
     var obj = tile.val;
-    switch(obj) 
+    switch(obj)
     {
         case 0:
             obj = 0;
@@ -134,21 +134,28 @@ function startMove(dist, degr)
     //can hardcode in different angles and distances
     var userInput = {angle: degr, magnitude: dist}
     //this is what I'd like to use eventually: var userInput = {angle: document.getElementById("userInterface").elements["angle"], magnitude: document.getElementById("userInterface").elements["magnitude"]};
-  
+
     //figures out how many units along x-axis and how many units along y-axis we have to go
     //this function call is where i'm having issues
     var runRise = gameVars.ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
     var newPos = {x: gameVars.ship.posX + runRise.x, y: gameVars.ship.posY + runRise.y};
 
-    var xUnitVector = runRise.x/Math.abs(runRise.x);
-    var yUnitVector = runRise.y/Math.abs(runRise.y);
-  
+    var xUnitVector = 0;
+    if(runRise.x != 0){
+      xUnitVector = runRise.x/Math.abs(runRise.x);
+    }
+    var yUnitVector = 0;
+    if(runRise.y != 0){
+      yUnitVector = runRise.y/Math.abs(runRise.y);
+    }
+
     var gm = setInterval(function(){shipMove(gm, newPos.x, xUnitVector, newPos.y, yUnitVector);}, 1);
 }
 
 var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
 {
-    if(gameVars.ship.posX != newX)
+//    if(ship still needs to move left/right AND ship hasn't hit left side of map AND ship hasn't hit right side of map
+    if((gameVars.ship.posX != newX) && (gameVars.ship.posX+xUnitVector >= 0) && (gameVars.ship.posX+xUnitVector < gameVars.mapSize))
     {
         gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
 
@@ -169,7 +176,7 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
         }
     }
 
-    if(gameVars.ship.posY != newY)
+    if((gameVars.ship.posY != newY) && (gameVars.ship.posY+yUnitVector >= 0) && (gameVars.ship.posY+yUnitVector < gameVars.mapSize))
     {
         gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
 
@@ -178,7 +185,7 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
         decreaseSupplies();
 
         drawGame();
-        if(gameVars.ship.posY != newY && (Math.abs((gameVars.ship.posY-newY)) > 1.5*Math.abs(gameVars.ship.posX-newX))) 
+        if(gameVars.ship.posY != newY && (Math.abs((gameVars.ship.posY-newY)) > 1.5*Math.abs(gameVars.ship.posX-newX)))
         {
             gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
 
@@ -189,11 +196,17 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
             drawGame();
         }
     }
-
     if(gameVars.ship.posX == newX && gameVars.ship.posY == newY)
     {
         alert("Arrived");
         clearInterval(gm);
+    }
+
+//    alert("position: x = " + gameVars.ship.posX + " y = " + gameVars.ship.posY + "\nxUnitVector = " + xUnitVector + "\nyUnitVector = " + yUnitVector);
+    else if(gameVars.ship.posX+xUnitVector < 0 || gameVars.ship.posX+xUnitVector > 127 || gameVars.ship.posY+yUnitVector < 0 || gameVars.ship.posY+yUnitVector > 127)
+    {
+      alert("Arrived");
+      clearInterval(gm);
     }
 }
 
@@ -220,7 +233,7 @@ function move(e)
                 gameVars.ship.posY = gameVars.ship.posY+1;
             break;
         case 32:
-            
+
             break;
     }
     drawGame();
@@ -292,16 +305,16 @@ function drawGame()
 
     gameVars.ctx.fillStyle = "#7FFF00";
     gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 30);
-    
+
     gameVars.ctx.fillStyle = "#7FFF00";
     gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 45);
-    
+
     gameVars.ctx.fillStyle = "#7FFF00";
     gameVars.ctx.fillText("Supplies: " + gameVars.ship.supplies, 20, 60);
-    
+
     gameVars.ctx.fillStyle = "#7FFF00";
     gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 75);
-    
+
     gameVars.ctx.fillStyle = "#7FFF00";
     gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 520, 30)
 
