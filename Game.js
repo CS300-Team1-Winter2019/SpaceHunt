@@ -95,7 +95,7 @@ var objects =
     }
 };
 
-function collison(x,y)
+function collision(x,y)
 {
     var tile = gameVars.gameMap.getTile(x, y);
     var obj = tile.val;
@@ -103,7 +103,7 @@ function collison(x,y)
     {
         case 0:
             obj = 0;
-            alert ('this is a wormhome,dead');
+            alert ('this is a wormhome');
             break;
         case 1:
             obj = 1;
@@ -165,7 +165,9 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
     {
         gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
 
-        //collision(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
+        if(gameVars.ship != null){
+          collision(gameVars.ship.posX, gameVars.ship.posY);
+        }
         decreaseEnergy(xUnitVector);
         decreaseSupplies();
 
@@ -175,7 +177,9 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
         {
             gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
 
-            //collision(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
+            if(gameVars.ship != null){
+              collision(gameVars.ship.posX, gameVars.ship.posY);
+            }
             decreaseEnergy(xUnitVector);
             decreaseSupplies();
 
@@ -187,7 +191,9 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
     {
         gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
 
-        //collision(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
+        if(gameVars.ship != null){
+          collision(gameVars.ship.posX, gameVars.ship.posY);
+        }
         decreaseEnergy(yUnitVector);
         decreaseSupplies();
 
@@ -196,7 +202,9 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
         {
             gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
 
-            //collision(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
+            if(gameVars.ship != null){
+              collision(gameVars.ship.posX, gameVars.ship.posY);
+            }
             decreaseEnergy(yUnitVector);
             decreaseSupplies();
 
@@ -248,7 +256,7 @@ function move(e)
 
 function drawGame()
 {
-    console.log(gameVars.mapSize);
+//    console.log(gameVars.mapSize);
     var ts = gameVars.Ts;
     var offX = 0;
     var offY = 0;
