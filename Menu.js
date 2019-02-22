@@ -19,8 +19,8 @@ var runGame = function()
     document.getElementById("settBtn").style.display = "none";
     document.getElementById("loadBtn").style.display = "none";
 
-    createGame(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
-               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size);
+    createGame(init_game.fix_start, [1,1], init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
+               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
 
     document.getElementById("distScroll").style.display = "block";
     document.getElementById("degreeScroll").style.display = "block";

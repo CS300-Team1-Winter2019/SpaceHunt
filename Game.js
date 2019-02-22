@@ -14,12 +14,15 @@ var gameVars =
     //Vals supplied by Settings in the menu -
     //will be supplied in the create game and updated here
     fix_start:      false,
+    start_loc:      [1, 1],
     init_energy:    1000,
     init_supplies:  100,
     init_credits:   1000,
     fix_wormhole:   false,
     unlim_game:     false,
     mapSize:        128,
+    fix_objects:    false,
+    object_list:    {} //Dictionary of all objects and their locations
 }
 
 //Values for the movement
@@ -61,15 +64,17 @@ function loadSaved(fS, iE, iS, iC, fW, uG, mS)
     else createGame(fS, iE, iS, iC, fW, uG, mS);
 }
 
-function createGame(fS, iE, iS, iC, fW, uG, mS)
+function createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
 {
     gameVars.fix_start = fS;
+    gameVars.start_loc = Sl;
     gameVars.init_energy = iE;
     gameVars.init_supplies = iS;
     gameVars.init_credits = iC;
     gameVars.fix_wormhole = fW;
     gameVars.unlim_game = uG;
     gameVars.mapSize = mS;
+    gameVars.fix_objects = fO;
 
     gameVars.ship = new Ship(fS, iE, iS, iC, mS);
     gameVars.gameMap = new Map(mS);
@@ -94,6 +99,16 @@ var objects =
         else { this.currColor = "blue"; }
     }
 };
+
+//Add the given object obj to (x,y) in the dictionary
+function addObject(x, y, obj) {
+  if((x,y) in gameVars.object_list) {
+    alert("There's already something in that location!");
+    return;
+  }
+
+  gameVars.object_list[(x,y)] = obj;
+}
 
 function collision(x,y)
 {
