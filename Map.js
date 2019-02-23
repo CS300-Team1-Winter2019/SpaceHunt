@@ -17,50 +17,97 @@ class Map
         this.maxWorms = 50;
         this.maxStations = 500;
 
-        for(var i = 0; i < this.mapSize; i++)
-        {
-            var row = [];
-            for(var j = 0; j < this.mapSize; j++)
+        //Build randomized map
+        if (!gameVars.fix_objects) {
+            for(var i = 0; i < this.mapSize; i++)
             {
-                //Random position at which something will be placed
-                var randPlacer = Math.floor(Math.random() * this.mapSize - 2);
-                //number of things e.g.: planets, holes, stations etc = # of colors
-                var maxChoices = 4;
-                //Gives a starting range for random num: e.g: 2-4
-                var startAt = 0;
-                //Create new tile
-                var newTile = new Tile();
+                var row = [];
+                for(var j = 0; j < this.mapSize; j++)
+                {
+                    //Random position at which something will be placed
+                    var randPlacer = Math.floor(Math.random() * this.mapSize - 2);
+                    //number of things e.g.: planets, holes, stations etc = # of colors
+                    var maxChoices = 4;
+                    //Gives a starting range for random num: e.g: 2-4
+                    var startAt = 0;
+                    //Create new tile
+                    var newTile = new Tile();
 
-                if(i == 0 || j == 0 || i == this.mapSize - 1 || j == this.mapSize - 1)
-                {
-                    newTile.val = 0;
-                    row.push(newTile);
-                }
-                else
-                {
-                    if(i == randPlacer || j == randPlacer)
+                    if(i == 0 || j == 0 || i == this.mapSize - 1 || j == this.mapSize - 1)
                     {
-                        if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
-                        if(this.maxPlanets <= 0) { maxChoices--; startAt = 2; }
-                        if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
-
-                        var choice = Math.floor((Math.random() * maxChoices) + startAt);
-
-                        if(choice == 0) { this.maxWorms--; }
-                        if(choice == 1) { this.maxPlanets--; }
-                        if(choice == 2) { this.maxStations--; }
-
-                        newTile.val = choice;
+                        newTile.val = 0;
                         row.push(newTile);
                     }
                     else
                     {
-                        newTile.val = 3;
-                        row.push(newTile);
+                        if(i == randPlacer || j == randPlacer)
+                        {
+                            if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
+                            if(this.maxPlanets <= 0) { maxChoices--; startAt = 2; }
+                            if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
+
+                            var choice = Math.floor((Math.random() * maxChoices) + startAt);
+
+                            if(choice == 0) { this.maxWorms--; }
+                            if(choice == 1) { this.maxPlanets--; }
+                            if(choice == 2) { this.maxStations--; }
+
+                            newTile.val = choice;
+                            row.push(newTile);
+                        }
+                        else
+                        {
+                            newTile.val = 3;
+                            row.push(newTile);
+                        }
                     }
                 }
+                this.map.push(row);
             }
-            this.map.push(row);
+        }
+
+        //Build specified map
+        else {
+            for(var i = 0; i < this.mapSize; i++)
+            {
+                var row = [];
+                for(var j = 0; j < this.mapSize; j++)
+                {
+                    //Create new tile
+                    var newTile = new Tile();
+
+                    if(i == 0 || j == 0 || i == this.mapSize - 1 || j == this.mapSize - 1)
+                    {
+                        newTile.val = 0;
+                        row.push(newTile);
+                    }
+                    else
+                    {
+                        if([i,j] in gameVars.object_list)
+                        {
+                            //Do we need to adjust max values if all obstacles are fixed?
+                            //if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
+                            //if(this.maxPlanets <= 0) { maxChoices--; startAt = 2; }
+                            //if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
+
+                            //var choice = Math.floor((Math.random() * maxChoices) + startAt);
+
+                            //if(choice == 0) { this.maxWorms--; }
+                            //if(choice == 1) { this.maxPlanets--; }
+                            //if(choice == 2) { this.maxStations--; }
+
+                            newTile.val = gameVars.object_list[ [i, j] ];
+                            row.push(newTile);
+                        }
+                        else
+                        {
+                            newTile.val = 3;
+                            row.push(newTile);
+                        }
+                    }
+                }
+                this.map.push(row);
+            }
         }
     }
 
