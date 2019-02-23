@@ -17,6 +17,8 @@ class Map
         this.maxWorms = 50;
         this.maxStations = 500;
 
+        //IF MAP IS RANDOM
+
         for(var i = 0; i < this.mapSize; i++)
         {
             var row = [];
@@ -62,6 +64,12 @@ class Map
             }
             this.map.push(row);
         }
+
+        //IF MAP IS NOT RANDOM
+
+
+
+
     }
 
     //Returns Tile object
