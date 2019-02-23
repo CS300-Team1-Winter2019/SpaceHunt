@@ -86,5 +86,7 @@ class Map
         this.maxPlanets = obj.maxPlanets;
         this.maxWorms = obj.maxWorms;
         this.maxStations = obj.maxStations;
+        //ABANDONED
+        this.maxDoc = obj.maxDoc;
     }
 }

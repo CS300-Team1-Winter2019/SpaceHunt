@@ -88,6 +88,7 @@ var objects =
     planet      :["green", 1],
     station     :["purple", 2],
     space       :["blue", 3],
+    abandoned   :["brown",4], // Abandoned
     currColor   :"white",
 
     //sets currColor to be used in drawGame()
@@ -96,6 +97,7 @@ var objects =
         if(index == 0) { this.currColor = "red"; }
         else if(index == 1) { this.currColor = "green"; }
         else if(index == 2) { this.currColor = "purple"; }
+        else if (index == 4) { this.currColor = "brown"; } // Abandoned 
         else { this.currColor = "blue"; }
     }
 };
@@ -131,6 +133,19 @@ function collision(x,y)
         case 3:
             obj = 3; // space, so keep moving
             break;
+        case 4:
+            obj = 4;
+            var keepgoing = prompt ("You hit ABANDONED FREIGHTER, do you want to land on it? ( Y or N )")
+            if (keepgoing == 'Y' || keepgoing == 'y') {
+                gameVars.ship.energy += 10; // increase eneryy by 5
+                gameVars.ship.supplies += 5; 
+            }
+            else
+                break;
+
+
+
+
     }
 }
 
@@ -322,7 +337,7 @@ function drawGame()
             }
             else
             {
-                if(!tile.vis) { gameVars.ctx.fillStyle = "pink"; }
+                if(!tile.vis) { gameVars.ctx.fillStyle = "Linen"; }
                 else
                 {
                     objects.updateColor(tile.val);
