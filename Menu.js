@@ -1,12 +1,14 @@
 var init_game = 
 {
     fix_start:        false,
+    start_loc:        [1,1],
     init_energy:      1000,
     init_supplies:    100,
     init_credits:     1000,
     fix_wormhole:     false,
     unlim_game:       false,
-    map_size:         128
+    map_size:         128,
+    fix_objects:      false
 }
 
 var runGame = function()
@@ -19,8 +21,8 @@ var runGame = function()
     document.getElementById("settBtn").style.display = "none";
     document.getElementById("loadBtn").style.display = "none";
 
-    createGame(init_game.fix_start, [1,1], init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
-               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
+    createGame(init_game.fix_start, init_game.start_loc, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
+               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, init_game.fix_objects);
 
     document.getElementById("distScroll").style.display = "block";
     document.getElementById("degreeScroll").style.display = "block";
@@ -112,6 +114,11 @@ function changeWormBehav(isFixed)
 function changeUnlim(isFixed)
 {
     init_game.unlim_game = isFixed;
+}
+
+function changeFixMap(isFixed)
+{
+    init_game.fix_objects = isFixed;
 }
 
 function submitCourse()
