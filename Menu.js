@@ -153,8 +153,9 @@ function load()
     document.getElementById("settBtn").style.display = "none";
     document.getElementById("loadBtn").style.display = "none";
 
-    loadSaved(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
-              init_game.fix_wormhole, init_game.unlim_game, init_game.map_size);
+    loadSaved(init_game.fix_start, init_game.start_loc, init_game.init_energy, init_game.init_supplies,
+              init_game.init_credits, init_game.fix_wormhole, init_game.unlim_game, init_game.map_size,
+              init_game.fix_objects);
 
     document.getElementById("distScroll").style.display = "block";
     document.getElementById("degreeScroll").style.display = "block";

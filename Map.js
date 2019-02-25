@@ -83,7 +83,7 @@ class Map
                     }
                     else
                     {
-                        if([i,j] in gameVars.object_list)
+                        if((String(i) + ':' + String(j)) in gameVars.object_list)
                         {
                             //Do we need to adjust max values if all obstacles are fixed?
                             //if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
@@ -96,7 +96,7 @@ class Map
                             //if(choice == 1) { this.maxPlanets--; }
                             //if(choice == 2) { this.maxStations--; }
 
-                            newTile.val = gameVars.object_list[ [i, j] ];
+                            newTile.val = gameVars.object_list[String(i) + ':' + String(j)];
                             row.push(newTile);
                         }
                         else

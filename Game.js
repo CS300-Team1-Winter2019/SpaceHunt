@@ -53,7 +53,7 @@ function callSensor()
     activate_sensor();
 }
 
-function loadSaved(fS, iE, iS, iC, fW, uG, mS)
+function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
 {
     if(testPersist())
     {
@@ -61,7 +61,7 @@ function loadSaved(fS, iE, iS, iC, fW, uG, mS)
         gameVars.ctx = document.getElementById('game').getContext("2d");
         drawGame();
     }
-    else createGame(fS, iE, iS, iC, fW, uG, mS);
+    else createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO);
 }
 
 function createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
@@ -101,13 +101,20 @@ var objects =
 };
 
 //Add the given object obj to (x,y) in the dictionary
-function addObject(x, y, obj) {
-  if((x,y) in gameVars.object_list) {
+function addObject(obj) {
+  var entered = window.prompt("Where would you like to add the wormhole?", "(0, 0)");
+  var nums = entered.match(/\d/g); //Regex for matching numbers, gets a list of numbers
+  if (nums.length < 2)
+   alert("Error: must provide an X and a Y coordinate");
+  var x = nums[0];
+  var y = nums[1];
+
+  if((x + ':' + y) in gameVars.object_list) {
     alert("There's already something in that location!");
     return;
   }
 
-  gameVars.object_list[(x,y)] = obj;
+  gameVars.object_list[(x + ':' + y)] = obj;
 }
 
 function collision(x,y)
