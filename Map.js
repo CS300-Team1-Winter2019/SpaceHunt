@@ -17,7 +17,7 @@ class Map
         this.maxWorms = 50;
         this.maxStations = 500;
         // Dockable
-        this.maxDoc = 50;
+        this.maxFreighter = 50;
 
         for(var i = 0; i < this.mapSize; i++)
         {
@@ -28,7 +28,7 @@ class Map
                 var randPlacer = Math.floor(Math.random() * this.mapSize - 2);
 
                 //number of things e.g.: planets, holes, stations etc = # of colors
-                var maxChoices = 5; // DOCKABLE changed from 4-5 to get one more choice for dock 
+                var maxChoices = 6; // DOCKABLE changed from 4-5 to get one more choice for dock 
                  
                 //Gives a starting range for random num: e.g: 2-4
                 var startAt = 0;
@@ -47,7 +47,9 @@ class Map
                         if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
                         if(this.maxPlanets <= 0) { maxChoices--; startAt = 2; }
                         if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
-                        if(this.maxDoc <= 0) { maxDoc--; startAt = 4}
+
+                        // Abandond
+                        if(this.maxFreighter <= 0) { maxFreighter--; startAt = 4}
 
                         var choice = Math.floor((Math.random() * maxChoices) + startAt);
 
@@ -55,8 +57,8 @@ class Map
                         if(choice == 1) { this.maxPlanets--; }
                         if(choice == 2) { this.maxStations--; }
 
-                        // DOCKABLE
-                        if(choice == 4) { this.maxDoc--;}
+                        // Abandond
+                        if(choice == 4) { this.maxFreighter--;}
 
                         newTile.val = choice;
                         row.push(newTile);
@@ -87,6 +89,6 @@ class Map
         this.maxWorms = obj.maxWorms;
         this.maxStations = obj.maxStations;
         //ABANDONED
-        this.maxDoc = obj.maxDoc;
+        this.maxFreighter = obj.maxFreighter;
     }
 }
