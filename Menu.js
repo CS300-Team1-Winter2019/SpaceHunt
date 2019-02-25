@@ -26,6 +26,7 @@ var runGame = function()
     document.getElementById("degreeScroll").style.display = "block";
     document.getElementById("subBtn").style.display = "block";
     document.getElementById("sensBtn").style.display = "block";
+    document.getElementById("saveBtn").style.display = "block";
 };
 
 var showCredits = function()
@@ -137,7 +138,7 @@ function submitSensor()
 }
 
 function load()
-{
+{    
     document.getElementById("newGame").style.display = "none";
     document.getElementById("theHead").style.display = "none";       
     document.getElementById("credits").style.display = "none";       
@@ -146,6 +147,7 @@ function load()
     document.getElementById("settBtn").style.display = "none";
     document.getElementById("loadBtn").style.display = "none";
 
+
     loadSaved(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size);
 
@@ -153,5 +155,12 @@ function load()
     document.getElementById("degreeScroll").style.display = "block";
     document.getElementById("subBtn").style.display = "block";
     document.getElementById("sensBtn").style.display = "block";
+    document.getElementById("saveBtn").style.display = "block";
     drawGame();
+}
+
+function save()
+{
+    name = prompt("Please enter a name for your game: ", "My Game")
+    saveState(name)
 }
