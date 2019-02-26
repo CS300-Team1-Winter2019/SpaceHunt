@@ -109,6 +109,12 @@ class Map
                 this.map.push(row);
             }
         }
+
+        //IF MAP IS NOT RANDOM
+
+
+
+
     }
 
     //Returns Tile object

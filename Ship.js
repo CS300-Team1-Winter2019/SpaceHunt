@@ -9,6 +9,7 @@ class Ship
         this.posY = 1; //Math.floor(Math.random() * 127); ->uncomment when random start
         this.delayMove = 150;
 
+        this.map_size = map_size;
         this.energy = init_energy;;
         this.supplies = init_supp;
         this.credits = init_creds;
@@ -35,10 +36,12 @@ class Ship
 
     move(x, y)
     {
+      /*
         if(x < 0) { x = 0; }
         if(y < 0) { y = 0; }
         if(x > 127) { x = 127; }
         if(y > 127) { y = 127; }
+        */
         var until = new Date().getTime() + this.delayMove;
         while((new Date().getTime() < until)) {};
 

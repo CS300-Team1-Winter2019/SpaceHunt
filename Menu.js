@@ -1,4 +1,4 @@
-var init_game = 
+var init_game =
 {
     fix_start:        false,
     start_loc:        [1,1],
@@ -14,19 +14,21 @@ var init_game =
 var runGame = function()
 {
     document.getElementById("newGame").style.display = "none";
-    document.getElementById("theHead").style.display = "none";       
-    document.getElementById("credits").style.display = "none";       
+    document.getElementById("theHead").style.display = "none";
+    document.getElementById("credits").style.display = "none";
     document.getElementById("main").style.display = "block";
     document.getElementById("creditBtn").style.display = "none";
     document.getElementById("settBtn").style.display = "none";
     document.getElementById("loadBtn").style.display = "none";
 
-    createGame(init_game.fix_start, init_game.start_loc, init_game.init_energy, init_game.init_supplies, init_game.init_credits, 
+    createGame(init_game.fix_start, init_game.start_loc, init_game.init_energy, init_game.init_supplies, init_game.init_credits,
                init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, init_game.fix_objects);
 
     document.getElementById("distScroll").style.display = "block";
-    document.getElementById("degreeScroll").style.display = "block";
-    document.getElementById("subBtn").style.display = "block";
+    document.getElementById("upBtn").style.display = "block";
+    document.getElementById("downBtn").style.display = "block";
+    document.getElementById("leftBtn").style.display = "block";
+    document.getElementById("rightBtn").style.display = "block";
     document.getElementById("sensBtn").style.display = "block";
 };
 
@@ -121,21 +123,15 @@ function changeFixMap(isFixed)
     init_game.fix_objects = isFixed;
 }
 
-function submitCourse()
+function submitCourse(direction)
 {
-    startMovement();
+    startMovement(direction);
 }
 
 function changeDistance(newDistance)
 {
     document.getElementById("distanceOut").innerHTML = newDistance;
     updateDistance(newDistance);
-}
-
-function changeDegree(newDegree)
-{
-    document.getElementById("degreeOut").innerHTML = newDegree;
-    updateDegree(newDegree);
 }
 
 function submitSensor()
@@ -146,8 +142,8 @@ function submitSensor()
 function load()
 {
     document.getElementById("newGame").style.display = "none";
-    document.getElementById("theHead").style.display = "none";       
-    document.getElementById("credits").style.display = "none";       
+    document.getElementById("theHead").style.display = "none";
+    document.getElementById("credits").style.display = "none";
     document.getElementById("main").style.display = "block";
     document.getElementById("creditBtn").style.display = "none";
     document.getElementById("settBtn").style.display = "none";
@@ -158,8 +154,10 @@ function load()
               init_game.fix_objects);
 
     document.getElementById("distScroll").style.display = "block";
-    document.getElementById("degreeScroll").style.display = "block";
-    document.getElementById("subBtn").style.display = "block";
+    document.getElementById("upBtn").style.display = "block";
+    document.getElementById("downBtn").style.display = "block";
+    document.getElementById("leftBtn").style.display = "block";
+    document.getElementById("rightBtn").style.display = "block";
     document.getElementById("sensBtn").style.display = "block";
     drawGame();
 }

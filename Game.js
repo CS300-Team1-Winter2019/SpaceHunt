@@ -26,14 +26,8 @@ var gameVars =
 }
 
 //Values for the movement
-var currDegree = 0;
 var currDistance = 0;
 
-//Updating when scroller in the game is touched
-function updateDegree(newVal)
-{
-    currDegree = newVal;
-}
 
 //Updating when scroller in game is touched
 function updateDistance(newVal)
@@ -42,9 +36,29 @@ function updateDistance(newVal)
 }
 
 //Calls this function when user wants to move (submit movement is pushed)
-function startMovement()
+function startMovement(direction)
 {
-    startMove(currDistance, currDegree);
+
+  console.log("currDistance: "+currDistance);
+//    startMove(currDistance, currDegree);
+  switch(direction){
+    //up
+    case 0:
+      startMove(0, (-1*currDistance));
+      break;
+    //down
+    case 1:
+      startMove(0, (currDistance));
+      break;
+    //left
+    case 2:
+      startMove((-1*currDistance), 0);
+      break;
+    //right
+    case 3:
+      startMove((currDistance), 0);
+      break;
+  }
 }
 
 //Calls this function when user wants to use sensor (sensor button is pushed)
@@ -121,42 +135,136 @@ function collision(x,y)
 {
     var tile = gameVars.gameMap.getTile(x, y);
     var obj = tile.val;
-    switch(obj)
-    {
-        case 0:
-            obj = 0;
-            alert ('this is a wormhome');
-            break;
-        case 1:
-            obj = 1;
-            alert('this is planet');
-            break;
-        case 2:
-            obj = 2;
-            alert('this is station');
-            break;
-        case 3:
-            obj = 3; // space, so keep moving
-            break;
-    }
+      switch(obj)
+      {
+          case 0:
+              obj = 0;
+              alert ('this is a wormhole');
+              return 'wormhole';
+          case 1:
+              obj = 1;
+              alert('this is planet');
+              return 'planet';
+          case 2:
+              obj = 2;
+              alert('this is station');
+              return 'station';
+          case 3:
+              obj = 3; // space, so keep moving
+              break;
+      }
+    return 'empty';
 }
 
 function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
-    if(gameVars.ship.energy <= 0){
+    if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false){
       alert("Out of energy, game over!");
+      window.location.reload();
     }
 }
 
 function decreaseSupplies()
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
-    if(gameVars.ship.supplies <= 0){
+    if(gameVars.ship.supplies <= 0 && gameVars.unlim_game == false){
       alert("Out of supplies, game over!");
+      window.location.reload();
     }
 }
 
+
+function startMove(x, y){
+
+  console.log("current position: ("+gameVars.ship.posX+','+gameVars.ship.posY+')');
+  console.log("arguments: ("+x+","+y+")");
+
+
+  var newX = eval(gameVars.ship.posX) + eval(x);
+  var newY = eval(gameVars.ship.posY) + eval(y);
+
+  console.log("calculated destination: ("+newX+","+newY+")");
+
+/*
+  console.log("newX: "+newX);
+  console.log("newY: "+newY);
+  console.log("x: "+x);
+  console.log("y: "+y);
+  console.log("ship: ("+gameVars.ship.posX+','+gameVars.ship.posY+')');
+*/
+
+  if(x != 0){x /= Math.abs(x);}
+  if(y != 0){y /= Math.abs(y);}
+
+  if((x != 0 && y != 0) && gameVars.ship != null){
+    alert("Something is wrong");
+  }
+
+  //only decrease supplies per "turn".
+  //this logic should perhaps be on keypress in menu? that way any action
+  //that takes a turn can call decreaseSupplies (scanning, going into orbit, docking with a station)
+  //seems like cleaner control.
+  decreaseSupplies();
+  var gm = setInterval(function(){shipMove(gm, x, y, newX, newY);}, 1);
+}
+
+var shipMove = function(gm, x, y, newX, newY){
+
+
+
+  var nextX = gameVars.ship.posX + x;
+  var nextY = gameVars.ship.posY + y;
+  var tileOccupant = 'empty';
+
+  decreaseEnergy(1);
+
+  if(gameVars.ship != null && false){
+    console.log("x:"+x+" y:"+y);
+    console.log("current: ("+gameVars.ship.posX+","+gameVars.ship.posY+")");
+    console.log("next:    ("+nextX+","+nextY+")");
+    console.log("new:     ("+newX+","+newY+")");
+  }
+
+  //wormhole behavior
+  if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize){
+    gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
+    drawGame();
+    clearInterval(gm);
+    alert("You wormholed!");
+  }
+
+  //non wormhole behavior - still need to move
+  else if(gameVars.ship.posX != newX || gameVars.ship.posY != newY){
+    gameVars.ship.move(nextX, nextY);
+    drawGame();
+
+    //needs to be in this wrapper to avoid scope issues i think?
+    if(gameVars.ship != null){tileOccupant = collision(gameVars.ship.posX, gameVars.ship.posY);}
+
+    if(tileOccupant != 'empty'){
+      clearInterval(gm);
+      if(tileOccupant == 'planet'){
+        alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
+        window.location.reload();
+      }
+      else if(tileOccupant == 'wormhole'){
+        gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
+        drawGame();
+        clearInterval(gm);
+        alert("You wormholed!");
+      }
+    }
+  }
+
+  //only other option is that we're done moving and have arrived at our location
+  else{
+    alert("You have arrived at ("+newX+','+newY+').');
+    clearInterval(gm);
+  }
+}
+
+/*
 function startMove(dist, degr)
 {
     //can hardcode in different angles and distances
@@ -164,7 +272,6 @@ function startMove(dist, degr)
     //this is what I'd like to use eventually: var userInput = {angle: document.getElementById("userInterface").elements["angle"], magnitude: document.getElementById("userInterface").elements["magnitude"]};
 
     //figures out how many units along x-axis and how many units along y-axis we have to go
-    //this function call is where i'm having issues
     var runRise = gameVars.ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
     var newPos = {x: gameVars.ship.posX + runRise.x, y: gameVars.ship.posY + runRise.y};
 
@@ -179,7 +286,8 @@ function startMove(dist, degr)
 
     var gm = setInterval(function(){shipMove(gm, newPos.x, xUnitVector, newPos.y, yUnitVector);}, 1);
 }
-
+*/
+/*
 var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
 {
 //    if(ship still needs to move left/right AND ship hasn't hit left side of map AND ship hasn't hit right side of map
@@ -247,6 +355,7 @@ var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
     }
 }
 
+*/
 function move(e)
 {
     e.preventDefault();
