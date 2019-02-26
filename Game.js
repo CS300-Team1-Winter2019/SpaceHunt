@@ -253,6 +253,7 @@ var shipMove = function(gm, x, y, newX, newY){
   if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize){
     gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
     drawGame();
+    requestAnimationFrame(drawGame);
     clearInterval(gm);
     alert("You wormholed!");
   }
@@ -261,6 +262,7 @@ var shipMove = function(gm, x, y, newX, newY){
   else if(gameVars.ship.posX != newX || gameVars.ship.posY != newY){
     gameVars.ship.move(nextX, nextY);
     drawGame();
+    requestAnimationFrame(drawGame);;
 
     //needs to be in this wrapper to avoid scope issues i think?
     if(gameVars.ship != null){tileOccupant = collision(gameVars.ship.posX, gameVars.ship.posY);}
@@ -269,11 +271,14 @@ var shipMove = function(gm, x, y, newX, newY){
       clearInterval(gm);
       if(tileOccupant == 'planet'){
         alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
+        alert("YOU CRASHED INTO A PLANET AND DIED!");
         window.location.reload();
       }
       else if(tileOccupant == 'wormhole'){
         gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
         drawGame();
+        gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
+        requestAnimationFrame(drawGame);
         clearInterval(gm);
         alert("You wormholed!");
       }
@@ -389,21 +394,25 @@ function move(e)
             if(gameVars.ship.posX - 1 >= 0 && gameVars.ship.posX - 1 <= gameVars.mapSize-1)
                 gameVars.ship.posX = gameVars.ship.posX-1;
                 decreaseEnergy(1);
+                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 38:
             if(gameVars.ship.posY - 1 >= 0 && gameVars.ship.posY - 1 <= gameVars.mapSize-1)
                 gameVars.ship.posY = gameVars.ship.posY-1;
                 decreaseEnergy(1);
+                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 39:
             if(gameVars.ship.posX + 1 >= 0 && gameVars.ship.posX + 1 <= gameVars.mapSize-1)
                 gameVars.ship.posX = gameVars.ship.posX+1;
                 decreaseEnergy(1);
+                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 40:
             if(gameVars.ship.posY + 1 >= 0 && gameVars.ship.posY + 1 <= gameVars.mapSize-1)
                 gameVars.ship.posY = gameVars.ship.posY+1;
                 decreaseEnergy(1);
+                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 32:
 
@@ -451,17 +460,6 @@ function drawGame()
                 gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
                 //TODO: set scanner range in ship, to calculate visibility instead of +-1
-                for(var i = -1; i < 2; i++)
-                {
-                    for(var j = -1; j < 2; j++)
-                    {
-                        if(pos.x + i >=0 && pos.x + i <= gameVars.mapSize-1 && pos.y + j >= 0 && pos.y + j <= gameVars.mapSize-1)
-                        {
-                            var sensTile = gameVars.gameMap.getTile(pos.x + i, pos.y + j);
-                            sensTile.vis = true;
-                        }
-                    }
-                }
             }
             else
             {
