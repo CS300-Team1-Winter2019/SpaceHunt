@@ -6,8 +6,8 @@ document.addEventListener("keydown", move);
 var gameVars =
 {
     ctx:            null,
-    cameraSize:     32,
-    Ts:             608/32,
+    cameraSize:     16,
+    Ts:             608/16,
     ship:           null,
     gameMap:        null,
 
@@ -124,8 +124,8 @@ var objects =
     wormHole    :["red", 0],
     planet      :["green", 1],
     station     :["purple", 2],
-    space       :["blue", 3],
-    currColor   :"white",
+    space       :["black", 3],
+    currColor   : null,
 
     //sets currColor to be used in drawGame()
     updateColor(index)
@@ -133,7 +133,7 @@ var objects =
         if(index == 0) { this.currColor = "red"; }
         else if(index == 1) { this.currColor = "green"; }
         else if(index == 2) { this.currColor = "purple"; }
-        else { this.currColor = "blue"; }
+        else { this.currColor = "black"; }
     }
 };
 
@@ -421,13 +421,13 @@ function drawGame()
 
     //Case 1: offset top left(x,y) to not display out of bounds "black" map
     //Basically display starts a bit lower to not go out of bounds
-    if(gameVars.ship.posX - 16 < 0) { offX = (16 - gameVars.ship.posX); }
-    if(gameVars.ship.posY - 16 < 0) { offY = (16 - gameVars.ship.posY); }
+    if(gameVars.ship.posX - 8 < 0) { offX = (8 - gameVars.ship.posX); }
+    if(gameVars.ship.posY - 8 < 0) { offY = (8 - gameVars.ship.posY); }
 
     //Case 2: offset top left(x,y) to not display out of bounds "black" mao
     //Basically display starts a bit higher to not go out of bounds
-    if(gameVars.ship.posX + 16 > gameVars.mapSize) { offX = -(gameVars.ship.posX - (gameVars.mapSize - 16)); }
-    if(gameVars.ship.posY + 16 > gameVars.mapSize) { offY = -(gameVars.ship.posY - (gameVars.mapSize - 16)); }
+    if(gameVars.ship.posX + 8 > gameVars.mapSize) { offX = -(gameVars.ship.posX - (gameVars.mapSize - 8)); }
+    if(gameVars.ship.posY + 8 > gameVars.mapSize) { offY = -(gameVars.ship.posY - (gameVars.mapSize - 8)); }
 
     var pos =
     {
@@ -445,10 +445,12 @@ function drawGame()
 
             var tile = gameVars.gameMap.getTile(pos.x, pos.y);
 
+            //If this is ships coords
             if(pos.x == gameVars.ship.posX && pos.y == gameVars.ship.posY)
             {
-                gameVars.ctx.fillStyle = "black";
-                gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+              /*
+                gameVars.ctx.fillStyle = "orange";
+                gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);*/
 
                 //TODO: set scanner range in ship, to calculate visibility instead of +-1
                 for(var i = -1; i < 2; i++)
@@ -462,6 +464,9 @@ function drawGame()
                         }
                     }
                 }
+
+                gameVars.ctx.fillStyle = "orange";
+                gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
             }
             else
             {
@@ -469,27 +474,32 @@ function drawGame()
                 else
                 {
                     objects.updateColor(tile.val);
+                    console.log(tile.val);
                     gameVars.ctx.fillStyle = objects.currColor;
                 }
                 gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+
+                gameVars.ctx.strokeStyle = "red";
+                gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
             }
         }
     }
 
-    gameVars.ctx.fillStyle = "#7FFF00";
+    gameVars.ctx.font = "20px Georgia";
+    gameVars.ctx.fillStyle = "blue";
     gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 30);
 
-    gameVars.ctx.fillStyle = "#7FFF00";
-    gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 45);
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 55);
 
-    gameVars.ctx.fillStyle = "#7FFF00";
-    gameVars.ctx.fillText("Supplies: " + gameVars.ship.supplies, 20, 60);
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Supplies: " + gameVars.ship.supplies, 20, 80);
 
-    gameVars.ctx.fillStyle = "#7FFF00";
-    gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 75);
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 105);
 
-    gameVars.ctx.fillStyle = "#7FFF00";
-    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 520, 30)
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30)
 }
 
 // This will modify the map based on the sensor when
