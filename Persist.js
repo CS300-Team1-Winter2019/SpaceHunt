@@ -1,54 +1,55 @@
 // File containing functions allowing for a persistant state.
-// This will change when we implement the Map and Ship classes.
+// Also, allows for multiple saved game states.
 
-var gameMap = null;
-var ship = null;
-
-function getMap()
+function loadSaves()
 {
-    return gameMap;
+	if(Storage !== void(0))
+		gameVars.saved_games = JSON.parse(localStorage.getItem("saved_games"))
 }
 
-function getShip()
-{
-    return ship;
-}
 
 // Determine whether state has been set on a prior visit.
 function testPersist()
 {
 	if(Storage !== void(0))
 	{
-		if("gameMap" in localStorage)
+		if("saved_games" in localStorage)
 			return true;
 	}
 	return false;
 }
 
 // Loads a prior state.
-function loadState()
+function loadState(name)
 {
-    var map_form = JSON.parse(localStorage.getItem("gameMap"));
-    gameVars.gameMap = new Map();
-	gameVars.gameMap.copyMap(map_form);
+	if(gameVars.saved_games.includes(name))
+	{
+    	var map_form = JSON.parse(localStorage.getItem(name.concat("gameMap")));
+    	gameVars.gameMap = new Map();
+		gameVars.gameMap.copyMap(map_form);
 
-	//ctx = JSON.parse(localStorage.getItem("context"));
+		var ship_form = JSON.parse(localStorage.getItem(name.concat("ship")));
+    	gameVars.ship = new Ship();
+    	gameVars.ship.copyShip(ship_form);
 
-	var ship_form = JSON.parse(localStorage.getItem("ship"));
-    gameVars.ship = new Ship();
-    gameVars.ship.copyShip(ship_form);
+    	return true;
+    }
+
+    return false;
 }
 
 
 
 // Save relevant state variables.
 // Will need a check to see if browser is compatible.
-function saveState()
+function saveState(name)
 {
 	if(Storage !== void(0))
 	{
-		localStorage.setItem("gameMap",JSON.stringify(gameVars.gameMap));
+		gameVars.saved_games.push(name);
+		localStorage.setItem("saved_games",JSON.stringify(gameVars.saved_games));
+		localStorage.setItem(name.concat("gameMap"),JSON.stringify(gameVars.gameMap));
 		//localStorage.setItem("context", JSON.stringify(ctx));
-		localStorage.setItem("ship", JSON.stringify(gameVars.ship));
+		localStorage.setItem(name.concat("ship"), JSON.stringify(gameVars.ship));
     }
 }

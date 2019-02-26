@@ -181,6 +181,25 @@
                 width: 35%;
                 float: right;
             }
+            #saveBtn
+            { 
+                text-align: center;
+                vertical-align: middle;
+                border: 2px solid red;
+                border-radius: 7px;
+                background-color: greenyellow;
+                color: rgb(72, 54, 235);
+                font-size: 32px;
+                font-weight: bold;
+                font-family: "Courier New";
+                width: 5em;
+                margin: 5px auto;   
+
+                display:none;
+                float: right;
+                width: 55%;
+            }
+
         </style>
     </head>
     <body>
@@ -205,6 +224,9 @@
         </div>
         <div>
             <div id="sensBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="submitSensor()">Engage Sensor Activity</div>
+        </div>
+        <div>
+            <div id="saveBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="save()">Save Game</div>
         </div>
 
         <div id="theHead">Welcome to Space Hunt!</div>

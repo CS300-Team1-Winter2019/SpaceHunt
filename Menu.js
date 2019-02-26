@@ -30,6 +30,7 @@ var runGame = function()
     document.getElementById("leftBtn").style.display = "block";
     document.getElementById("rightBtn").style.display = "block";
     document.getElementById("sensBtn").style.display = "block";
+    document.getElementById("saveBtn").style.display = "block";
 };
 
 var showCredits = function()
@@ -159,5 +160,12 @@ function load()
     document.getElementById("leftBtn").style.display = "block";
     document.getElementById("rightBtn").style.display = "block";
     document.getElementById("sensBtn").style.display = "block";
+    document.getElementById("saveBtn").style.display = "block";
     drawGame();
+}
+
+function save()
+{
+    name = prompt("Please enter a name for your game: ", "My Game")
+    saveState(name)
 }

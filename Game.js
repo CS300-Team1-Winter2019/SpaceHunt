@@ -22,7 +22,8 @@ var gameVars =
     unlim_game:     false,
     mapSize:        128,
     fix_objects:    false,
-    object_list:    {} //Dictionary of all objects and their locations
+    object_list:    {}, //Dictionary of all objects and their locations
+    saved_games:    ["default"] //List of all saved game states.
 }
 
 //Values for the movement
@@ -69,13 +70,35 @@ function callSensor()
 
 function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
 {
-    if(testPersist())
+    if(testPersist() === true)
     {
-        loadState();
+        i = 0;
+        loadSaves();
+        name = prompt("Please enter the name of the saved game you would like to load: ", " ");
+        while((loadState(name) === false) && (i < 3))
+        {
+            name = prompt("Name entered is invalid, please try again: ", " ");
+            i += 1
+        }
+
+        if(i == 3)
+        {
+            alert("Load unsuccessful. Press 'OK' to begin a new game.");
+
+            createGame(init_game.fix_start, [1,1], init_game.init_energy, init_game.init_supplies, init_game.init_credits,
+               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
+        }
+
         gameVars.ctx = document.getElementById('game').getContext("2d");
         drawGame();
     }
-    else createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO);
+    else
+    {
+        alert("You have no saved games! Press 'OK' to begin a new game.");
+        //createGame(fS, iE, iS, iC, fW, uG, mS);
+        createGame(init_game.fix_start, [1,1], init_game.init_energy, init_game.init_supplies, init_game.init_credits,
+               init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
+    }
 }
 
 function createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
@@ -467,8 +490,6 @@ function drawGame()
 
     gameVars.ctx.fillStyle = "#7FFF00";
     gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 520, 30)
-
-    saveState();
 }
 
 // This will modify the map based on the sensor when
@@ -490,7 +511,6 @@ function activate_sensor()
         }
     }
     gameVars.ship.consume_supplies(0.02);
-    saveState();
     //requestAnimationFrame(drawGame);
     drawGame();
 }
