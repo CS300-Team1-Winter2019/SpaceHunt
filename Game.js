@@ -35,19 +35,25 @@ function updateDistance(newVal)
 //Calls this function when user wants to move (submit movement is pushed)
 function startMovement(direction)
 {
+
+  console.log("currDistance: "+currDistance);
 //    startMove(currDistance, currDegree);
   switch(direction){
+    //up
     case 0:
-      startMove(0, -currDistance);
+      startMove(0, (-1*currDistance));
       break;
+    //down
     case 1:
-      startMove(0, currDistance);
+      startMove(0, (currDistance));
       break;
+    //left
     case 2:
-      startMove(-currDistance, 0);
+      startMove((-1*currDistance), 0);
       break;
+    //right
     case 3:
-      startMove(currDistance, 0);
+      startMove((currDistance), 0);
       break;
   }
 }
@@ -112,7 +118,7 @@ function collision(x,y)
           case 0:
               obj = 0;
               alert ('this is a wormhole');
-              return 'wormhole'
+              return 'wormhole';
           case 1:
               obj = 1;
               alert('this is planet');
@@ -148,8 +154,24 @@ function decreaseSupplies()
 
 
 function startMove(x, y){
-  var newX = gameVars.ship.posX + x;
-  var newY = gameVars.ship.posY + y;
+
+  console.log("current position: ("+gameVars.ship.posX+','+gameVars.ship.posY+')');
+  console.log("arguments: ("+x+","+y+")");
+
+
+  var newX = eval(gameVars.ship.posX) + eval(x);
+  var newY = eval(gameVars.ship.posY) + eval(y);
+
+  console.log("calculated destination: ("+newX+","+newY+")");
+
+/*
+  console.log("newX: "+newX);
+  console.log("newY: "+newY);
+  console.log("x: "+x);
+  console.log("y: "+y);
+  console.log("ship: ("+gameVars.ship.posX+','+gameVars.ship.posY+')');
+*/
+
   if(x != 0){x /= Math.abs(x);}
   if(y != 0){y /= Math.abs(y);}
 
@@ -175,7 +197,7 @@ var shipMove = function(gm, x, y, newX, newY){
 
   decreaseEnergy(1);
 
-  if(gameVars.ship != null){
+  if(gameVars.ship != null && false){
     console.log("x:"+x+" y:"+y);
     console.log("current: ("+gameVars.ship.posX+","+gameVars.ship.posY+")");
     console.log("next:    ("+nextX+","+nextY+")");
@@ -184,9 +206,10 @@ var shipMove = function(gm, x, y, newX, newY){
 
   //wormhole behavior
   if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize){
-    gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
+    gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
+    drawGame();
     clearInterval(gm);
-    alert("You wormholed!")
+    alert("You wormholed!");
   }
 
   //non wormhole behavior - still need to move
@@ -195,9 +218,8 @@ var shipMove = function(gm, x, y, newX, newY){
     drawGame();
 
     //needs to be in this wrapper to avoid scope issues i think?
-    if(gameVars.ship != null){
-      tileOccupant = collision(gameVars.ship.posX, gameVars.ship.posY);
-    }
+    if(gameVars.ship != null){tileOccupant = collision(gameVars.ship.posX, gameVars.ship.posY);}
+
     if(tileOccupant != 'empty'){
       clearInterval(gm);
       if(tileOccupant == 'planet'){
@@ -206,7 +228,9 @@ var shipMove = function(gm, x, y, newX, newY){
       }
       else if(tileOccupant == 'wormhole'){
         gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
-        alert("You wormholed!")
+        drawGame();
+        clearInterval(gm);
+        alert("You wormholed!");
       }
     }
   }
