@@ -17,7 +17,7 @@ class Map
         this.maxWorms = 50;
         this.maxStations = 500;
         // Dockable
-        this.maxFreighter = 50;
+        this.maxFreighter = 100;
 
         for(var i = 0; i < this.mapSize; i++)
         {
