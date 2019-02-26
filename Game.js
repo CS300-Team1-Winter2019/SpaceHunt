@@ -365,18 +365,22 @@ function move(e)
         case 37:
             if(gameVars.ship.posX - 1 >= 0 && gameVars.ship.posX - 1 <= gameVars.mapSize-1)
                 gameVars.ship.posX = gameVars.ship.posX-1;
+                decreaseEnergy(1);
             break;
         case 38:
             if(gameVars.ship.posY - 1 >= 0 && gameVars.ship.posY - 1 <= gameVars.mapSize-1)
                 gameVars.ship.posY = gameVars.ship.posY-1;
+                decreaseEnergy(1);
             break;
         case 39:
             if(gameVars.ship.posX + 1 >= 0 && gameVars.ship.posX + 1 <= gameVars.mapSize-1)
                 gameVars.ship.posX = gameVars.ship.posX+1;
+                decreaseEnergy(1);
             break;
         case 40:
             if(gameVars.ship.posY + 1 >= 0 && gameVars.ship.posY + 1 <= gameVars.mapSize-1)
                 gameVars.ship.posY = gameVars.ship.posY+1;
+                decreaseEnergy(1);
             break;
         case 32:
 
