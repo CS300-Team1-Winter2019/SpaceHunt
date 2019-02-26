@@ -119,22 +119,25 @@ function collision(x,y)
     switch(obj)
     {
         case 0:
-            obj = 0;
+  //          obj = 0;
             alert ('this is a wormhome');
             break;
         case 1:
-            obj = 1;
+ //           obj = 1;
             alert('this is planet');
             break;
         case 2:
-            obj = 2;
+ //           obj = 2;
             alert('this is station');
             break;
-        /*case 3:
-            obj = 4;
-            alert('this is frighter')*/
         case 4:
-            obj = 3; // space, so keep moving
+ //           obj = 4;
+            gameVars.ship.energy += 100; // increase eneryy by 5
+            gameVars.ship.supplies += 5;
+ //           alert("this is a freighter");
+            break;
+        case 3:
+ //           obj = 3; // space, so keep moving
             break;
         /*case 4:
             obj = 4;
@@ -261,18 +264,25 @@ function move(e)
         case 37:
             if(gameVars.ship.posX - 1 >= 0 && gameVars.ship.posX - 1 <= gameVars.mapSize-1)
                 gameVars.ship.posX = gameVars.ship.posX-1;
+                decreaseEnergy(1);
+                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 38:
             if(gameVars.ship.posY - 1 >= 0 && gameVars.ship.posY - 1 <= gameVars.mapSize-1)
                 gameVars.ship.posY = gameVars.ship.posY-1;
+                decreaseEnergy(1);
+                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 39:
             if(gameVars.ship.posX + 1 >= 0 && gameVars.ship.posX + 1 <= gameVars.mapSize-1)
                 gameVars.ship.posX = gameVars.ship.posX+1;
+                decreaseEnergy(1);
+                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 40:
             if(gameVars.ship.posY + 1 >= 0 && gameVars.ship.posY + 1 <= gameVars.mapSize-1)
                 gameVars.ship.posY = gameVars.ship.posY+1;
+                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 32:
 
