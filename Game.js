@@ -141,18 +141,18 @@ function collision(x,y)
     }
 }
 
+// little game
 function alien ()
 {
     alert ("ready for the battle with Casinian")
-    var input = prompt("Easy game. Guess his 's favorite number from 1-10")
+    var input = prompt("Easy game. Guess his 's favorite number from 1-10. If you win, the number is your additional energy")
     var result = Math.floor(Math.random()*10+1)
-    if (input == result) 
-    {   alert ("correct")
+    if (input == result) {
+       alert ("correct, here your enery reward " + result)
+       gameVars.ship.energy += result;
+    }
 }
 
-
-
-}
 function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
