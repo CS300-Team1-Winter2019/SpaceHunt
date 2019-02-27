@@ -16,8 +16,10 @@ class Map
         this.maxPlanets = 200;
         this.maxWorms = 50;
         this.maxStations = 500;
-        // Dockable
+        // Freighter
         this.maxFreighter = 100;
+        // Dock
+        this.maxDock = 100;
 
         for(var i = 0; i < this.mapSize; i++)
         {
@@ -48,9 +50,11 @@ class Map
                         if(this.maxPlanets <= 0) { maxChoices--; startAt = 2; }
                         if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
 
-                        // Abandond
+                        // Freighter
                         if(this.maxFreighter <= 0) { maxFreighter--; startAt = 4}
-
+                        
+                        //Dock
+                        if (this.maxDock <= 0) {maxDock--; startAt = 5}
                         var choice = Math.floor((Math.random() * maxChoices) + startAt);
 
                         if(choice == 0) { this.maxWorms--; }
@@ -59,6 +63,8 @@ class Map
 
                         // Abandond
                         if(choice == 4) { this.maxFreighter--;}
+
+                        if (choice == 5) {this.maxDock--;}
 
                         newTile.val = choice;
                         row.push(newTile);
@@ -90,5 +96,7 @@ class Map
         this.maxStations = obj.maxStations;
         //ABANDONED
         this.maxFreighter = obj.maxFreighter;
+        //Dock
+        this.maxDock = obj.maxDock;
     }
 }

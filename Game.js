@@ -89,6 +89,7 @@ var objects =
     station     :["purple", 2],
     space       :["blue", 3],
     freighter   :["CHOCOLATE",4], // Abandoned
+    dock        :["SALMON",5], //dock
     currColor   :"white",
 
     //sets currColor to be used in drawGame()
@@ -98,6 +99,7 @@ var objects =
         else if(index == 1) { this.currColor = "green"; }
         else if(index == 2) { this.currColor = "purple"; }
         else if (index == 4) { this.currColor = "CHOCOLATE"; } // Abandoned 
+        else if (index == 5) {this.currColor = "SALMON";} //dock
         else { this.currColor = "blue"; }
     }
 };
@@ -119,36 +121,38 @@ function collision(x,y)
     switch(obj)
     {
         case 0:
-  //          obj = 0;
             alert ('this is a wormhome');
             break;
         case 1:
- //           obj = 1;
             alert('this is planet');
             break;
         case 2:
- //           obj = 2;
             alert('this is station');
             break;
         case 4:
- //           obj = 4;
             gameVars.ship.energy += 100; // increase eneryy by 5
             gameVars.ship.supplies += 5;
- //           alert("this is a freighter");
+            break;
+        case 5:
+            alien();
             break;
         case 3:
- //           obj = 3; // space, so keep moving
             break;
-        /*case 4:
-            obj = 4;
-            alert('this is frighter')
-            
-            gameVars.ship.energy += 10; // increase eneryy by 5
-            gameVars.ship.supplies += 5; 
-            break; */
     }
 }
 
+function alien ()
+{
+    alert ("ready for the battle with Casinian")
+    var input = prompt("Easy game. Guess his 's favorite number from 1-10")
+    var result = Math.floor(Math.random()*10+1)
+    if (input == result) 
+    {   alert ("correct")
+}
+
+
+
+}
 function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
