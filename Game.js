@@ -141,17 +141,30 @@ function collision(x,y)
     }
 }
 
-// little game
+// little game when u encounter the dock
 function alien ()
 {
     alert ("ready for the battle with Casinian")
-    var input = prompt("Easy game. Guess his 's favorite number from 1-10. If you win, the number is your additional energy")
-    var result = Math.floor(Math.random()*10+1)
-    if (input == result) {
-       alert ("correct, here your enery reward " + result)
-       gameVars.ship.energy += result;
-    }
+    var keepgoing = true;
+    
+    do {
+        var input = prompt("Easy game. Guess my favorite number from 1-10. If you win, the number is your additional energy.")
+        var result = Math.floor(Math.random()*10+1)
+ 
+        if (input == result) {
+            alert ("correct, here your enery reward " + result)
+            gameVars.ship.energy += result;
+        }
+        else {
+            var input1 = prompt ("play again? y or n");
+            if (input1 == 'y' || input1 == 'Y')
+                keepgoing = true;
+            else
+                keepgoing = false;               
+        }         
+    } while (keepgoing == true );
 }
+
 
 function decreaseEnergy(dist)
 {
@@ -159,6 +172,7 @@ function decreaseEnergy(dist)
     if(gameVars.ship.energy <= 0){
       alert("Out of energy, game over!");
     }
+
 }
 
 function decreaseSupplies()
