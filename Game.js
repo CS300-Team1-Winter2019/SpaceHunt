@@ -21,6 +21,26 @@ spaceshipDown.src = "images/spaceshipDown.png";
 spaceshipDown.width = 38;
 spaceshipDown.height = 38;
 
+var asteroid = new Image();
+asteroid.src = "images/Asteroid.png";
+asteroid.width = 38;
+asteroid.height = 38;
+
+var planet = new Image();
+planet.src = "images/azuria_norings.png";
+planet.width = 38;
+planet.height = 38;
+
+var station = new Image();
+planet.src = "images/station.png";
+planet.width = 38;
+planet.height = 38;
+
+var freighter = new Image();
+planet.src = "images/freighter.png";
+planet.width = 38;
+planet.height = 38;
+
 //!!!EVERYTHING you might need is already in here.
 //Just grab it and use for your functions.
 var gameVars =
@@ -416,7 +436,7 @@ function drawGame()
             {
                 //Ensure correct background is shown
                 objects.updateColor(tile.val);
-                gameVars.ctx.fillStyle = objects.currColor;
+                gameVars.ctx.fillStyle = "black";
                 gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
                 //Draw the ship
@@ -424,13 +444,31 @@ function drawGame()
             }
             else
             {
-                if(!tile.vis) { gameVars.ctx.fillStyle = "pink"; }
+                if(!tile.vis) { 
+                	gameVars.ctx.fillStyle = "pink"; 
+
+                	gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+                }
                 else
                 {
                     objects.updateColor(tile.val);
                     gameVars.ctx.fillStyle = objects.currColor;
+
+                    gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+
+                    if(tile.val == 1)
+                    	gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts)
+
+                    if(tile.val == 2)
+                    	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
+
+                    if(tile.val == 4)
+                    	gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts)
+
+                   //if(tile.val == 5)
+                   // 	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
                 }
-                gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+                
 
                 gameVars.ctx.strokeStyle = "red";
                 gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
@@ -515,7 +553,7 @@ function drawGame(drctn)
             {
               //Ensure correct background is shown
               objects.updateColor(tile.val);
-              gameVars.ctx.fillStyle = objects.currColor;
+              gameVars.ctx.fillStyle = "black";
               gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
               //Draw the ship
@@ -526,13 +564,29 @@ function drawGame(drctn)
             }
             else
             {
-                if(!tile.vis) { gameVars.ctx.fillStyle = "pink"; }
+                if(!tile.vis) { 
+                	gameVars.ctx.fillStyle = "pink"; 
+
+                	gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+                }
                 else
                 {
                     objects.updateColor(tile.val);
-                    gameVars.ctx.fillStyle = objects.currColor;
+                    gameVars.ctx.fillStyle = "black";
+
+                    gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+
+                    if(tile.val == 1)
+                    	gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts)
+
+                    if(tile.val == 2)
+                    	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
+
+                    if(tile.val == 4)
+                    	gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts)
                 }
-                gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+
+           
 
                 gameVars.ctx.strokeStyle = "red";
                 gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
