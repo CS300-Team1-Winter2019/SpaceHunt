@@ -270,7 +270,6 @@ var shipMove = function(gm, x, y, newX, newY){
     if(tileOccupant != 'empty'){
       clearInterval(gm);
       if(tileOccupant == 'planet'){
-        alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
         alert("YOU CRASHED INTO A PLANET AND DIED!");
         window.location.reload();
       }
