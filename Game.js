@@ -130,6 +130,7 @@ function collision(x,y)
             alert('this is station');
             break;
         case 4:
+            alert("You took on the the abandoned freighter " + 5 + " supplies " + 100 + " energies");
             gameVars.ship.energy += 100; // increase eneryy by 5
             gameVars.ship.supplies += 5;
             break;
@@ -144,25 +145,28 @@ function collision(x,y)
 // little game when u encounter the dock
 function alien ()
 {
-    alert ("ready for the battle with Casinian")
+    alert ("Ready for the game with Casinian")
     var keepgoing = true;
     
-    do {
+
+    while (keepgoing) { 
+        
         var input = prompt("Easy game. Guess my favorite number from 1-10. If you win, the number is your additional energy.")
         var result = Math.floor(Math.random()*10+1)
  
         if (input == result) {
             alert ("correct, here your enery reward " + result)
             gameVars.ship.energy += result;
-        }
+            keepgoing = false;
+        } 
         else {
-            var input1 = prompt ("play again? y or n");
-            if (input1 == 'y' || input1 == 'Y')
-                keepgoing = true;
-            else
-                keepgoing = false;               
-        }         
-    } while (keepgoing == true );
+            var input1 = prompt ("Play again? y or n");
+            if (input1 == 'y' || input1 == 'Y') {
+                keepgoing = true; }
+            else {
+                keepgoing = false; }         
+        }
+    }       
 }
 
 
