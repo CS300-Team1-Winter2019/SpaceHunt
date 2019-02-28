@@ -159,7 +159,7 @@ var objects =
 
 //Add the given object obj to (x,y) in the dictionary
 function addObject(obj) {
-  var entered = window.prompt("Where would you like to add the wormhole?", "(0, 0)");
+  var entered = window.prompt("Where would you like to add the object?", "(0, 0)");
   var nums = entered.match(/\d+/g); //Regex for matching numbers, gets a list of numbers
   if (nums.length < 2)
    alert("Error: must provide an X and a Y coordinate");
