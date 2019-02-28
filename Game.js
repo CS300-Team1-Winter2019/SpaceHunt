@@ -202,39 +202,49 @@ function collision(x,y)
     return 'empty';
 }
 
-function decreaseEnergy(dist)
+function decreaseEnergy(dist) //function changed by Jiacheng
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
     if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false){
       //alert("Out of energy, game over!");
       die(1);
-      window.location.reload();
+      //window.location.reload();
     }
 }
 
-function decreaseSupplies()
+function decreaseSupplies() //function changed by Jiacheng
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
     if(gameVars.ship.supplies <= 0 && gameVars.unlim_game == false){
       //alert("Out of supplies, game over!");
       die(2);
-      window.location.reload();
+      //window.location.reload();
     }
 }
 
 function die(flag)
 {
-  if(flag ==1)
+  if(flag ==1){
     alert("You run out of Energy. Game Over!");
-    else if(flag ==2)
+    window.location.reload();
+  }
+    else if(flag ==2){
        alert("You run out of Supplies. Game Over!");
-      else if(flag ==3)
+       window.location.reload();
+  }
+      else if(flag ==3){
         alert("You are destoryed and No health. Game Over!");
-        else if(flag ==4)
+        window.location.reload();
+      }
+        else if(flag ==4){
           alert("You are killed by BadMax. Game Over!");
-          else if(flag ==5)
+          window.location.reload();
+        }
+          else if(flag ==5){
             alert("Asteroid Collision Destroy your ship. Game Over!");
-      window.location.reload();
+            window.location.reload();
+          }
+    //  window.location.reload();
 }
 
 function startMove(x, y){
@@ -304,8 +314,9 @@ var shipMove = function(gm, x, y, newX, newY){
     if(tileOccupant != 'empty'){
       clearInterval(gm);
       if(tileOccupant == 'planet'){
-        alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
-        window.location.reload();
+        //alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
+        //window.location.reload();
+        die(5); //changed by Jiacheng
       }
       else if(tileOccupant == 'wormhole'){
         gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
