@@ -1,6 +1,26 @@
 document.addEventListener("keydown", move);
 
 
+var spaceshipUp = new Image();
+spaceshipUp.src = "images/spaceship.png";
+spaceshipUp.width = 38;
+spaceshipUp.height = 38;
+
+var spaceshipRight = new Image();
+spaceshipRight.src = "images/spaceshipRight.png";
+spaceshipRight.width = 38;
+spaceshipRight.height = 38;
+
+var spaceshipLeft = new Image();
+spaceshipLeft.src = "images/spaceshipLeft.png";
+spaceshipLeft.width = 38;
+spaceshipLeft.height = 38;
+
+var spaceshipDown = new Image();
+spaceshipDown.src = "images/spaceshipDown.png";
+spaceshipDown.width = 38;
+spaceshipDown.height = 38;
+
 //!!!EVERYTHING you might need is already in here.
 //Just grab it and use for your functions.
 var gameVars =
@@ -29,6 +49,8 @@ var gameVars =
 //Values for the movement
 var currDistance = 0;
 
+//flag for die functions
+var flag =0;
 
 //Updating when scroller in game is touched
 function updateDistance(newVal)
@@ -116,7 +138,8 @@ function createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
     gameVars.ship = new Ship(fS, iE, iS, iC, mS);
     gameVars.gameMap = new Map(mS);
     gameVars.ctx = document.getElementById('game').getContext("2d");
-    drawGame();
+    makeVisible();
+    drawGame(38);
 }
 
 var objects =
@@ -179,24 +202,50 @@ function collision(x,y)
     return 'empty';
 }
 
-function decreaseEnergy(dist)
+function decreaseEnergy(dist) //function changed by Jiacheng
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
     if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false){
-      alert("Out of energy, game over!");
-      window.location.reload();
+      //alert("Out of energy, game over!");
+      die(1);
+      //window.location.reload();
     }
 }
 
-function decreaseSupplies()
+function decreaseSupplies() //function changed by Jiacheng
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
     if(gameVars.ship.supplies <= 0 && gameVars.unlim_game == false){
-      alert("Out of supplies, game over!");
-      window.location.reload();
+      //alert("Out of supplies, game over!");
+      die(2);
+      //window.location.reload();
     }
 }
 
+function die(flag)
+{
+  if(flag ==1){
+    alert("You run out of Energy. Game Over!");
+    window.location.reload();
+  }
+    else if(flag ==2){
+       alert("You run out of Supplies. Game Over!");
+       window.location.reload();
+  }
+      else if(flag ==3){ //this could add in decreasehealth() function.
+        alert("You are destoryed and No health. Game Over!");
+        window.location.reload();
+      }
+        else if(flag ==4){ //this cound add in BadMax choose kill ship.
+          alert("You are killed by BadMax. Game Over!");
+          window.location.reload();
+        }
+          else if(flag ==5){
+            alert("Asteroid Collision Destroy your ship. Game Over!");
+            window.location.reload();
+          }
+    //  window.location.reload();
+}
 
 function startMove(x, y){
 
@@ -233,9 +282,6 @@ function startMove(x, y){
 }
 
 var shipMove = function(gm, x, y, newX, newY){
-
-
-
   var nextX = gameVars.ship.posX + x;
   var nextY = gameVars.ship.posY + y;
   var tileOccupant = 'empty';
@@ -270,8 +316,9 @@ var shipMove = function(gm, x, y, newX, newY){
     if(tileOccupant != 'empty'){
       clearInterval(gm);
       if(tileOccupant == 'planet'){
-        alert("YOU CRASHED INTO A PLANET AND DIED!");
-        window.location.reload();
+        //alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
+        //window.location.reload();
+        die(5); //changed by Jiacheng
       }
       else if(tileOccupant == 'wormhole'){
         gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
@@ -291,98 +338,6 @@ var shipMove = function(gm, x, y, newX, newY){
   }
 }
 
-/*
-function startMove(dist, degr)
-{
-    //can hardcode in different angles and distances
-    var userInput = {angle: degr, magnitude: dist}
-    //this is what I'd like to use eventually: var userInput = {angle: document.getElementById("userInterface").elements["angle"], magnitude: document.getElementById("userInterface").elements["magnitude"]};
-
-    //figures out how many units along x-axis and how many units along y-axis we have to go
-    var runRise = gameVars.ship.calculateXY(userInput); //this function returns an object {x: ?, y: ?}
-    var newPos = {x: gameVars.ship.posX + runRise.x, y: gameVars.ship.posY + runRise.y};
-
-    var xUnitVector = 0;
-    if(runRise.x != 0){
-      xUnitVector = runRise.x/Math.abs(runRise.x);
-    }
-    var yUnitVector = 0;
-    if(runRise.y != 0){
-      yUnitVector = runRise.y/Math.abs(runRise.y);
-    }
-
-    var gm = setInterval(function(){shipMove(gm, newPos.x, xUnitVector, newPos.y, yUnitVector);}, 1);
-}
-*/
-/*
-var shipMove = function(gm, newX, xUnitVector, newY, yUnitVector)
-{
-//    if(ship still needs to move left/right AND ship hasn't hit left side of map AND ship hasn't hit right side of map
-    if((gameVars.ship.posX != newX) && (gameVars.ship.posX+xUnitVector >= 0) && (gameVars.ship.posX+xUnitVector < gameVars.mapSize))
-    {
-        gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
-
-        if(gameVars.ship != null){
-          collision(gameVars.ship.posX, gameVars.ship.posY);
-        }
-        decreaseEnergy(xUnitVector);
-        decreaseSupplies();
-
-        drawGame();
-        //if(ship still needs to move left/right AND ship's remaining movement left/right is more than 1.5x remaining movement up/down)
-        if(gameVars.ship.posX != newX && (Math.abs((gameVars.ship.posX-newX)) > 1.5*Math.abs(gameVars.ship.posY-newY)))
-        {
-            gameVars.ship.move(gameVars.ship.posX + xUnitVector, gameVars.ship.posY);
-
-            if(gameVars.ship != null){
-              collision(gameVars.ship.posX, gameVars.ship.posY);
-            }
-            decreaseEnergy(xUnitVector);
-            decreaseSupplies();
-
-            drawGame();
-        }
-    }
-//    if(ship still needs to move up/down AND ship hasn't hit top of map AND ship hasn't hit bottom of map)
-    if((gameVars.ship.posY != newY) && (gameVars.ship.posY+yUnitVector >= 0) && (gameVars.ship.posY+yUnitVector < gameVars.mapSize))
-    {
-        gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
-
-        if(gameVars.ship != null){
-          collision(gameVars.ship.posX, gameVars.ship.posY);
-        }
-        decreaseEnergy(yUnitVector);
-        decreaseSupplies();
-
-        drawGame();
-        if(gameVars.ship.posY != newY && (Math.abs((gameVars.ship.posY-newY)) > 1.5*Math.abs(gameVars.ship.posX-newX)))
-        {
-            gameVars.ship.move(gameVars.ship.posX, gameVars.ship.posY + yUnitVector);
-
-            if(gameVars.ship != null){
-              collision(gameVars.ship.posX, gameVars.ship.posY);
-            }
-            decreaseEnergy(yUnitVector);
-            decreaseSupplies();
-
-            drawGame();
-        }
-    }
-    if(gameVars.ship.posX == newX && gameVars.ship.posY == newY)
-    {
-        alert("Arrived");
-        clearInterval(gm);
-    }
-
-//    alert("position: x = " + gameVars.ship.posX + " y = " + gameVars.ship.posY + "\nxUnitVector = " + xUnitVector + "\nyUnitVector = " + yUnitVector);
-    else if(gameVars.ship.posX+xUnitVector < 0 || gameVars.ship.posX+xUnitVector > 127 || gameVars.ship.posY+yUnitVector < 0 || gameVars.ship.posY+yUnitVector > 127)
-    {
-      alert("Arrived");
-      clearInterval(gm);
-    }
-}
-
-*/
 function move(e)
 {
     e.preventDefault();
@@ -392,37 +347,44 @@ function move(e)
         case 37:
             if(gameVars.ship.posX - 1 >= 0 && gameVars.ship.posX - 1 <= gameVars.mapSize-1)
                 gameVars.ship.posX = gameVars.ship.posX-1;
-                decreaseEnergy(1);
-                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 38:
             if(gameVars.ship.posY - 1 >= 0 && gameVars.ship.posY - 1 <= gameVars.mapSize-1)
                 gameVars.ship.posY = gameVars.ship.posY-1;
-                decreaseEnergy(1);
-                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 39:
             if(gameVars.ship.posX + 1 >= 0 && gameVars.ship.posX + 1 <= gameVars.mapSize-1)
                 gameVars.ship.posX = gameVars.ship.posX+1;
-                decreaseEnergy(1);
-                collision(gameVars.ship.posX, gameVars.ship.posY);
             break;
         case 40:
             if(gameVars.ship.posY + 1 >= 0 && gameVars.ship.posY + 1 <= gameVars.mapSize-1)
                 gameVars.ship.posY = gameVars.ship.posY+1;
-                decreaseEnergy(1);
-                collision(gameVars.ship.posX, gameVars.ship.posY);
-            break;
-        case 32:
-
             break;
     }
-    drawGame();
+    decreaseEnergy(1);
+    makeVisible();
+    drawGame(e.keyCode);
+}
+
+//Make tiles around the ship visible
+function makeVisible()
+{
+  for(var i = -1; i < 2; i++)
+  {
+      for(var j = -1; j < 2; j++)
+      {
+          if(gameVars.ship.posX + i >= 0 && gameVars.ship.posX + i <= gameVars.mapSize-1 && gameVars.ship.posY + j >= 0 && gameVars.ship.posY + j <= gameVars.mapSize-1)
+          {
+
+              var sensTile = gameVars.gameMap.getTile(gameVars.ship.posX + i, gameVars.ship.posY + j);
+              sensTile.vis = true;
+          }
+      }
+  }
 }
 
 function drawGame()
 {
-//    console.log(gameVars.mapSize);
     var ts = gameVars.Ts;
     var offX = 0;
     var offY = 0;
@@ -432,7 +394,7 @@ function drawGame()
     if(gameVars.ship.posX - 16 < 0) { offX = (16 - gameVars.ship.posX); }
     if(gameVars.ship.posY - 16 < 0) { offY = (16 - gameVars.ship.posY); }
 
-    //Case 2: offset top left(x,y) to not display out of bounds "black" mao
+    //Case 2: offset top left(x,y) to not display out of bounds "black" map
     //Basically display starts a bit higher to not go out of bounds
     if(gameVars.ship.posX + 16 > gameVars.mapSize) { offX = -(gameVars.ship.posX - (gameVars.mapSize - 16)); }
     if(gameVars.ship.posY + 16 > gameVars.mapSize) { offY = -(gameVars.ship.posY - (gameVars.mapSize - 16)); }
@@ -455,10 +417,13 @@ function drawGame()
 
             if(pos.x == gameVars.ship.posX && pos.y == gameVars.ship.posY)
             {
-                gameVars.ctx.fillStyle = "black";
+                //Ensure correct background is shown
+                objects.updateColor(tile.val);
+                gameVars.ctx.fillStyle = objects.currColor;
                 gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
-                //TODO: set scanner range in ship, to calculate visibility instead of +-1
+                //Draw the ship
+                gameVars.ctx.drawImage(spaceshipUp, x*ts, y*ts, ts, ts);
             }
             else
             {
@@ -508,6 +473,85 @@ function activate_sensor()
         }
     }
     gameVars.ship.consume_supplies(0.02);
-    //requestAnimationFrame(drawGame);
     drawGame();
+}
+
+
+function drawGame(drctn)
+{
+    var ts = gameVars.Ts;
+    var offX = 0;
+    var offY = 0;
+
+    //Case 1: offset top left(x,y) to not display out of bounds "black" map
+    //Basically display starts a bit lower to not go out of bounds
+    if(gameVars.ship.posX - 8 < 0) { offX = (8 - gameVars.ship.posX); }
+    if(gameVars.ship.posY - 8 < 0) { offY = (8 - gameVars.ship.posY); }
+
+    //Case 2: offset top left(x,y) to not display out of bounds "black" mao
+    //Basically display starts a bit higher to not go out of bounds
+    if(gameVars.ship.posX + 8 > gameVars.mapSize) { offX = -(gameVars.ship.posX - (gameVars.mapSize - 8)); }
+    if(gameVars.ship.posY + 8 > gameVars.mapSize) { offY = -(gameVars.ship.posY - (gameVars.mapSize - 8)); }
+
+    var pos =
+    {
+        x: 0,
+        y: 0,
+    }
+
+    for(var x = 0; x < gameVars.cameraSize; x++)
+    {
+        for(var y = 0; y < gameVars.cameraSize; y++)
+        {
+
+            pos.x =  Math.round((gameVars.ship.posX) - gameVars.cameraSize/2) + x + offX;
+            pos.y =  Math.round((gameVars.ship.posY) - gameVars.cameraSize/2) + y + offY;
+
+            var tile = gameVars.gameMap.getTile(pos.x, pos.y);
+
+            //If this is ships coords
+            if(pos.x == gameVars.ship.posX && pos.y == gameVars.ship.posY)
+            {
+              //Ensure correct background is shown
+              objects.updateColor(tile.val);
+              gameVars.ctx.fillStyle = objects.currColor;
+              gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+
+              //Draw the ship
+              if(drctn == 38) gameVars.ctx.drawImage(spaceshipUp, x*ts, y*ts, ts, ts);
+              else if(drctn == 40) gameVars.ctx.drawImage(spaceshipDown, x*ts, y*ts, ts, ts);
+              else if(drctn == 37) gameVars.ctx.drawImage(spaceshipLeft, x*ts, y*ts, ts, ts);
+              else gameVars.ctx.drawImage(spaceshipRight, x*ts, y*ts, ts, ts);
+            }
+            else
+            {
+                if(!tile.vis) { gameVars.ctx.fillStyle = "pink"; }
+                else
+                {
+                    objects.updateColor(tile.val);
+                    gameVars.ctx.fillStyle = objects.currColor;
+                }
+                gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+
+                gameVars.ctx.strokeStyle = "red";
+                gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
+            }
+        }
+    }
+
+    gameVars.ctx.font = "20px Georgia";
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 30);
+
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 55);
+
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Supplies: " + gameVars.ship.supplies, 20, 80);
+
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 105);
+
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30)
 }
