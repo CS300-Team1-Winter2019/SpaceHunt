@@ -69,9 +69,6 @@ var gameVars =
 //Values for the movement
 var currDistance = 0;
 
-//flag for die functions
-var flag =0;
-
 //Updating when scroller in game is touched
 function updateDistance(newVal)
 {
@@ -222,50 +219,24 @@ function collision(x,y)
     return 'empty';
 }
 
-function decreaseEnergy(dist) //function changed by Jiacheng
+function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
     if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false){
-      //alert("Out of energy, game over!");
-      die(1);
-      //window.location.reload();
+      alert("Out of energy, game over!");
+      window.location.reload();
     }
 }
 
-function decreaseSupplies() //function changed by Jiacheng
+function decreaseSupplies()
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
     if(gameVars.ship.supplies <= 0 && gameVars.unlim_game == false){
-      //alert("Out of supplies, game over!");
-      die(2);
-      //window.location.reload();
+      alert("Out of supplies, game over!");
+      window.location.reload();
     }
 }
 
-function die(flag)
-{
-  if(flag ==1){
-    alert("You run out of Energy. Game Over!");
-    window.location.reload();
-  }
-    else if(flag ==2){
-       alert("You run out of Supplies. Game Over!");
-       window.location.reload();
-  }
-      else if(flag ==3){ //this could add in decreasehealth() function.
-        alert("You are destoryed and No health. Game Over!");
-        window.location.reload();
-      }
-        else if(flag ==4){ //this cound add in BadMax choose kill ship.
-          alert("You are killed by BadMax. Game Over!");
-          window.location.reload();
-        }
-          else if(flag ==5){
-            alert("Asteroid Collision Destroy your ship. Game Over!");
-            window.location.reload();
-          }
-    //  window.location.reload();
-}
 
 function startMove(x, y){
 
@@ -277,14 +248,6 @@ function startMove(x, y){
   var newY = eval(gameVars.ship.posY) + eval(y);
 
   console.log("calculated destination: ("+newX+","+newY+")");
-
-/*
-  console.log("newX: "+newX);
-  console.log("newY: "+newY);
-  console.log("x: "+x);
-  console.log("y: "+y);
-  console.log("ship: ("+gameVars.ship.posX+','+gameVars.ship.posY+')');
-*/
 
   if(x != 0){x /= Math.abs(x);}
   if(y != 0){y /= Math.abs(y);}
@@ -299,6 +262,19 @@ function startMove(x, y){
   //seems like cleaner control.
   decreaseSupplies();
   var gm = setInterval(function(){shipMove(gm, x, y, newX, newY);}, 1);
+}
+            // left=37 up=38 right=39 down=40
+
+function calculateKeyCode(x, y){
+  if(x < 0){
+    return 37;
+  }else if(x > 0){
+    return 39;
+  }else if(y < 0){
+    return 38;
+  }else{
+    return 40;
+  }
 }
 
 var shipMove = function(gm, x, y, newX, newY){
@@ -318,7 +294,8 @@ var shipMove = function(gm, x, y, newX, newY){
   //wormhole behavior
   if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize){
     gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
-    drawGame();
+    makeVisible();
+    drawGame(calculateKeyCode(x, y));
     clearInterval(gm);
     alert("You wormholed!");
   }
@@ -326,7 +303,8 @@ var shipMove = function(gm, x, y, newX, newY){
   //non wormhole behavior - still need to move
   else if(gameVars.ship.posX != newX || gameVars.ship.posY != newY){
     gameVars.ship.move(nextX, nextY);
-    drawGame();
+    makeVisible();
+    drawGame(calculateKeyCode(x, y));
 
     //needs to be in this wrapper to avoid scope issues i think?
     if(gameVars.ship != null){tileOccupant = collision(gameVars.ship.posX, gameVars.ship.posY);}
@@ -334,13 +312,13 @@ var shipMove = function(gm, x, y, newX, newY){
     if(tileOccupant != 'empty'){
       clearInterval(gm);
       if(tileOccupant == 'planet'){
-        //alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
-        //window.location.reload();
-        die(5); //changed by Jiacheng
+        alert("YOU CRASHED INTO A PLANET AND DIED!");
+        window.location.reload();
       }
       else if(tileOccupant == 'wormhole'){
-        gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
-        drawGame();
+        gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
+        makeVisible();
+        drawGame(calculateKeyCode(x, y));
         clearInterval(gm);
         alert("You wormholed!");
       }
