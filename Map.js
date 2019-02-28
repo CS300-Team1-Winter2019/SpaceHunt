@@ -14,13 +14,33 @@ class Map
         this.mapSize = mS;
         this.map = [];
         this.maxAsteroids = 200;
-        this.maxWorms = 50;
+        this.maxWorms = 200;
         this.maxStations = 500;
+
+        this.planets_x = {};
+        this.planets_y = {};
 
         //Build randomized map
         if (!gameVars.fix_objects) {
 
             //planet logic
+//            /*
+
+            this.planets_x[0] = true;
+            this.planets_y[0] = true;
+
+            for(var i = 1; i < 10; i++){
+              var x = Math.floor(Math.random() * this.mapSize);
+              var y = Math.floor(Math.random() * this.mapSize);
+
+              if(this.planets_x[x] && this.planets_y[y]){
+                --i;
+              }
+              else{
+                this.planets_x[x] = true;
+                this.planets_y[y] = true;
+              }
+            }
 
             for(var i = 0; i < this.mapSize; i++)
             {
@@ -28,7 +48,7 @@ class Map
                 for(var j = 0; j < this.mapSize; j++)
                 {
                     //Random position at which something will be placed
-                    var randPlacer = Math.floor(Math.random() * this.mapSize - 2);
+                    var randPlacer = Math.floor(Math.random() * this.mapSize);
                     //number of things e.g.: planets, holes, stations etc = # of colors
                     var maxChoices = 4;
                     //Gives a starting range for random num: e.g: 2-4
@@ -45,7 +65,11 @@ class Map
                     */
                     if(true)
                     {
-                        if(i == randPlacer || j == randPlacer)
+                        if(this.planets_y[i] && this.planets_x[j]){
+                          newTile.val = 111;
+                          row.push(newTile);
+                        }
+                        else if(i == randPlacer || j == randPlacer)
                         {
                             if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
                             if(this.maxAsteroids <= 0) { maxChoices--; startAt = 2; }
