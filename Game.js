@@ -26,8 +26,8 @@ spaceshipDown.height = 38;
 var gameVars =
 {
     ctx:            null,
-    cameraSize:     32,
-    Ts:             608/32,
+    cameraSize:     16,
+    Ts:             608/16,
     ship:           null,
     gameMap:        null,
 
@@ -48,9 +48,6 @@ var gameVars =
 
 //Values for the movement
 var currDistance = 0;
-
-//flag for die functions
-var flag =0;
 
 //Updating when scroller in game is touched
 function updateDistance(newVal)
@@ -147,8 +144,8 @@ var objects =
     wormHole    :["red", 0],
     planet      :["green", 1],
     station     :["purple", 2],
-    space       :["blue", 3],
-    currColor   :"white",
+    space       :["black", 3],
+    currColor   : null,
 
     //sets currColor to be used in drawGame()
     updateColor(index)
@@ -156,7 +153,7 @@ var objects =
         if(index == 0) { this.currColor = "red"; }
         else if(index == 1) { this.currColor = "green"; }
         else if(index == 2) { this.currColor = "purple"; }
-        else { this.currColor = "blue"; }
+        else { this.currColor = "black"; }
     }
 };
 
@@ -202,50 +199,24 @@ function collision(x,y)
     return 'empty';
 }
 
-function decreaseEnergy(dist) //function changed by Jiacheng
+function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
     if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false){
-      //alert("Out of energy, game over!");
-      die(1);
-      //window.location.reload();
+      alert("Out of energy, game over!");
+      window.location.reload();
     }
 }
 
-function decreaseSupplies() //function changed by Jiacheng
+function decreaseSupplies()
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
     if(gameVars.ship.supplies <= 0 && gameVars.unlim_game == false){
-      //alert("Out of supplies, game over!");
-      die(2);
-      //window.location.reload();
+      alert("Out of supplies, game over!");
+      window.location.reload();
     }
 }
 
-function die(flag)
-{
-  if(flag ==1){
-    alert("You run out of Energy. Game Over!");
-    window.location.reload();
-  }
-    else if(flag ==2){
-       alert("You run out of Supplies. Game Over!");
-       window.location.reload();
-  }
-      else if(flag ==3){ //this could add in decreasehealth() function.
-        alert("You are destoryed and No health. Game Over!");
-        window.location.reload();
-      }
-        else if(flag ==4){ //this cound add in BadMax choose kill ship.
-          alert("You are killed by BadMax. Game Over!");
-          window.location.reload();
-        }
-          else if(flag ==5){
-            alert("Asteroid Collision Destroy your ship. Game Over!");
-            window.location.reload();
-          }
-    //  window.location.reload();
-}
 
 function startMove(x, y){
 
@@ -299,7 +270,6 @@ var shipMove = function(gm, x, y, newX, newY){
   if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize){
     gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
     drawGame();
-    requestAnimationFrame(drawGame);
     clearInterval(gm);
     alert("You wormholed!");
   }
@@ -308,7 +278,6 @@ var shipMove = function(gm, x, y, newX, newY){
   else if(gameVars.ship.posX != newX || gameVars.ship.posY != newY){
     gameVars.ship.move(nextX, nextY);
     drawGame();
-    requestAnimationFrame(drawGame);;
 
     //needs to be in this wrapper to avoid scope issues i think?
     if(gameVars.ship != null){tileOccupant = collision(gameVars.ship.posX, gameVars.ship.posY);}
@@ -316,15 +285,12 @@ var shipMove = function(gm, x, y, newX, newY){
     if(tileOccupant != 'empty'){
       clearInterval(gm);
       if(tileOccupant == 'planet'){
-        //alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
-        //window.location.reload();
-        die(5); //changed by Jiacheng
+        alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
+        window.location.reload();
       }
       else if(tileOccupant == 'wormhole'){
         gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
         drawGame();
-        gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
-        requestAnimationFrame(drawGame);
         clearInterval(gm);
         alert("You wormholed!");
       }
@@ -391,13 +357,13 @@ function drawGame()
 
     //Case 1: offset top left(x,y) to not display out of bounds "black" map
     //Basically display starts a bit lower to not go out of bounds
-    if(gameVars.ship.posX - 16 < 0) { offX = (16 - gameVars.ship.posX); }
-    if(gameVars.ship.posY - 16 < 0) { offY = (16 - gameVars.ship.posY); }
+    if(gameVars.ship.posX - 8 < 0) { offX = (8 - gameVars.ship.posX); }
+    if(gameVars.ship.posY - 8 < 0) { offY = (8 - gameVars.ship.posY); }
 
     //Case 2: offset top left(x,y) to not display out of bounds "black" map
     //Basically display starts a bit higher to not go out of bounds
-    if(gameVars.ship.posX + 16 > gameVars.mapSize) { offX = -(gameVars.ship.posX - (gameVars.mapSize - 16)); }
-    if(gameVars.ship.posY + 16 > gameVars.mapSize) { offY = -(gameVars.ship.posY - (gameVars.mapSize - 16)); }
+    if(gameVars.ship.posX + 8 > gameVars.mapSize) { offX = -(gameVars.ship.posX - (gameVars.mapSize - 8)); }
+    if(gameVars.ship.posY + 8 > gameVars.mapSize) { offY = -(gameVars.ship.posY - (gameVars.mapSize - 8)); }
 
     var pos =
     {
@@ -415,6 +381,7 @@ function drawGame()
 
             var tile = gameVars.gameMap.getTile(pos.x, pos.y);
 
+            //If this is ships coords
             if(pos.x == gameVars.ship.posX && pos.y == gameVars.ship.posY)
             {
                 //Ensure correct background is shown
@@ -434,24 +401,28 @@ function drawGame()
                     gameVars.ctx.fillStyle = objects.currColor;
                 }
                 gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+
+                gameVars.ctx.strokeStyle = "red";
+                gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
             }
         }
     }
 
-    gameVars.ctx.fillStyle = "#7FFF00";
+    gameVars.ctx.font = "20px Georgia";
+    gameVars.ctx.fillStyle = "blue";
     gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 30);
 
-    gameVars.ctx.fillStyle = "#7FFF00";
-    gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 45);
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 55);
 
-    gameVars.ctx.fillStyle = "#7FFF00";
-    gameVars.ctx.fillText("Supplies: " + gameVars.ship.supplies, 20, 60);
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Supplies: " + gameVars.ship.supplies, 20, 80);
 
-    gameVars.ctx.fillStyle = "#7FFF00";
-    gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 75);
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 105);
 
-    gameVars.ctx.fillStyle = "#7FFF00";
-    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 520, 30)
+    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30)
 }
 
 // This will modify the map based on the sensor when
@@ -555,3 +526,4 @@ function drawGame(drctn)
     gameVars.ctx.fillStyle = "blue";
     gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30)
 }
+
