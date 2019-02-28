@@ -109,7 +109,7 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
         }
 
         gameVars.ctx = document.getElementById('game').getContext("2d");
-        drawGame();
+        drawGame(38);
     }
     else
     {
@@ -142,7 +142,7 @@ function createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
 var objects =
 {
     wormHole    :["red", 0],
-    planet      :["green", 1],
+    asteroid      :["green", 1],
     station     :["purple", 2],
     space       :["black", 3],
     currColor   : null,
@@ -186,8 +186,8 @@ function collision(x,y)
               return 'wormhole';
           case 1:
               obj = 1;
-              alert('this is planet');
-              return 'planet';
+              alert('this is asteroid');
+              return 'asteroid';
           case 2:
               obj = 2;
               alert('this is station');
@@ -203,8 +203,7 @@ function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
     if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false){
-      alert("Out of energy, game over!");
-      window.location.reload();
+      die(1);
     }
 }
 
@@ -212,9 +211,33 @@ function decreaseSupplies()
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
     if(gameVars.ship.supplies <= 0 && gameVars.unlim_game == false){
-      alert("Out of supplies, game over!");
-      window.location.reload();
+      die(2);
     }
+}
+
+function die(flag)
+{
+  if(flag ==1){
+    alert("You run out of Energy. Game Over!");
+    window.location.reload();
+  }
+    else if(flag ==2){
+       alert("You run out of Supplies. Game Over!");
+       window.location.reload();
+  }
+      else if(flag ==3){ //this could add in decreasehealth() function.
+        alert("You are destoryed and No health. Game Over!");
+        window.location.reload();
+      }
+        else if(flag ==4){ //this cound add in BadMax choose kill ship.
+          alert("You are killed by BadMax. Game Over!");
+          window.location.reload();
+        }
+          else if(flag ==5){
+            alert("Asteroid Collision Destroy your ship. Game Over!");
+            window.location.reload();
+          }
+    //  window.location.reload();
 }
 
 
@@ -291,9 +314,8 @@ var shipMove = function(gm, x, y, newX, newY){
 
     if(tileOccupant != 'empty'){
       clearInterval(gm);
-      if(tileOccupant == 'planet'){
-        alert("YOU CRASHED INTO A PLANET AND DIED!");
-        window.location.reload();
+      if(tileOccupant == 'asteroid'){
+        die(5);
       }
       else if(tileOccupant == 'wormhole'){
         gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
@@ -452,7 +474,7 @@ function activate_sensor()
         }
     }
     gameVars.ship.consume_supplies(0.02);
-    drawGame();
+    drawGame(38);
 }
 
 
