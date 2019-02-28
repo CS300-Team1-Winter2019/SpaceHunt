@@ -232,11 +232,11 @@ function die(flag)
        alert("You run out of Supplies. Game Over!");
        window.location.reload();
   }
-      else if(flag ==3){
+      else if(flag ==3){ //this could add in decreasehealth() function.
         alert("You are destoryed and No health. Game Over!");
         window.location.reload();
       }
-        else if(flag ==4){
+        else if(flag ==4){ //this cound add in BadMax choose kill ship.
           alert("You are killed by BadMax. Game Over!");
           window.location.reload();
         }
