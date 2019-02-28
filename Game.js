@@ -229,14 +229,6 @@ function startMove(x, y){
 
   console.log("calculated destination: ("+newX+","+newY+")");
 
-/*
-  console.log("newX: "+newX);
-  console.log("newY: "+newY);
-  console.log("x: "+x);
-  console.log("y: "+y);
-  console.log("ship: ("+gameVars.ship.posX+','+gameVars.ship.posY+')');
-*/
-
   if(x != 0){x /= Math.abs(x);}
   if(y != 0){y /= Math.abs(y);}
 
@@ -250,6 +242,19 @@ function startMove(x, y){
   //seems like cleaner control.
   decreaseSupplies();
   var gm = setInterval(function(){shipMove(gm, x, y, newX, newY);}, 1);
+}
+            // left=37 up=38 right=39 down=40
+
+function calculateKeyCode(x, y){
+  if(x < 0){
+    return 37;
+  }else if(x > 0){
+    return 39;
+  }else if(y < 0){
+    return 38;
+  }else{
+    return 40;
+  }
 }
 
 var shipMove = function(gm, x, y, newX, newY){
@@ -269,7 +274,8 @@ var shipMove = function(gm, x, y, newX, newY){
   //wormhole behavior
   if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize){
     gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
-    drawGame();
+    makeVisible();
+    drawGame(calculateKeyCode(x, y));
     clearInterval(gm);
     alert("You wormholed!");
   }
@@ -277,7 +283,8 @@ var shipMove = function(gm, x, y, newX, newY){
   //non wormhole behavior - still need to move
   else if(gameVars.ship.posX != newX || gameVars.ship.posY != newY){
     gameVars.ship.move(nextX, nextY);
-    drawGame();
+    makeVisible();
+    drawGame(calculateKeyCode(x, y));
 
     //needs to be in this wrapper to avoid scope issues i think?
     if(gameVars.ship != null){tileOccupant = collision(gameVars.ship.posX, gameVars.ship.posY);}
@@ -285,12 +292,13 @@ var shipMove = function(gm, x, y, newX, newY){
     if(tileOccupant != 'empty'){
       clearInterval(gm);
       if(tileOccupant == 'planet'){
-        alert("YOU CRASHED INTO A PLANET AND DIEEEEEEEEEED!!!!!");
+        alert("YOU CRASHED INTO A PLANET AND DIED!");
         window.location.reload();
       }
       else if(tileOccupant == 'wormhole'){
-        gameVars.ship.move(Math.floor(Math.random() * (map_size - 2)), Math.floor(Math.random() * (map_size - 2)));
-        drawGame();
+        gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
+        makeVisible();
+        drawGame(calculateKeyCode(x, y));
         clearInterval(gm);
         alert("You wormholed!");
       }
@@ -526,4 +534,3 @@ function drawGame(drctn)
     gameVars.ctx.fillStyle = "blue";
     gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30)
 }
-
