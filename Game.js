@@ -49,6 +49,9 @@ var gameVars =
 //Values for the movement
 var currDistance = 0;
 
+//flag for die functions
+var flag =0;
+
 //Updating when scroller in game is touched
 function updateDistance(newVal)
 {
@@ -203,7 +206,8 @@ function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
     if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false){
-      alert("Out of energy, game over!");
+      //alert("Out of energy, game over!");
+      die(1);
       window.location.reload();
     }
 }
@@ -212,11 +216,26 @@ function decreaseSupplies()
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
     if(gameVars.ship.supplies <= 0 && gameVars.unlim_game == false){
-      alert("Out of supplies, game over!");
+      //alert("Out of supplies, game over!");
+      die(2);
       window.location.reload();
     }
 }
 
+function die(flag)
+{
+  if(flag ==1)
+    alert("You run out of Energy. Game Over!");
+    else if(flag ==2)
+       alert("You run out of Supplies. Game Over!");
+      else if(flag ==3)
+        alert("You are destoryed and No health. Game Over!");
+        else if(flag ==4)
+          alert("You are killed by BadMax. Game Over!");
+          else if(flag ==5)
+            alert("Asteroid Collision Destroy your ship. Game Over!");
+      window.location.reload();
+}
 
 function startMove(x, y){
 
@@ -526,4 +545,3 @@ function drawGame(drctn)
     gameVars.ctx.fillStyle = "blue";
     gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30)
 }
-
