@@ -13,12 +13,15 @@ class Map
     {
         this.mapSize = mS;
         this.map = [];
-        this.maxPlanets = 200;
+        this.maxAsteroids = 200;
         this.maxWorms = 50;
         this.maxStations = 500;
 
         //Build randomized map
         if (!gameVars.fix_objects) {
+
+            //planet logic
+
             for(var i = 0; i < this.mapSize; i++)
             {
                 var row = [];
@@ -33,23 +36,25 @@ class Map
                     //Create new tile
                     var newTile = new Tile();
 
+                    /*
                     if(i == 0 || j == 0 || i == this.mapSize - 1 || j == this.mapSize - 1)
                     {
                         newTile.val = 0;
                         row.push(newTile);
                     }
-                    else
+                    */
+                    if(true)
                     {
                         if(i == randPlacer || j == randPlacer)
                         {
                             if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
-                            if(this.maxPlanets <= 0) { maxChoices--; startAt = 2; }
+                            if(this.maxAsteroids <= 0) { maxChoices--; startAt = 2; }
                             if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
 
                             var choice = Math.floor((Math.random() * maxChoices) + startAt);
 
                             if(choice == 0) { this.maxWorms--; }
-                            if(choice == 1) { this.maxPlanets--; }
+                            if(choice == 1) { this.maxAsteroids--; }
                             if(choice == 2) { this.maxStations--; }
 
                             newTile.val = choice;
@@ -68,6 +73,7 @@ class Map
 
         //Build specified map
         else {
+
             for(var i = 0; i < this.mapSize; i++)
             {
                 var row = [];
@@ -87,13 +93,13 @@ class Map
                         {
                             //Do we need to adjust max values if all obstacles are fixed?
                             //if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
-                            //if(this.maxPlanets <= 0) { maxChoices--; startAt = 2; }
+                            //if(this.maxAsteroids <= 0) { maxChoices--; startAt = 2; }
                             //if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
 
                             //var choice = Math.floor((Math.random() * maxChoices) + startAt);
 
                             //if(choice == 0) { this.maxWorms--; }
-                            //if(choice == 1) { this.maxPlanets--; }
+                            //if(choice == 1) { this.maxAsteroids--; }
                             //if(choice == 2) { this.maxStations--; }
 
                             newTile.val = gameVars.object_list[String(i) + ':' + String(j)];
@@ -128,7 +134,7 @@ class Map
     {
         this.map = obj.map;
         this.mapSize = obj.mapSize;
-        this.maxPlanets = obj.maxPlanets;
+        this.maxAsteroids = obj.maxAsteroids;
         this.maxWorms = obj.maxWorms;
         this.maxStations = obj.maxStations;
     }
