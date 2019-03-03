@@ -17,8 +17,10 @@ class Map
         this.maxWorms = 200;
         this.maxStations = 500;
 
-        this.planets_x = {};
-        this.planets_y = {};
+//        this.planets_x = {};
+  //      this.planets_y = {};
+
+      this.planets = {};
 
         //Build randomized map
         if (!gameVars.fix_objects) {
@@ -26,19 +28,17 @@ class Map
             //planet logic
 //            /*
 
-            this.planets_x[0] = true;
-            this.planets_y[0] = true;
+            this.planets[0] = 0;
 
             for(var i = 1; i < 10; i++){
               var x = Math.floor(Math.random() * this.mapSize);
               var y = Math.floor(Math.random() * this.mapSize);
 
-              if(this.planets_x[x] && this.planets_y[y]){
-                --i;
+              if(this.planets[y] == x){
+                i--;
               }
               else{
-                this.planets_x[x] = true;
-                this.planets_y[y] = true;
+                this.planets[y] = x;
               }
             }
 
@@ -65,7 +65,7 @@ class Map
                     */
                     if(true)
                     {
-                        if(this.planets_y[i] && this.planets_x[j]){
+                        if(this.planets[i] == j){
                           newTile.val = 111;
                           row.push(newTile);
                         }
