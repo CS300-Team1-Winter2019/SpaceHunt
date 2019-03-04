@@ -60,8 +60,11 @@ var goBack = function()
     document.getElementById("loadBtn").style.display = "block";
 
     var sett = document.getElementsByClassName("stngs");
+    var opt = document.getElementsByClassName("optional");
     for(var i = 0; i < sett.length; i++)
         sett[i].style.display = "none";
+    for(var i = 0; i < opt.length; i++)
+        opt[i].style.display = "none";
 };
 
 var settMen = function()
@@ -108,6 +111,10 @@ function changeMap(newMap)
 function changeStartPos(isFixed)
 {
     init_game.fix_start = isFixed;
+    if(isFixed)
+      document.getElementById("setStart").style.display="block"
+    else
+      document.getElementById("setStart").style.display="none"
 }
 
 //Use alert box to set starting position if fixed
@@ -137,6 +144,19 @@ function changeUnlim(isFixed)
 function changeFixMap(isFixed)
 {
     init_game.fix_objects = isFixed;
+    if(isFixed)
+    {
+      document.getElementById("addWorm").style.display="block";
+      document.getElementById("addStation").style.display="block";
+      document.getElementById("addAst").style.display="block";
+    }
+
+    else
+    {
+      document.getElementById("addWorm").style.display="none";
+      document.getElementById("addStation").style.display="none";
+      document.getElementById("addAst").style.display="none";
+    }
 }
 
 function submitCourse(direction)
