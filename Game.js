@@ -34,7 +34,8 @@ var gameVars =
     //Vals supplied by Settings in the menu -
     //will be supplied in the create game and updated here
     fix_start:      false,
-    start_loc:      [1, 1],
+    startX:         1,
+    startY:         1,
     init_energy:    1000,
     init_supplies:  100,
     init_credits:   1000,
@@ -104,7 +105,7 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
         {
             alert("Load unsuccessful. Press 'OK' to begin a new game.");
 
-            createGame(init_game.fix_start, [1,1], init_game.init_energy, init_game.init_supplies, init_game.init_credits,
+            createGame(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits,
                init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
         }
 
@@ -115,15 +116,14 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
     {
         alert("You have no saved games! Press 'OK' to begin a new game.");
         //createGame(fS, iE, iS, iC, fW, uG, mS);
-        createGame(init_game.fix_start, [1,1], init_game.init_energy, init_game.init_supplies, init_game.init_credits,
+        createGame(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits,
                init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
     }
 }
 
-function createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
+function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
 {
     gameVars.fix_start = fS;
-    gameVars.start_loc = Sl;
     gameVars.init_energy = iE;
     gameVars.init_supplies = iS;
     gameVars.init_credits = iC;
@@ -142,7 +142,7 @@ function createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
 var objects =
 {
     wormHole    :["red", 0],
-    asteroid      :["green", 1],
+    asteroid    :["green", 1],
     station     :["purple", 2],
     space       :["black", 3],
     currColor   : null,
@@ -160,7 +160,7 @@ var objects =
 //Add the given object obj to (x,y) in the dictionary
 function addObject(obj) {
   var entered = window.prompt("Where would you like to add the object?", "(0, 0)");
-  var nums = entered.match(/\d+/g); //Regex for matching numbers, gets a list of numbers
+  var nums = entered.match(/\d+/g); //Regex for matching numbers, gets a list of strings containing only digits
   if (nums.length < 2)
    alert("Error: must provide an X and a Y coordinate");
   var x = nums[0];

@@ -82,12 +82,14 @@ class Map
                     //Create new tile
                     var newTile = new Tile();
 
+                    /*
                     if(i == 0 || j == 0 || i == this.mapSize - 1 || j == this.mapSize - 1)
                     {
                         newTile.val = 0;
                         row.push(newTile);
                     }
-                    else
+                    */
+                    if(true)
                     {
                         if((String(i) + ':' + String(j)) in gameVars.object_list)
                         {

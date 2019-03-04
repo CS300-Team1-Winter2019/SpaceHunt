@@ -146,6 +146,21 @@
                 display: none;
                 background-color: inherit;
             }
+
+            #setStart, #addWorm, #addStation, #addAst
+            {
+                text-align: center;
+                vertical-align: middle;
+                border: 2px solid goldenrod;
+                border-radius: 7px;
+                background-color: gold;
+                color: orangeRed;
+                font-size: 32px;
+                font-weight: bold;
+                font-family: "Courier New";
+                width: 10em;
+                margin: 5px auto;
+            }
             #backBtn
             {
                 display: none;
@@ -266,6 +281,8 @@
                 <span class="slider"></span>
             </label>
         </div>
+        <div class="stngs"
+        id="setStart" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="setStartPos()">Set Start Position</div>
         <div class="stngs">
             <p>Fixed Wormhole Behavior</p>
             <label class="switch">

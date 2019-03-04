@@ -5,8 +5,8 @@ class Ship
         this.health = 10000;
         this.sizeX = 50;
         this.sizeY = 50;
-        this.posX = 1; //Math.floor(Math.random() * 127); ->uncomment when random start
-        this.posY = 1; //Math.floor(Math.random() * 127); ->uncomment when random start
+        this.posX = gameVars.startX; //Math.floor(Math.random() * 127); ->uncomment when random start
+        this.posY = gameVars.startY; //Math.floor(Math.random() * 127); ->uncomment when random start
         this.delayMove = 150;
 
         this.map_size = map_size;

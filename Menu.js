@@ -1,7 +1,8 @@
 var init_game =
 {
     fix_start:        false,
-    start_loc:        [1,1],
+    startX:           1,
+    startY:           1,
     init_energy:      1000,
     init_supplies:    100,
     init_credits:     1000,
@@ -21,7 +22,7 @@ var runGame = function()
     document.getElementById("settBtn").style.display = "none";
     document.getElementById("loadBtn").style.display = "none";
 
-    createGame(init_game.fix_start, init_game.start_loc, init_game.init_energy, init_game.init_supplies, init_game.init_credits,
+    createGame(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits,
                init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, init_game.fix_objects);
 
     document.getElementById("distScroll").style.display = "block";
@@ -107,6 +108,20 @@ function changeMap(newMap)
 function changeStartPos(isFixed)
 {
     init_game.fix_start = isFixed;
+}
+
+//Use alert box to set starting position if fixed
+function setStartPos()
+{
+  var entered = window.prompt("Where would you like to add the object?", "(0, 0)");
+  var nums = entered.match(/\d+/g); //Regex for matching numbers, gets a list of strings containing only digits
+  if (nums.length < 2)
+   alert("Error: must provide an X and a Y coordinate");
+  var x = parseInt(nums[0]);
+  var y = parseInt(nums[1]);
+
+  gameVars.startX = x;
+  gameVars.startY = y;
 }
 
 function changeWormBehav(isFixed)
