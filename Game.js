@@ -11,9 +11,9 @@ var gameVars =
     ship:           null,
     gameMap:        null,
    
-    //Baymax
+    /*Baymax
     bayMax:         null,
-    init_eng:       50,
+    init_eng:       50, */
 
     //Vals supplied by Settings in the menu -
     //will be supplied in the create game and updated here
@@ -83,8 +83,8 @@ function createGame(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
     gameVars.ship = new Ship(fS, iE, iS, iC, mS);
     gameVars.gameMap = new Map(mS);
 
-    //baymax
-    gameVars.bayMax = new bayMax(fs,iE,ms);
+    /*baymax
+    gameVars.bayMax = new bayMax(fs,iE,ms); */
     
     gameVars.ctx = document.getElementById('game').getContext("2d");
     drawGame();
