@@ -218,6 +218,9 @@ function collision(x,y)
           case 3:
               obj = 3; // space, so keep moving
               break;
+          case 111:
+              var planet = gameVars.gameMap.getPlanetByCoords(x, y);
+              alert("somethign");
       }
     return 'empty';
 }
