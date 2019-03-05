@@ -1,3 +1,14 @@
+class bayMax
+{
+    constructor ()
+    {
+        this.energy = 50;
+        this.posX = 2;
+        this.posX = 2;
+        this.delayMove = 150;
+    }
+}
+
 class Ship
 {
     constructor(fix_start, init_energy, init_supp, init_creds, map_size)
