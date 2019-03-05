@@ -166,7 +166,7 @@ var objects =
     asteroid    :["green", 1],
     station     :["purple", 2],
     space       :["black", 3],
-    planets     :["blue", 111],
+    planet     :["blue", 111],
     currColor   : null,
 
     //sets currColor to be used in drawGame()
@@ -459,7 +459,7 @@ function drawGame()
 
                     gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
-                    if(tile.val == 1)
+                    if(tile.val == 111)
                     	gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts)
 
                     if(tile.val == 2)
