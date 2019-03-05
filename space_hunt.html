@@ -100,7 +100,7 @@
 
             body
             {
-                background: #202028;
+                background-image: url("background.jpg");
                 color: #fff;
                 font-family: sans-serif;
                 font-size: 2em;
@@ -111,11 +111,16 @@
                 background-color: pink;
                 height: 608px;
                 width: 608px;
+                position: absolute;
+                top:50px;
+                left:50px;
             }
+
             #main
             {
                 display: none;
             }
+
             #newGame, #backBtn, #settBtn, #creditBtn, #loadBtn, #addWorm, #addStation, #addAst
             {
                 text-align: center;
@@ -175,14 +180,14 @@
             }
 
 
-            #upBtn, #downBtn, #leftBtn, #rightBtn, #sensBtn
+            #upBtn, #downBtn, #leftBtn, #rightBtn
             {
                 text-align: center;
                 vertical-align: middle;
-                border: 2px solid red;
+                border: 2px solid #0A2A12;
                 border-radius: 7px;
-                background-color: greenyellow;
-                color: rgb(72, 54, 235);
+                background-color: green;
+                color: #0A2A12;
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
@@ -191,23 +196,25 @@
 
                 display:none;
                 float: right;
-                width: 55%;
+                clear: both;
+                width: 30%;
 
             }
             #distScroll
             {
                 display: none;
-                width: 35%;
+                width: 30%;
                 float: right;
+                clear: both;
             }
-            #saveBtn
+            #saveBtn, #sensBtn
             { 
                 text-align: center;
                 vertical-align: middle;
-                border: 2px solid red;
+                border: 2px solid #0A2A12;
                 border-radius: 7px;
-                background-color: greenyellow;
-                color: rgb(72, 54, 235);
+                background-color: green;
+                color: #0A2A12;
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
@@ -216,7 +223,8 @@
 
                 display:none;
                 float: right;
-                width: 55%;
+                clear: both;
+                width: 30%;
             }
 
         </style>
@@ -230,22 +238,22 @@
             </div>
         </div>
         <div>
-            <div id="upBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="submitCourse(0)">UP</div>
+            <div id="upBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitCourse(0)">Move Up</div>
         </div>
         <div>
-            <div id="downBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="submitCourse(1)">DOWN</div>
+            <div id="downBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitCourse(1)">Move Down</div>
         </div>
         <div>
-            <div id="leftBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="submitCourse(2)">LEFT</div>
+            <div id="leftBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitCourse(2)">Move Left</div>
         </div>
         <div>
-            <div id="rightBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="submitCourse(3)">RIGHT</div>
+            <div id="rightBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitCourse(3)">Move Right</div>
         </div>
         <div>
-            <div id="sensBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="submitSensor()">Engage Sensor Activity</div>
+            <div id="sensBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitSensor()">Engage Sensor</div>
         </div>
         <div>
-            <div id="saveBtn" onmouseover="this.style.backgroundColor = 'orange'" onmouseout="this.style.backgroundColor = 'greenyellow'" onclick="save()">Save Game</div>
+            <div id="saveBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="save()">Save Game</div>
         </div>
 
         <div id="theHead">Welcome to Space Hunt!</div>
