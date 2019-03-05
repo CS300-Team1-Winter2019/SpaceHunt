@@ -68,6 +68,12 @@ var gameVars =
     planets:        {} //Dictionary of planets
 }
 
+var miniVars =
+{
+  ctx:    null,
+  tileSize:   null,
+}
+
 //Values for the movement
 var currDistance = 0;
 
@@ -156,8 +162,73 @@ function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
     gameVars.ship = new Ship(fS, iE, iS, iC, mS);
     gameVars.gameMap = new Map(mS);
     gameVars.ctx = document.getElementById('game').getContext("2d");
+
+    miniVars.ctx = document.getElementById('minimap').getContext("2d");
+    miniVars.tileSize = (320/mS);
+
     makeVisible();
     drawGame(38);
+
+    //addObjectsToList();
+}
+
+/*
+Adds all the objects to the list
+*/
+function addObjectsToList()
+{
+  for(var x = 0; x < gameVars.mapSize - 1; x++)
+  {
+    for(var y = 0; y < gameVars.mapSize - 1; y++)
+    {
+      if(gameVars.gameMap.getTile(x, y).val != 3 && gameVars.gameMap.getTile(x, y).val != 0)
+      {
+        var ul = document.getElementById("list");
+        var li = document.createElement("li");
+
+        var knd = getObject(gameVars.gameMap.getTile(x, y).val);
+        li.appendChild(document.createTextNode(x + " " + y + " " + knd));
+
+        //li.setAttribute("id", "element4");
+        ul.appendChild(li);
+      }
+    }
+  }
+}
+
+function addObjectsToList(x, y)
+{
+  if(gameVars.gameMap.getTile(x, y).val != 3 && gameVars.gameMap.getTile(x, y).val != 0 && !visited.includes((x,y)))
+  {
+    //console.log(434);
+    var ul = document.getElementById("list");
+    var li = document.createElement("li");
+
+    var knd = getObject(gameVars.gameMap.getTile(x, y).val);
+    li.appendChild(document.createTextNode("[" + x + ":" + y + "] " + knd));
+
+    //li.setAttribute("id", "element4");
+    ul.appendChild(li);
+    visited.push(x,y);
+  }
+}
+
+/*
+Helper function to get kind of the object (e.g.: planet, station etc)
+*/
+function getObject(kind)
+{
+  switch(kind)
+  {
+    case 0:
+      return "Wormhole";
+    case 1:
+      return "Planet";
+    case 2:
+      return "Station";
+    default:
+      return "NULL";
+  }
 }
 
 var objects =
@@ -313,13 +384,6 @@ var shipMove = function(gm, x, y, newX, newY){
 
   decreaseEnergy(1);
 
-  if(gameVars.ship != null && false){
-    console.log("x:"+x+" y:"+y);
-    console.log("current: ("+gameVars.ship.posX+","+gameVars.ship.posY+")");
-    console.log("next:    ("+nextX+","+nextY+")");
-    console.log("new:     ("+newX+","+newY+")");
-  }
-
   //wormhole behavior
   if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize){
     gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
@@ -397,8 +461,8 @@ function makeVisible()
       {
           if(gameVars.ship.posX + i >= 0 && gameVars.ship.posX + i <= gameVars.mapSize-1 && gameVars.ship.posY + j >= 0 && gameVars.ship.posY + j <= gameVars.mapSize-1)
           {
-
               var sensTile = gameVars.gameMap.getTile(gameVars.ship.posX + i, gameVars.ship.posY + j);
+              addObjectsToList(gameVars.ship.posX + i, gameVars.ship.posY + j)
               sensTile.vis = true;
           }
       }
@@ -496,7 +560,9 @@ function drawGame()
     gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 105);
 
     gameVars.ctx.fillStyle = "blue";
-    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30)
+    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30);
+
+    drawMini();
 }
 
 // This will modify the map based on the sensor when
@@ -513,6 +579,7 @@ function activate_sensor()
             if(pos_x + i >=0 && pos_x + i <= gameVars.mapSize-1 && pos_y + j >= 0 && pos_y + j <= gameVars.mapSize-1)
             {
                 var sensTile = gameVars.gameMap.getTile(pos_x + i, pos_y + j);
+                addObjectsToList(pos_x + i, pos_y + j);
                 sensTile.vis = true;
             }
         }
@@ -543,6 +610,8 @@ function drawGame(drctn)
         x: 0,
         y: 0,
     }
+
+    drawMini();
 
     for(var x = 0; x < gameVars.cameraSize; x++)
     {
@@ -614,5 +683,39 @@ function drawGame(drctn)
     gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 105);
 
     gameVars.ctx.fillStyle = "blue";
-    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30)
+    gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30);
+
+    //drawMini();
+}
+
+function drawMini()
+{
+  var ts = miniVars.tileSize;
+  for(var i = 0; i <= gameVars.mapSize-1; i++)
+  {
+    for(var j = 0; j <= gameVars.mapSize-1; j++)
+    {
+      var tile = gameVars.gameMap.getTile(i, j);
+
+      //If this is ships coords
+      if(i == gameVars.ship.posX && j == gameVars.ship.posY)
+      {
+        //Ensure correct background is shown
+        objects.updateColor(tile.val);
+
+        miniVars.ctx.fillStyle = "yellow";//objects.currColor;
+        miniVars.ctx.fillRect(i * ts, j * ts, ts, ts);
+      }
+      else
+      {
+          if(!tile.vis) { miniVars.ctx.fillStyle = "pink"; }
+          else
+          {
+              objects.updateColor(tile.val);
+              miniVars.ctx.fillStyle = objects.currColor;
+          }
+          miniVars.ctx.fillRect(i * ts, j * ts, ts, ts);
+      }
+    }
+  }
 }

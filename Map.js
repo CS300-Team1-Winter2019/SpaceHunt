@@ -16,7 +16,6 @@ class Map
         this.maxAsteroids = 200;
         this.maxWorms = 200;
         this.maxStations = 500;
-
 //        planetPlacer_x = {};
   //      planetPlacer_y = {};
 
@@ -68,8 +67,8 @@ class Map
               }
             }
 
-
-
+        //Build randomized map
+        if (!gameVars.fix_objects) {
 
             for(var i = 0; i < this.mapSize; i++)
             {

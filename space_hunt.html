@@ -106,7 +106,9 @@
                 font-size: 2em;
                 text-align: center;
             }
-            canvas
+
+
+            #game
             {
                 background-color: pink;
                 height: 608px;
@@ -115,13 +117,18 @@
                 top:50px;
                 left:50px;
             }
-
+            #minimap
+            {
+                position: absolute;
+                top: 90%;
+                left: 75%;
+                border: 5px solid blue;
+            }
             #main
             {
                 display: none;
             }
-
-            #newGame, #backBtn, #settBtn, #creditBtn, #loadBtn, #addWorm, #addStation, #addAst
+            #newGame, #backBtn, #settBtn, #creditBtn, #loadBtn
             {
                 text-align: center;
                 vertical-align: middle;
@@ -208,7 +215,7 @@
                 clear: both;
             }
             #saveBtn, #sensBtn
-            { 
+            {
                 text-align: center;
                 vertical-align: middle;
                 border: 2px solid #0A2A12;
@@ -219,7 +226,7 @@
                 font-weight: bold;
                 font-family: "Courier New";
                 width: 5em;
-                margin: 5px auto;   
+                margin: 5px auto;
 
                 display:none;
                 float: right;
@@ -227,9 +234,26 @@
                 width: 30%;
             }
 
+            #list
+            {
+                position: absolute;
+                top: 55%;
+                left: 75%;
+                display: none;
+                font-size: 16px;
+            }
+
+            nav ul{height:100px; width:18%;}
+            nav ul{overflow:hidden; overflow-y:scroll;}
+
         </style>
     </head>
     <body>
+        <nav>
+            <ul id = "list">
+
+            </ul>
+        </nav>
         <div>
             <div id="distScroll">
                 <p>Distance:</p>
@@ -265,6 +289,7 @@
         <div id="main">
         <div id="score"></div>
         <canvas id="game" width="608" height="608"></canvas>
+        <canvas id="minimap" width="320" height="320"></canvas>
         </div>
         <div class="stngs">
             <p>Initial Energy:</p>
