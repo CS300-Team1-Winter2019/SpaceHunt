@@ -9,6 +9,14 @@ class Tile
 
 class Map
 {
+    getPlanetByName(planet_name){
+      return this.planets_by_name[planet_name];
+    }
+    getPlanetByCoords(x, y){
+      var coords = {x: x, y: y};
+      return this.planets_by_coords[coords];
+    }
+
     constructor(mS)
     {
         this.mapSize = mS;
