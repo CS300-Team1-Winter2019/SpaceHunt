@@ -445,7 +445,7 @@ function drawGame()
             else
             {
                 if(!tile.vis) { 
-                	gameVars.ctx.fillStyle = "pink"; 
+                	gameVars.ctx.fillStyle = "#848484"; 
 
                 	gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
                 }
@@ -470,7 +470,7 @@ function drawGame()
                 }
                 
 
-                gameVars.ctx.strokeStyle = "red";
+                gameVars.ctx.strokeStyle = "green";
                 gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
             }
         }
@@ -565,7 +565,7 @@ function drawGame(drctn)
             else
             {
                 if(!tile.vis) { 
-                	gameVars.ctx.fillStyle = "pink"; 
+                	gameVars.ctx.fillStyle = "#848484"; 
 
                 	gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
                 }
@@ -588,7 +588,7 @@ function drawGame(drctn)
 
            
 
-                gameVars.ctx.strokeStyle = "red";
+                gameVars.ctx.strokeStyle = "green";
                 gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
             }
         }
