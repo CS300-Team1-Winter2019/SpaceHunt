@@ -64,7 +64,8 @@ var gameVars =
     mapSize:        128,
     fix_objects:    false,
     object_list:    {}, //Dictionary of all objects and their locations
-    saved_games:    ["default"] //List of all saved game states.
+    saved_games:    ["default"], //List of all saved game states.
+    planets:        {} //Dictionary of planets
 }
 
 //Values for the movement
@@ -165,6 +166,7 @@ var objects =
     asteroid    :["green", 1],
     station     :["purple", 2],
     space       :["black", 3],
+    planets     :["blue", 111],
     currColor   : null,
 
     //sets currColor to be used in drawGame()
@@ -173,6 +175,7 @@ var objects =
         if(index == 0) { this.currColor = "red"; }
         else if(index == 1) { this.currColor = "green"; }
         else if(index == 2) { this.currColor = "purple"; }
+        else if(index == 111){this.currColor = "blue"; }
         else { this.currColor = "black"; }
     }
 };

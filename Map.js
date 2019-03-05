@@ -14,13 +14,72 @@ class Map
         this.mapSize = mS;
         this.map = [];
         this.maxAsteroids = 200;
-        this.maxWorms = 50;
+        this.maxWorms = 200;
         this.maxStations = 500;
+
+//        planetPlacer_x = {};
+  //      planetPlacer_y = {};
+
+        var planetPlacer = {};
+        this.planets_by_name = {};
+        this.planets_by_coords = {};
 
         //Build randomized map
         if (!gameVars.fix_objects) {
 
             //planet logic
+            //planet at 0,0 is Eniac
+            planetPlacer[0] = {x: 0, type: "eniac"};
+            this.planets_by_name["eniac"] = {x: x, y: y};
+//            this.planets_by_coords[{x: 0, y: 0}] = "eniac";
+            this.planets_by_coords[[0,0]] = "eniac";
+
+            //figure out what quadrant the Pentium system will be in
+            var pentium_x = Math.floor(Math.random()*2);
+            var pentium_y = Math.floor(Math.random()*2);
+
+            var i = 1;
+            for(i; i < 8; i++){
+              var x = Math.floor(Math.random() * (this.mapSize/2)) + pentium_x*(this.mapSize/2);
+              var y = Math.floor(Math.random() * (this.mapSize/2)) + pentium_y*(this.mapSize/2);
+              if(planetPlacer[y] && planetPlacer[y].x == x){
+                i--;
+              }
+              else{
+                planetPlacer[y] = {x: x, type: "pentium"+i}
+                this.planets_by_name["pentium"+i] = {x: x, y: y};
+                this.planets_by_coords[[x, y]] = "pentium"+i;
+              }
+            }
+            i -= 7;
+            var planet_names = ["celeron", "xeon", "ryzen"]
+            for(i; i < 3; i++){
+              var x = Math.floor(Math.random() * this.mapSize);
+              var y = Math.floor(Math.random() * this.mapSize);
+              if(planetPlacer[y] && planetPlacer[y].x == x){
+                i--;
+              }
+              else{
+                planetPlacer[y] = {x: x, type: planet_names[i]};
+                this.planets_by_name[planet_names[i]] = {x: x, y: y};
+                this.planets_by_coords[[x, y]] = planet_names[i];
+              }
+            }
+
+
+
+  /*          for(var i = 1; i < 10; i++){
+              var x = Math.floor(Math.random() * this.mapSize);
+              var y = Math.floor(Math.random() * this.mapSize);
+
+              if(planetPlacer[y] == x){
+                i--;
+              }
+              else{
+                planetPlacer[y] = x;
+              }
+            }
+            */
 
             for(var i = 0; i < this.mapSize; i++)
             {
@@ -28,7 +87,7 @@ class Map
                 for(var j = 0; j < this.mapSize; j++)
                 {
                     //Random position at which something will be placed
-                    var randPlacer = Math.floor(Math.random() * this.mapSize - 2);
+                    var randPlacer = Math.floor(Math.random() * this.mapSize);
                     //number of things e.g.: planets, holes, stations etc = # of colors
                     var maxChoices = 4;
                     //Gives a starting range for random num: e.g: 2-4
@@ -45,7 +104,11 @@ class Map
                     */
                     if(true)
                     {
-                        if(i == randPlacer || j == randPlacer)
+                        if(planetPlacer[i] && planetPlacer[i].x == j){
+                          newTile.val = 111;
+                          row.push(newTile);
+                        }
+                        else if(i == randPlacer || j == randPlacer)
                         {
                             if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
                             if(this.maxAsteroids <= 0) { maxChoices--; startAt = 2; }
@@ -69,6 +132,8 @@ class Map
                 }
                 this.map.push(row);
             }
+          console.log(this.planets_by_name);
+          console.log(this.planets_by_coords);
         }
 
         //Build specified map
