@@ -447,8 +447,8 @@ function drawGame()
             }
             else
             {
-                if(!tile.vis) { 
-                	gameVars.ctx.fillStyle = "#848484"; 
+                if(!tile.vis) {
+                	gameVars.ctx.fillStyle = "#848484";
 
                 	gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
                 }
@@ -471,7 +471,7 @@ function drawGame()
                    //if(tile.val == 5)
                    // 	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
                 }
-                
+
 
                 gameVars.ctx.strokeStyle = "green";
                 gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
@@ -567,8 +567,8 @@ function drawGame(drctn)
             }
             else
             {
-                if(!tile.vis) { 
-                	gameVars.ctx.fillStyle = "#848484"; 
+                if(!tile.vis) {
+                	gameVars.ctx.fillStyle = "#848484";
 
                 	gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
                 }
@@ -589,7 +589,7 @@ function drawGame(drctn)
                     	gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts)
                 }
 
-           
+
 
                 gameVars.ctx.strokeStyle = "green";
                 gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);

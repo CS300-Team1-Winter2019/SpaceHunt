@@ -20,6 +20,8 @@ class Map
 //        planetPlacer_x = {};
   //      planetPlacer_y = {};
 
+
+//all new
         var planetPlacer = {};
         this.planets_by_name = {};
         this.planets_by_coords = {};
@@ -68,18 +70,6 @@ class Map
 
 
 
-  /*          for(var i = 1; i < 10; i++){
-              var x = Math.floor(Math.random() * this.mapSize);
-              var y = Math.floor(Math.random() * this.mapSize);
-
-              if(planetPlacer[y] == x){
-                i--;
-              }
-              else{
-                planetPlacer[y] = x;
-              }
-            }
-            */
 
             for(var i = 0; i < this.mapSize; i++)
             {
