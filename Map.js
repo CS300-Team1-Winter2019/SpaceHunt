@@ -17,6 +17,8 @@ class Map
         this.maxAsteroids = 200;
         this.maxWorms = 200;
         this.maxStations = 500;
+        this.maxFreighter = 500;
+        this.maxDock = 500;
 
         //all new
         this.planetPlacer = {};
@@ -90,7 +92,7 @@ class Map
                 //Random position at which something will be placed
                 var randPlacer = Math.floor(Math.random() * this.mapSize);
                 //number of things e.g.: planets, holes, stations etc = # of colors
-                var maxChoices = 4;
+                var maxChoices = 8;
                 //Gives a starting range for random num: e.g: 2-4
                 var startAt = 0;
                 //Create new tile
@@ -116,12 +118,18 @@ class Map
                         if(this.maxWorms <= 0) { maxChoices--; startAt = 1; }
                         if(this.maxAsteroids <= 0) { maxChoices--; startAt = 2; }
                         if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
+                        if(this.maxFreighter <= 0) { maxChoices--; startAt = 4; }
+                        if(this.maxDock <= 0) { maxChoices--; startAt = 5; }
+
 
                         var choice = Math.floor((Math.random() * maxChoices) + startAt);
 
                         if(choice == 0) { this.maxWorms--; }
                         if(choice == 1) { this.maxAsteroids--; }
                         if(choice == 2) { this.maxStations--; }
+                        if(choice == 4) { this.maxFreighter--; }
+                        if(choice == 5) { this.maxDock--;}
+
 
                         newTile.val = choice;
                         row.push(newTile);
@@ -167,6 +175,13 @@ class Map
         }
     }
 
+     // change the title to space from visited freighter and dock
+     removeTile(x,y)
+     {
+         this.map[x][y].val = 3;
+         return;
+     }
+
     //"Constructor" which takes an object, so it can be loaded from localStorage.
     copyMap(obj)
     {
@@ -175,5 +190,7 @@ class Map
         this.maxAsteroids = obj.maxAsteroids;
         this.maxWorms = obj.maxWorms;
         this.maxStations = obj.maxStations;
+        this.maxFreighter = obj.maxFreighter;
+        this.maxDock = obj.maxDock;
     }
 }
