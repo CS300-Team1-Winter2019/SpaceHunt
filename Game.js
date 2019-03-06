@@ -139,77 +139,44 @@ function collision(x,y)
             alert('this is station');
             break;
         case 4:
-            alert("You took on the the abandoned freighter " + 5 + " supplies " + 100 + " energies");
-            gameVars.ship.energy += 100; // increase eneryy by 5
-            gameVars.ship.supplies += 5;
+            var s = Math.floor(Math.random()*100)+20;
+            var e = Math.floor(Math.random()*100)+50;
+            alert("You took on the the abandoned freighter " + s + " supplies " + e + " energies");
+            gameVars.ship.energy += e; // increase eneryy by 5
+            gameVars.ship.supplies += s;
+            gameVars.gameMap.removeTile(x,y);
             break;
         case 5:
-            if (obj == 5) {
-                alien();
-                obj = 3;
-                break;
-            }
-            else {
-                break;
-            }
+            alien();
+            gameVars.gameMap.removeTile(x,y);
+            break;
         case 3:
             break;
     }
 }
-/*
-class Casinian {  
-    constructor (e,s,visited) {
-        this.e = e;
-        this.s = s;
-        this.visited = visited;
-    
 
-    alien ()
-    {   
-        var answer = prompt(" hey I am a Casinian, do you want to play a game with me? (y or n)");
-        if (answer == 'y' || answer == 'Y') {
-            var keepgoing = true;
-            while (keepgoing) { 
-        
-                var input = prompt("Easy game. Guess my favorite number from 1-10. If you win, the number is your additional energy.")
-                var result = Math.floor(Math.random()*10+1)
- 
-                if (input == result) {
-                    alert ("correct, here your enery reward " + result)
-                    gameVars.ship.energy += result;
-                    keepgoing = false;
-                } 
-                else {
-                    alert ("Better luck next time")
-                    keepgoing = false; 
-                }
-            }          
+function alien ()
+{
+    var answer = prompt("hey I am a Casinian, do you want to play a game with me. You could earn a reward if you are lucky? (y or n)");
+    if (answer == 'y' || answer == 'Y') {
+        var keepgoing = true;
+        while (keepgoing) {
+
+            var input = prompt("Easy game. Guess my favorite number from 1-10. If you win, the number is your additional energy.")
+            var result = Math.floor(Math.random() * 10 + 1)
+
+            if (input == result) {
+                alert("Wow, you have more luck than I though. Here your reward energy " + result)
+                gameVars.ship.energy += result;
+                keepgoing = false;
+            }
+            else {
+                alert("Better luck next time")
+                keepgoing = false;
+            }
         }
     }
 }
-*/
-function alien ()
-    {   
-        var answer = prompt(" hey I am a Casinian, do you want to play a game with me? (y or n)");
-        if (answer == 'y' || answer == 'Y') {
-            var keepgoing = true;
-            while (keepgoing) { 
-        
-                var input = prompt("Easy game. Guess my favorite number from 1-10. If you win, the number is your additional energy.")
-                var result = Math.floor(Math.random()*10+1)
- 
-                if (input == result) {
-                    alert ("correct, here your enery reward " + result)
-                    gameVars.ship.energy += result;
-                    keepgoing = false;
-                } 
-                else {
-                    alert ("Better luck next time")
-                    keepgoing = false; 
-                }
-            }          
-        }
-    }
 function decreaseEnergy(dist)
 {
     gameVars.ship.energy -= 10*Math.abs(dist);
