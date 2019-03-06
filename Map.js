@@ -193,6 +193,12 @@ class Map
         return this.map[x][y];
     }
 
+    // change the title to space from visited freighter and dock
+    removeTile(x,y)
+    {
+        this.map[y][y].val = 3;
+        return;
+    }
     //"Constructor" which takes an object, so it can be loaded from localStorage.
     copyMap(obj)
     {
