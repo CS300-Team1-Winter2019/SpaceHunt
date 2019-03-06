@@ -120,8 +120,8 @@
             #minimap
             {
                 position: absolute;
-                top: 90%;
-                left: 75%;
+                top: 75%;
+                left: 50%;
                 border: 5px solid blue;
             }
             #main
@@ -237,18 +237,19 @@
             #list
             {
                 position: absolute;
-                top: 55%;
+                top: 75%;
                 left: 75%;
                 display: none;
                 font-size: 16px;
             }
 
-            nav ul{height:100px; width:18%;}
+            nav ul{height:100px; width:17%;}
             nav ul{overflow:hidden; overflow-y:scroll;}
 
         </style>
     </head>
     <body>
+        <embed id = "music" src="./audio/back_music.mp3" autostart="false" loop="true" hidden="true">  
         <nav>
             <ul id = "list">
 
@@ -289,7 +290,7 @@
         <div id="main">
         <div id="score"></div>
         <canvas id="game" width="608" height="608"></canvas>
-        <canvas id="minimap" width="320" height="320"></canvas>
+        <canvas id="minimap" width="192" height="192"></canvas>
         </div>
         <div class="stngs">
             <p>Initial Energy:</p>

@@ -33,6 +33,7 @@ var runGame = function()
     document.getElementById("sensBtn").style.display = "block";
     document.getElementById("saveBtn").style.display = "block";
     document.getElementById("list").style.display = "block";
+    document.getElementById("music").style.display = "block";
 };
 
 var showCredits = function()

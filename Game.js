@@ -32,14 +32,22 @@ planet.width = 38;
 planet.height = 38;
 
 var station = new Image();
-planet.src = "images/station.png";
-planet.width = 38;
-planet.height = 38;
+station.src = "images/station.png";
+station.width = 38;
+station.height = 38;
 
 var freighter = new Image();
-planet.src = "images/freighter.png";
-planet.width = 38;
-planet.height = 38;
+freighter.src = "images/freighter.png";
+freighter.width = 38;
+freighter.height = 38;
+
+var wormhole = new Image();
+wormhole.src = "images/wormhole.png";
+wormhole.width = 38;
+wormhole.height = 38;
+
+//Keeps visited coordinates 
+var visited = [];
 
 //!!!EVERYTHING you might need is already in here.
 //Just grab it and use for your functions.
@@ -68,6 +76,7 @@ var gameVars =
     planets:        {} //Dictionary of planets
 }
 
+//For minimap
 var miniVars =
 {
   ctx:    null,
@@ -161,10 +170,11 @@ function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
 
     gameVars.ship = new Ship(fS, iE, iS, iC, mS);
     gameVars.gameMap = new Map(mS);
+    gameVars.gameMap.buildRandom();
     gameVars.ctx = document.getElementById('game').getContext("2d");
 
     miniVars.ctx = document.getElementById('minimap').getContext("2d");
-    miniVars.tileSize = (320/mS);
+    miniVars.tileSize = (192/mS);
 
     makeVisible();
     drawGame(38);
@@ -198,7 +208,8 @@ function addObjectsToList()
 
 function addObjectsToList(x, y)
 {
-  if(gameVars.gameMap.getTile(x, y).val != 3 && gameVars.gameMap.getTile(x, y).val != 0 && !visited.includes((x,y)))
+  var currTile = gameVars.gameMap.getTile(x, y);
+  if(currTile.val != 3 && !visited.includes(currTile))
   {
     //console.log(434);
     var ul = document.getElementById("list");
@@ -209,7 +220,7 @@ function addObjectsToList(x, y)
 
     //li.setAttribute("id", "element4");
     ul.appendChild(li);
-    visited.push(x,y);
+    visited.push(currTile);
   }
 }
 
@@ -227,7 +238,7 @@ function getObject(kind)
     case 2:
       return "Station";
     default:
-      return "NULL";
+      return "Unknown";
   }
 }
 
@@ -627,7 +638,7 @@ function drawGame(drctn)
             if(pos.x == gameVars.ship.posX && pos.y == gameVars.ship.posY)
             {
               //Ensure correct background is shown
-              objects.updateColor(tile.val);
+              //objects.updateColor(tile.val);
               gameVars.ctx.fillStyle = "black";
               gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
@@ -637,33 +648,38 @@ function drawGame(drctn)
               else if(drctn == 37) gameVars.ctx.drawImage(spaceshipLeft, x*ts, y*ts, ts, ts);
               else gameVars.ctx.drawImage(spaceshipRight, x*ts, y*ts, ts, ts);
             }
+            //Else something besides ship
             else
             {
-                if(!tile.vis) {
+                if(!tile.vis) 
+                {
                 	gameVars.ctx.fillStyle = "#848484";
-
                 	gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
                 }
                 else
                 {
-                    objects.updateColor(tile.val);
+                    //objects.updateColor(tile.val);
                     gameVars.ctx.fillStyle = "black";
-
                     gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
-                    if(tile.val == 1)
-                    	gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts)
-
-                    if(tile.val == 2)
-                    	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
-
-                    if(tile.val == 4)
-                    	gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts)
+                    if(tile.val == 0)
+                      gameVars.ctx.drawImage(wormhole, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 1)
+                    	gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 2)
+                    	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 4)
+                      gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts);
+                      /*
+                    else
+                    {
+                      gameVars.ctx.fillStyle = "black";
+                      gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
+                    }
+                    */
                 }
 
-
-
-                gameVars.ctx.strokeStyle = "green";
+                gameVars.ctx.strokeStyle = "red";
                 gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
             }
         }
