@@ -13,11 +13,11 @@ class Map
     {
         this.mapSize = mS;
         this.map = [];
-        this.maxAsteroids = 200;
+        this.maxAsteroids = 20;
         this.maxWorms = 200;
         this.maxStations = 500;
-        this.maxFreighter = 100;
-        this.maxDock = 100;
+        this.maxFreighter = 200;
+        this.maxDock = 200;
     
 
 //        planetPlacer_x = {};
