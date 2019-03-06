@@ -166,6 +166,8 @@ var objects =
     asteroid    :["green", 1],
     station     :["purple", 2],
     space       :["black", 3],
+    freighter   :["CHOCOLATE",4],
+    docking     :["SALMON",5],
     planets     :["blue", 111],
     currColor   : null,
 
@@ -176,6 +178,8 @@ var objects =
         else if(index == 1) { this.currColor = "green"; }
         else if(index == 2) { this.currColor = "purple"; }
         else if(index == 111){this.currColor = "blue"; }
+        else if (index == 4){this.currColor = "CHOCOLATE";}
+        else if (index == 5){this.currColor = "SALMON";}
         else { this.currColor = "black"; }
     }
 };
@@ -204,20 +208,24 @@ function collision(x,y)
       switch(obj)
       {
           case 0:
-              obj = 0;
               alert ('this is a wormhole');
               return 'wormhole';
           case 1:
-              obj = 1;
               alert('this is asteroid');
               return 'asteroid';
           case 2:
-              obj = 2;
               alert('this is station');
               return 'station';
+          case 4:
+              alert ("this is freighter");
+              return 'freighter';
+          case 5:
+              alert("this is dock");
+              return 'dock';
           case 3:
               obj = 3; // space, so keep moving
               break;
+
       }
     return 'empty';
 }
