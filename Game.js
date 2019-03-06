@@ -46,6 +46,10 @@ wormhole.src = "images/wormhole.png";
 wormhole.width = 38;
 wormhole.height = 38;
 
+var dock = new Image();
+dock.src = "images/dock.png";
+dock.width = 38;
+dock.height = 38;
 //Keeps visited coordinates 
 var visited = [];
 
@@ -287,40 +291,42 @@ function addObject(obj) {
   gameVars.object_list[(x + ':' + y)] = obj;
 }
 
-function collision(x, y) {
-  var tile = gameVars.gameMap.getTile(x, y);
-  var obj = tile.val;
-  switch (obj) {
-    case 0:
-      alert('this is a wormhole');
-      return 'wormhole';
-    case 1:
-      alert('this is asteroid');
-      return 'asteroid';
-    case 2:
-      alert('this is station');
-      return 'station';
-    case 4:
-      var s = Math.floor(Math.random() * 100) + 20;
-      var e = Math.floor(Math.random() * 100) + 50;
-      alert("You took on the the abandoned freighter " + s + " supplies " + e + " energies");
-      gameVars.ship.energy += e; // increase eneryy by 5
-      gameVars.ship.supplies += s;
-      gameVars.gameMap.removeTile(x, y);
-      return 'freighter';
-    case 5:
-      alien();
-      gameVars.gameMap.removeTile(x, y);
-      return 'dock';
-
-    case 3:
-      // space, so keep moving
-      break;
-    case 111:
-      var planet = gameVars.gameMap.getPlanetByCoords(x, y);
-      alert("somethign");
-  }
-  return 'empty';
+function collision(x,y)
+{
+    var tile = gameVars.gameMap.getTile(x, y);
+    var obj = tile.val;
+      switch(obj)
+      {
+          case 0:
+              alert ('this is a wormhole');
+              return 'wormhole';
+          case 1:
+              alert('this is asteroid');
+              return 'asteroid';
+          case 2:
+              alert('this is station');
+              return 'station';
+          case 4:
+              var s = Math.floor(Math.random()*100)+20;
+              var e = Math.floor(Math.random()*100)+50;
+              alert("You took on the the abandoned freighter " + s + " supplies " + e + " energies");
+              gameVars.ship.energy += e; // increase eneryy by 5
+              gameVars.ship.supplies += s;
+              gameVars.gameMap.removeTile(x,y);
+              return 'freighter';
+          case 5: 
+              alien();
+              gameVars.gameMap.removeTile(x,y);
+              return 'dock';
+              
+          case 3:
+              // space, so keep moving
+              break;
+          case 111:
+              var planet = gameVars.gameMap.getPlanetByCoords(x, y);
+              alert("somethign");
+      }
+    return 'empty';
 }
 
 function alien ()
@@ -587,7 +593,10 @@ function drawGame()
                     	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
 
                     if(tile.val == 4)
-                    	gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts)
+                      gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts)
+                      
+                    if(tile.val == 5)
+                    	gameVars.ctx.drawImage(dock, x*ts, y*ts, ts, ts)
 
                    //if(tile.val == 5)
                    // 	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
@@ -713,6 +722,8 @@ function drawGame(drctn)
                     	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts);
                     else if(tile.val == 4)
                       gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 5)
+                      gameVars.ctx.drawImage(dock, x*ts, y*ts, ts, ts);
                       /*
                     else
                     {
