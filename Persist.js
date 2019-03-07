@@ -43,13 +43,17 @@ function loadState(name)
     	gameVars.ship.copyShip(ship_form);
 
     	// Loading important settings values.
-    	gameVars.unlim_game = localStorage.getItem(name.concat("playmode"));
-    	gameVars.mapSize = localStorage.getItem(name.concat("mapsize"));
-    	gameVars.fix_wormhole = localStorage.getItem(name.concat("wormholemode"));
+    	gameVars.unlim_game = JSON.parse(localStorage.getItem(name.concat("playmode")));
+    	gameVars.mapSize = JSON.parse(localStorage.getItem(name.concat("mapsize")));
+    	gameVars.fix_wormhole = JSON.parse(localStorage.getItem(name.concat("wormholemode")));
+
+    	// Loading array of visited items.
+    	visited = JSON.parse(localStorage.getItem(name.concat("visited")));
+    	visited_information = JSON.parse(localStorage.getItem(name.concat("visited_info")));
 
     	return true;
     }
-    
+
     return false;
 }
 
@@ -76,8 +80,12 @@ function saveState(name)
 		localStorage.setItem(name.concat("ship"), JSON.stringify(gameVars.ship));
 
 		// Push necessary settings values to localStorage.
-		localStorage.setItem(name.concat("playmode"), gameVars.unlim_game);
-		localStorage.setItem(name.concat("mapsize"), gameVars.mapSize);
-		localStorage.setItem(name.concat("wormholemode"), gameVars.fix_wormhole);
+		localStorage.setItem(name.concat("playmode"), JSON.stringify(gameVars.unlim_game));
+		localStorage.setItem(name.concat("mapsize"), JSON.stringify(gameVars.mapSize));
+		localStorage.setItem(name.concat("wormholemode"), JSON.stringify(gameVars.fix_wormhole));
+
+		// Saving array of visited items.
+		localStorage.setItem(name.concat("visited"), JSON.stringify(visited));
+		localStorage.setItem(name.concat("visited_info"), JSON.stringify(visited_information));
     }
 }

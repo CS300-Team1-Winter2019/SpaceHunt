@@ -51,7 +51,12 @@ dock.src = "images/dock.png";
 dock.width = 38;
 dock.height = 38;
 //Keeps visited coordinates 
+
 var visited = [];
+
+// Used to save and grab details of visited
+// celestial artifacts for future load of game.
+var visited_information = [];
 
 //!!!EVERYTHING you might need is already in here.
 //Just grab it and use for your functions.
@@ -148,11 +153,13 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
             createGame(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits,
                init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
         }
+      
 
         gameVars.ctx = document.getElementById('game').getContext("2d");
         miniVars.ctx = document.getElementById('minimap').getContext("2d");
         miniVars.tileSize = (192/mS);
         drawGame(38);
+        populate_gazetteer();
     }
     else
     {
@@ -162,6 +169,33 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
                init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
     }
 }
+
+
+// Function used by loader to make sure that the gazetteer is 
+// correctly populated based on visited celestial artifacts
+// from saved game.
+function populate_gazetteer()
+{
+  // Grab number of visited celestial artifacts.
+  var num_visited = visited_information.length;
+
+  // Loop through to add to HTML, so can be seen.
+  for (var i = 0; i < num_visited; i++)
+  {
+    var ul = document.getElementById("list");
+    var li = document.createElement("li");
+
+    var knd = visited_information[i][2];
+    var x = visited_information[i][0];
+    var y = visited_information[i][1];
+
+    li.appendChild(document.createTextNode("[" + x + ":" + y + "] " + knd));
+
+    //li.setAttribute("id", "element4");
+    ul.appendChild(li);
+  }
+}
+
 
 function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
 {
@@ -207,6 +241,8 @@ function addObjectsToList()
 
         //li.setAttribute("id", "element4");
         ul.appendChild(li);
+
+//visited.push([x, y, knd]);
       }
     }
   }
@@ -227,7 +263,8 @@ function addObjectsToList(x, y)
     //li.setAttribute("id", "element4");
     ul.appendChild(li);
     visited.push(currTile);
-  }
+    visited_information.push([x, y, knd])
+    }
 }
 
 /*
@@ -240,13 +277,15 @@ function getObject(kind)
     case 0:
       return "Wormhole";
     case 1:
-      return "Planet";
+      return "Asteroid";
     case 2:
       return "Station";
     case 4:
       return "Freighter";
     case 5:
       return "Dock";
+    case 111:
+      return "Planet"
     default:
       return "Unknown";
   }
@@ -300,18 +339,18 @@ function collision(x,y)
       switch(obj)
       {
           case 0:
-              alert ('this is a wormhole');
+              alert ('You hit a wormhole!');
               return 'wormhole';
           case 1:
-              alert('this is asteroid');
+              alert('You hit an asteroid! Oh no!');
               return 'asteroid';
           case 2:
-              alert('this is station');
+              alert('You arrived at a space station.');
               return 'station';
           case 4:
               var s = Math.floor(Math.random()*100)+20;
               var e = Math.floor(Math.random()*100)+50;
-              alert("You took on the the abandoned freighter " + s + " supplies " + e + " energies");
+              alert("You took on the the abandoned freighter's " + s + " supplies and " + e + " energies");
               gameVars.ship.energy += e; // increase eneryy by 5
               gameVars.ship.supplies += s;
               gameVars.gameMap.removeTile(x,y);
@@ -326,7 +365,7 @@ function collision(x,y)
               break;
           case 111:
               var planet = gameVars.gameMap.getPlanetByCoords(x, y);
-              alert("somethign");
+              alert("Planet!");
       }
     return 'empty';
 }
@@ -588,20 +627,18 @@ function drawGame()
 
                     gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
-                    if(tile.val == 111)
-                    	gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts)
-
-                    if(tile.val == 2)
-                    	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
-
-                    if(tile.val == 4)
-                      gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts)
-                      
-                    if(tile.val == 5)
-                    	gameVars.ctx.drawImage(dock, x*ts, y*ts, ts, ts)
-
-                   //if(tile.val == 5)
-                   // 	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts)
+                    if(tile.val == 0)
+                      gameVars.ctx.drawImage(wormhole, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 1)
+                      gameVars.ctx.drawImage(asteroid, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 2)
+                      gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 4)
+                      gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 5)
+                      gameVars.ctx.drawImage(dock, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 111)
+                      gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts);
                 }
 
 
@@ -719,13 +756,15 @@ function drawGame(drctn)
                     if(tile.val == 0)
                       gameVars.ctx.drawImage(wormhole, x*ts, y*ts, ts, ts);
                     else if(tile.val == 1)
-                    	gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts);
+                    	gameVars.ctx.drawImage(asteroid, x*ts, y*ts, ts, ts);
                     else if(tile.val == 2)
                     	gameVars.ctx.drawImage(station, x*ts, y*ts, ts, ts);
                     else if(tile.val == 4)
                       gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts);
                     else if(tile.val == 5)
                       gameVars.ctx.drawImage(dock, x*ts, y*ts, ts, ts);
+                    else if(tile.val == 111)
+                      gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts);
                       /*
                     else
                     {
