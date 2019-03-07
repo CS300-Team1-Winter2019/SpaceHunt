@@ -176,7 +176,10 @@ function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
 
     gameVars.ship = new Ship(fS, iE, iS, iC, mS);
     gameVars.gameMap = new Map(mS);
-    gameVars.gameMap.buildRandom();
+    if(gameVars.fix_objects)
+        gameVars.gameMap.buildCustom();
+    else
+        gameVars.gameMap.buildRandom();
     gameVars.ctx = document.getElementById('game').getContext("2d");
 
     miniVars.ctx = document.getElementById('minimap').getContext("2d");
