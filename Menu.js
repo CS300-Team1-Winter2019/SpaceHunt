@@ -179,6 +179,10 @@ function submitSensor()
 
 function load()
 {
+    loadSaved(init_game.fix_start, init_game.start_loc, init_game.init_energy, init_game.init_supplies,
+              init_game.init_credits, init_game.fix_wormhole, init_game.unlim_game, init_game.map_size,
+              init_game.fix_objects);
+
     document.getElementById("newGame").style.display = "none";
     document.getElementById("theHead").style.display = "none";
     document.getElementById("credits").style.display = "none";
@@ -186,10 +190,6 @@ function load()
     document.getElementById("creditBtn").style.display = "none";
     document.getElementById("settBtn").style.display = "none";
     document.getElementById("loadBtn").style.display = "none";
-
-    loadSaved(init_game.fix_start, init_game.start_loc, init_game.init_energy, init_game.init_supplies,
-              init_game.init_credits, init_game.fix_wormhole, init_game.unlim_game, init_game.map_size,
-              init_game.fix_objects);
 
     document.getElementById("distScroll").style.display = "block";
     document.getElementById("upBtn").style.display = "block";

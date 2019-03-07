@@ -128,7 +128,21 @@
             {
                 display: none;
             }
-            #newGame, #backBtn, #settBtn, #creditBtn, #loadBtn
+            #newGame, #backBtn, #settBtn, #creditBtn
+            {
+                text-align: center;
+                vertical-align: middle;
+                border: 2px solid goldenrod;
+                border-radius: 7px;
+                background-color: gold;
+                color: orangeRed;
+                font-size: 32px;
+                font-weight: bold;
+                font-family: "Courier New";
+                width: 5em;
+                margin: 5px auto;
+            }
+            #loadBtn
             {
                 text-align: center;
                 vertical-align: middle;
@@ -243,6 +257,29 @@
                 font-size: 16px;
             }
 
+            .dropdown
+            {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content
+            {
+                display: none;
+                position: absolute;
+                background-color: "black";
+                min-width: 120px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                padding: 12px 16px;
+                z-index: 1;
+            }
+
+            .dropdown:hover .dropdown-content
+            {
+                display: block;
+            }
+
+
             nav ul{height:100px; width:17%;}
             nav ul{overflow:hidden; overflow-y:scroll;}
 
@@ -283,7 +320,11 @@
 
         <div id="theHead">Welcome to Space Hunt!</div>
         <div id="newGame" onclick="runGame()" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'">New Game</div>
+
+
         <div id="loadBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="load()">Load</div>
+
+
         <div id="settBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="settMen()">Settings</div>
         <div id="creditBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="showCredits()">Credits</div>
         <div id="credits">Testing</div>

@@ -76,7 +76,7 @@ var gameVars =
     mapSize:        128,
     fix_objects:    false,
     object_list:    {}, //Dictionary of all objects and their locations
-    saved_games:    ["default"], //List of all saved game states.
+    saved_games:    [], //List of all saved game states.
     planets:        {} //Dictionary of planets
 }
 
@@ -134,7 +134,7 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
     {
         i = 0;
         loadSaves();
-        name = prompt("Please enter the name of the saved game you would like to load: ", " ");
+        name = prompt("Your current saved games are: " + gameVars.saved_games + " \nPlease enter the name of the saved game you would like to load: ", " ");
         while((loadState(name) === false) && (i < 3))
         {
             name = prompt("Name entered is invalid, please try again: ", " ");
