@@ -122,7 +122,7 @@ function changeStartPos(isFixed)
 //Use alert box to set starting position if fixed
 function setStartPos()
 {
-  var entered = window.prompt("Where would you like to add the object?", "(0, 0)");
+  var entered = window.prompt("Where would you like to start?", "(" + gameVars.startX + ", " + gameVars.startY + ")");
   var nums = entered.match(/\d+/g); //Regex for matching numbers, gets a list of strings containing only digits
   if (nums.length < 2)
    alert("Error: must provide an X and a Y coordinate");
@@ -151,6 +151,7 @@ function changeFixMap(isFixed)
       document.getElementById("addWorm").style.display="block";
       document.getElementById("addStation").style.display="block";
       document.getElementById("addAst").style.display="block";
+      document.getElementById("addFreighter").style.display="block";
     }
 
     else
@@ -158,6 +159,7 @@ function changeFixMap(isFixed)
       document.getElementById("addWorm").style.display="none";
       document.getElementById("addStation").style.display="none";
       document.getElementById("addAst").style.display="none";
+      document.getElementById("addFreighter").style.display="none";
     }
 }
 
