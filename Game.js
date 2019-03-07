@@ -150,6 +150,8 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
         }
 
         gameVars.ctx = document.getElementById('game').getContext("2d");
+        miniVars.ctx = document.getElementById('minimap').getContext("2d");
+        miniVars.tileSize = (192/mS);
         drawGame(38);
     }
     else
