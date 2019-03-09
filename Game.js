@@ -299,7 +299,7 @@ var objects =
     wormHole    :["red", 0],
     asteroid    :["green", 1],
     station     :["purple", 2],
-    space       :["black", 3],
+    space       :["rgba(0,0,0,.8)", 3],
     planet      :["blue", 111],
     freighter   :["CHOCOLATE",4],
     dock        :["SALMON",5],
@@ -314,7 +314,7 @@ var objects =
         else if(index == 111){this.currColor = "blue"; }
         else if (index == 4){this.currColor = "CHOCOLATE";}
         else if (index == 5){this.currColor = "SALMON";}
-        else { this.currColor = "black"; }
+        else { this.currColor = "rgba(0,0,0,.6)"; }
     }
 };
 
@@ -346,9 +346,10 @@ function collision(x,y)
               return 'wormhole';
           case 1:
               alert('You hit an asteroid! Oh no!');
+              die(5)
               return 'asteroid';
           case 2:
-              alert('You arrived at a space station.');
+              space_station();
               return 'station';
           case 4:
               var s = Math.floor(Math.random()*100)+20;
@@ -375,7 +376,7 @@ function collision(x,y)
 
 function alien ()
 {
-  var answer = prompt("hey I am a Casinian, do you want to play a game with me. You could earn a reward if you are lucky? (y or n)");
+  var answer = prompt("Hey, I am a Casinian, do you want to play a game with me? You could earn a reward if you are lucky! (y or n)");
   if (answer == 'y' || answer == 'Y') {
     var keepgoing = true;
     while (keepgoing) {
@@ -383,18 +384,36 @@ function alien ()
       var result = Math.floor(Math.random() * 10 + 1)
 
       if (input == result) {
-        alert("Wow, you have more luck than I though. Here your reward energy " + result)
+        alert("Wow, you have more luck than I thought. Here's your reward energy: " + result)
         gameVars.ship.energy += result;
         keepgoing = false;
       }
       else {
-        alert("Better luck next time")
+        alert("Better luck next time!")
         keepgoing = false;
       }
     }
   }
 }
 
+
+// Space station interaction/dialogue.
+function space_station()
+{
+  var energy_avaliable = Math.floor(Math.random() * 100);
+  var price = energy_avaliable * 1.5;
+  var answer = prompt("Welcome to the Musk-Tesla Energy Station! We have " + energy_avaliable + " units of energy to sell, for the low price of " + price + " credits! Would you like to purchase the energy? (Y/N)");
+
+  if(answer.toUpperCase() == 'Y') 
+  {
+    gameVars.ship.energy += energy_avaliable;
+    gameVars.ship.credits -= price;
+    alert("Thanks for your purchase! Come back again soon!");
+  }
+  else
+    alert("Maybe another time!");
+
+}
 
 function decreaseEnergy(dist)
 {
@@ -610,7 +629,7 @@ function drawGame()
             {
                 //Ensure correct background is shown
                 objects.updateColor(tile.val);
-                gameVars.ctx.fillStyle = "black";
+                gameVars.ctx.fillStyle = "rgba(0,0,0,.6)";
                 gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
                 //Draw the ship
@@ -671,7 +690,7 @@ function drawGame()
 }
 
 // This will modify the map based on the sensor when
-// the button is pressed...no button yet.
+// the button is pressed.
 function activate_sensor()
 {
     var pos_x = gameVars.ship.posX;
@@ -733,7 +752,7 @@ function drawGame(drctn)
             {
               //Ensure correct background is shown
               //objects.updateColor(tile.val);
-              gameVars.ctx.fillStyle = "black";
+              gameVars.ctx.fillStyle = "rgba(0,0,0,.6)";
               gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
               //Draw the ship
@@ -753,7 +772,7 @@ function drawGame(drctn)
                 else
                 {
                     //objects.updateColor(tile.val);
-                    gameVars.ctx.fillStyle = "black";
+                    gameVars.ctx.fillStyle = "rgba(0,0,0,.6)";
                     gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
 
                     if(tile.val == 0)
@@ -822,7 +841,7 @@ function drawMini()
       }
       else
       {
-          if(!tile.vis) { miniVars.ctx.fillStyle = "pink"; }
+          if(!tile.vis) { miniVars.ctx.fillStyle = "rgba(100,100,100,.3)"; }
           else
           {
               objects.updateColor(tile.val);

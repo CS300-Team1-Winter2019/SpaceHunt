@@ -1,3 +1,4 @@
+
 class Ship
 {
     constructor(fix_start, init_energy, init_supp, init_creds, map_size)

@@ -1,3 +1,19 @@
+<!--SPACE HUNT: A project by Team 1, CS 300, Winter 2019.
+    Contributors: Dylan Wagner, Max Smiley, Kim Ma, 
+                  Jiacheng Zhao, Illia Shershun, Amie Roten
+
+    Visual Credits: 
+    Asteroid: https://opengameart.org/content/brown-asteroid by FunwithPixels
+    Station: http://opengameart.org/users/varkalandar by Hansjörg Malthaner
+    Blue Planet: https://opengameart.org/content/azuria-a-2-d-ringed-planet by Molly "Cougarmint" Willits
+    Background: https://www.pexels.com/photo/sky-space-milky-way-stars-110854/
+
+
+
+
+-->
+
+
 <html>
     <head>
          <meta charset="UTF-8">
@@ -110,7 +126,7 @@
 
             #game
             {
-                background-color: pink;
+                background-color: rgba(0,0,0,1);
                 height: 608px;
                 width: 608px;
                 position: absolute;
@@ -120,9 +136,9 @@
             #minimap
             {
                 position: absolute;
-                top: 75%;
+                top: 10%;
                 left: 50%;
-                border: 5px solid blue;
+                border: 5px solid darkblue;
             }
             #main
             {
@@ -205,10 +221,10 @@
             {
                 text-align: center;
                 vertical-align: middle;
-                border: 2px solid #0A2A12;
+                border: 2px solid rgba(50,50,50,1);
                 border-radius: 7px;
-                background-color: green;
-                color: #0A2A12;
+                background-color: rgba(184,184,184,.7);
+                color: rgba(50,50,50,1);
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
@@ -225,6 +241,7 @@
             {
                 display: none;
                 width: 30%;
+                height: 25%;
                 float: right;
                 clear: both;
             }
@@ -232,10 +249,10 @@
             {
                 text-align: center;
                 vertical-align: middle;
-                border: 2px solid #0A2A12;
+                border: 2px solid rgba(50,50,50,1);
                 border-radius: 7px;
-                background-color: green;
-                color: #0A2A12;
+                background-color: rgba(184,184,184,.7);
+                color: rgba(50,50,50,1);
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
@@ -251,8 +268,8 @@
             #list
             {
                 position: absolute;
-                top: 60%;
-                left: 70%;
+                top: 40%;
+                left: 42%;
                 display: none;
                 font-size: 16px;
             }
@@ -282,22 +299,22 @@
             </div>
         </div>
         <div>
-            <div id="upBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitCourse(0)">Move Up</div>
+            <div id="upBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="submitCourse(0)">Move Up</div>
         </div>
         <div>
-            <div id="downBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitCourse(1)">Move Down</div>
+            <div id="downBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="submitCourse(1)">Move Down</div>
         </div>
         <div>
-            <div id="leftBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitCourse(2)">Move Left</div>
+            <div id="leftBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="submitCourse(2)">Move Left</div>
         </div>
         <div>
-            <div id="rightBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitCourse(3)">Move Right</div>
+            <div id="rightBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="submitCourse(3)">Move Right</div>
         </div>
         <div>
-            <div id="sensBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="submitSensor()">Engage Sensor</div>
+            <div id="sensBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="submitSensor()">Engage Sensor</div>
         </div>
         <div>
-            <div id="saveBtn" onmouseover="this.style.backgroundColor = '#3104B4'" onmouseout="this.style.backgroundColor = 'green'" onclick="save()">Save Game</div>
+            <div id="saveBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="save()">Save Game</div>
         </div>
 
         <div id="theHead">Welcome to Space Hunt!</div>

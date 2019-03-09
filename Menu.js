@@ -1,3 +1,4 @@
+
 var init_game =
 {
     fix_start:        false,
