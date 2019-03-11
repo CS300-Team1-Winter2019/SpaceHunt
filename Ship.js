@@ -1,4 +1,6 @@
-
+/*
+Class represents the main ship user is controlling
+*/
 class Ship
 {
     constructor(fix_start, init_energy, init_supp, init_creds, map_size)
@@ -22,6 +24,9 @@ class Ship
         }
     }
 
+    /*
+    Helper function to copy the ship from passed ship object -> used when we Load the game
+    */
     copyShip(obj)
     {
         this.health = obj.health;
@@ -35,25 +40,20 @@ class Ship
         this.credits = obj.credits;
     }
 
+    /*
+    Helper function that moves the ship to new coordinates
+    */
     move(x, y)
     {
-      /*
-        if(x < 0) { x = 0; }
-        if(y < 0) { y = 0; }
-        if(x > 127) { x = 127; }
-        if(y > 127) { y = 127; }
-        */
-        var until = new Date().getTime() + this.delayMove;
-        while((new Date().getTime() < until)) {};
-
         this.posX = x;
         this.posY = y;
     }
 
-    //this argument should be an object {angle: ?, magnitude: ?}
+    /*
+    this argument should be an object {angle: ?, magnitude: ?}
+    */
     calculateXY(userInput)
     {
-
       var convertedAngle = (userInput.angle * (Math.PI/180))
 
       var coords = {x: Math.round(Math.cos(convertedAngle)*userInput.magnitude),
@@ -61,8 +61,9 @@ class Ship
       return coords;
     }
 
-    // Added for sensor to be able to reduce
-    // supplies.
+    /*
+    Added for sensor to be able to reduce supplies.
+    */
     consume_supplies(percentage)
     {
         this.supplies -= this.supplies * percentage;

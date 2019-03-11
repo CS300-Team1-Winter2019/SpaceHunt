@@ -1,3 +1,6 @@
+/*
+Class represents individual tile on the canvas
+*/
 class Tile
 {
     constructor()
@@ -7,9 +10,11 @@ class Tile
     }
 }
 
+/*
+Class represents the whole map used for the game
+*/
 class Map
-{
-    
+{  
     constructor(mS)
     {
         this.mapSize = mS;
@@ -33,13 +38,17 @@ class Map
     }
     
 
-    //Returns Tile object
+    /*
+    Helper function that returns tile object 
+    */
     getTile(x, y)
     {
         return this.map[x][y];
     }
 
-    //Function that creates initial planets
+    /*
+    Helper function that builds initial planets
+    */
     buildPlanets()
     {
         //figure out what quadrant the Pentium system will be in
@@ -79,7 +88,9 @@ class Map
         }
     }
 
-    //Function that build random map
+    /*
+    Helper function that builds random map
+    */
     buildRandom()
     {
         this.buildPlanets();
@@ -145,7 +156,9 @@ class Map
         }
     }
 
-    //Function that builds custom map
+    /*
+    Helper function that builds custom map
+    */
     buildCustom()
     {
         this.buildPlanets();
@@ -175,14 +188,18 @@ class Map
         }
     }
 
-     // change the title to space from visited freighter and dock
+     /*
+     Change the title to space from visited freighter and dock
+     */
      removeTile(x,y)
      {
          this.map[x][y].val = 3;
          return;
      }
 
-    //"Constructor" which takes an object, so it can be loaded from localStorage.
+    /*
+    "Constructor" which takes an object, so it can be loaded from localStorage.
+    */
     copyMap(obj)
     {
         this.map = obj.map;

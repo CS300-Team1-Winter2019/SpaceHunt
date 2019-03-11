@@ -14,14 +14,14 @@
 -->
 
 
-<html>
+<!DOCTYPE html>
     <head>
          <meta charset="UTF-8">
         <script src="Map.js"></script>
         <script src="Ship.js"></script>
         <script src="Game.js"></script>
-        <script src="Persist.js"></script>
         <script src='Menu.js'></script>
+        <script src="Persist.js"></script>
         <title>Space Hunt</title>
         <style>
             input[type=range]
@@ -126,7 +126,7 @@
 
             #game
             {
-                background-color: rgba(0,0,0,1);
+                background: transparent;
                 height: 608px;
                 width: 608px;
                 position: absolute;
@@ -281,15 +281,14 @@
         </style>
     </head>
     <body>
-        <embed id = "music" src="./audio/back_music.mp3" autostart="false" loop="true" hidden="true">  
-
+        <!--<embed id = "music" src="./audio/back_music.mp3" autostart="false" loop="true" hidden="true">  -->
         <nav style="background-color: #ffe7e8; border: 10px; border-color: red"> 
-            <p style="margin: 10px; line-height: 1.5; text-align: right; border: 10px; border-color: red"">
+            <p style="margin: 10px; line-height: 1.5; text-align: right; border: 10px; border-color: red">
                 <ul id = "list">
                     <h4> GAZETTEER: </h4>
 
-            </ul>
-        </p>
+                </ul>
+            
         </nav>
         <div>
             <div id="distScroll">
@@ -392,4 +391,4 @@
         id="addFreighter" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="addObject(4)">Add Freighter</div>
         <div id="backBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="goBack()">Back</div>
     </body>
-<html>
+</html>

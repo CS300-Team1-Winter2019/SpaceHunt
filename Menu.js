@@ -1,4 +1,6 @@
-
+/*
+All the varialbes with which new/loaded game will be initialized
+*/
 var init_game =
 {
     fix_start:        false,
@@ -13,6 +15,9 @@ var init_game =
     fix_objects:      false
 }
 
+/*
+New Game function (gets called when New Game button is pressed)
+*/
 var runGame = function()
 {
     document.getElementById("newGame").style.display = "none";
@@ -34,9 +39,12 @@ var runGame = function()
     document.getElementById("sensBtn").style.display = "block";
     document.getElementById("saveBtn").style.display = "block";
     document.getElementById("list").style.display = "block";
-    document.getElementById("music").style.display = "block";
+    //document.getElementById("music").style.display = "block";
 };
 
+/*
+Credits function (currently displays testing)
+*/
 var showCredits = function()
 {
     document.getElementById("theHead").style.display = "none";
@@ -52,6 +60,9 @@ var showCredits = function()
         sett[i].style.display = "none";
 };
 
+/*
+Go Back function (gets called when Back button is pressed)
+*/
 var goBack = function()
 {
     document.getElementById("backBtn").style.display = "none";
@@ -70,6 +81,9 @@ var goBack = function()
         opt[i].style.display = "none";
 };
 
+/*
+Setting function (gets called when Settings button is pressed)
+*/
 var settMen = function()
 {
     document.getElementById("theHead").style.display = "none";
@@ -87,30 +101,45 @@ var settMen = function()
     document.getElementById("backBtn").style.display = "block";
 };
 
+/*
+Helper function that changes initial energy on user input in Setting
+*/
 function changeEnergy(newEnergy)
 {
     document.getElementById("energyOut").innerHTML = newEnergy;
     init_game.init_energy = newEnergy;
 }
 
+/*
+Helper function that changes initial supplies on user input in Settings
+*/
 function changeSupplies(newSupplies)
 {
     document.getElementById("suppliesOut").innerHTML = newSupplies;
     init_game.init_supplies = newSupplies;
 }
 
+/*
+Helper function that changes initial credits on user input in Settings
+*/
 function changeCredits(newCredits)
 {
     document.getElementById("creditsOut").innerHTML = newCredits;
     init_game.init_credits = newCredits;
 }
 
+/*
+Helper function that changes the size/dimensions of the initial map on user input in Settings
+*/
 function changeMap(newMap)
 {
     document.getElementById("mapOut").innerHTML = newMap;
     init_game.map_size = newMap;
 }
 
+/*
+Helper function that changes the initial starting position of the ship to user input coordinates in Settings
+*/
 function changeStartPos(isFixed)
 {
     init_game.fix_start = isFixed;
@@ -120,7 +149,9 @@ function changeStartPos(isFixed)
       document.getElementById("setStart").style.display="none"
 }
 
-//Use alert box to set starting position if fixed
+/*
+Helper function the the ChangeStartPos -> accepts user input for starting position (in Settings)
+*/
 function setStartPos()
 {
   var entered = window.prompt("Where would you like to start?", "(" + gameVars.startX + ", " + gameVars.startY + ")");
@@ -134,16 +165,25 @@ function setStartPos()
   gameVars.startY = y;
 }
 
+/*
+Helper function that changes wormhole behavior on the map -> toggle switch in Settings
+*/
 function changeWormBehav(isFixed)
 {
     init_game.fix_wormhole = isFixed;
 }
 
+/*
+Helper function that changes unlimited/god mode -> toggle switch in Settings
+*/
 function changeUnlim(isFixed)
 {
     init_game.unlim_game = isFixed;
 }
 
+/*
+Helper function that changes the initial map settings (random/custom) and interacts with user for the custom map settings -> in Settings
+*/
 function changeFixMap(isFixed)
 {
     init_game.fix_objects = isFixed;
@@ -164,22 +204,34 @@ function changeFixMap(isFixed)
     }
 }
 
+/*
+Helper function that gets called when SUBMIT COURSE button is pressed (in-game)
+*/
 function submitCourse(direction)
 {
     startMovement(direction);
 }
 
+/*
+Helper function that accepts user input for the distance to travel -> range input slider: in-game
+*/
 function changeDistance(newDistance)
 {
     document.getElementById("distanceOut").innerHTML = newDistance;
     updateDistance(newDistance);
 }
 
+/*
+Helper function that gets called when ACTIVATE/ENGAGE SENSOR button is pressed: in-game
+*/
 function submitSensor()
 {
     callSensor();
 }
 
+/*
+Function that gets called when Load button is pressed (main Menu)
+*/
 function load()
 {
     loadSaved(init_game.fix_start, init_game.start_loc, init_game.init_energy, init_game.init_supplies,
@@ -207,6 +259,9 @@ function load()
     drawGame();
 }
 
+/*
+Helper function that gets called when user presses SAVE button: in-game
+*/
 function save()
 {
     name = prompt("Please enter a name for your game: ", "My Game")
