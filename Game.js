@@ -466,7 +466,7 @@ function decreaseEnergy(dist)
 function decreaseSupplies()
 {
     gameVars.ship.supplies -= 0.02*gameVars.ship.supplies;
-    if(gameVars.ship.supplies <= 0 && gameVars.unlim_game == false){
+    if(gameVars.ship.supplies <= 1 && gameVars.unlim_game == false){
       die(2);
     }
 }
@@ -563,18 +563,16 @@ var shipMove = function(gm, x, y, newX, newY){
 
     if(tileOccupant != 'empty'){
       clearInterval(gm);
-      if(tileOccupant == 'asteroid'){
-        die(5);
-      }
-      else if(tileOccupant == 'wormhole'){
+
+      if(tileOccupant == 'wormhole'){
         gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
         makeVisible();
         drawGame(calculateKeyCode(x, y));
         clearInterval(gm);
         alert("You wormholed!");
-      }
     }
   }
+}
 
   //only other option is that we're done moving and have arrived at our location
   else{
@@ -759,6 +757,9 @@ function activate_sensor()
         }
     }
     gameVars.ship.consume_supplies(0.02);
+
+    if(gameVars.ship.supplies < 1)
+      die(2)
     drawGame(38);
 }
 
