@@ -831,7 +831,7 @@ function drawGame(drctn)
       if(pos.x == gameVars.ship.posX && pos.y == gameVars.ship.posY)
       {
         //Draw the ship
-        if(drctn == 38) {console.log(9999); gameVars.ctx.drawImage(spaceshipUp, x*ts, y*ts, ts, ts);}
+        if(drctn == 38) gameVars.ctx.drawImage(spaceshipUp, x*ts, y*ts, ts, ts);
         else if(drctn == 40) gameVars.ctx.drawImage(spaceshipDown, x*ts, y*ts, ts, ts);
         else if(drctn == 37) gameVars.ctx.drawImage(spaceshipLeft, x*ts, y*ts, ts, ts);
         else gameVars.ctx.drawImage(spaceshipRight, x*ts, y*ts, ts, ts);
