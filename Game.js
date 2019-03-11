@@ -346,7 +346,14 @@ function collision(x,y)
               return 'wormhole';
           case 1:
               alert('You hit an asteroid! Oh no!');
-              die(5)
+              var coin_flip = Math.floor(Math.random() * 2);
+              if(coin_flip == 0)
+              {
+                alert("Your ship was damaged by the asteroid!")
+                gameVars.ship.health = true;
+              }
+              else
+                die(5)
               return 'asteroid';
           case 2:
               space_station();
@@ -354,7 +361,7 @@ function collision(x,y)
           case 4:
               var s = Math.floor(Math.random()*100)+20;
               var e = Math.floor(Math.random()*100)+50;
-              alert("You took on the the abandoned freighter's " + s + " supplies and " + e + " energies");
+              alert("You took on the the abandoned freighter's " + s + " supplies and " + e + " energies.");
               gameVars.ship.energy += e; // increase eneryy by 5
               gameVars.ship.supplies += s;
               gameVars.gameMap.removeTile(x,y);
@@ -366,6 +373,13 @@ function collision(x,y)
               
           case 3:
               // space, so keep moving
+              // Introduce one in 100 chance of randomly hitting a meteor shower.
+              var meteor_chance = Math.floor(Math.random() * 100);
+              if(!meteor_chance)
+              {
+                alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
+                gameVars.ship.health = true;
+              }
               break;
           case 111:
               var planet = gameVars.gameMap.getPlanetByCoords(x, y);
@@ -373,6 +387,7 @@ function collision(x,y)
       }
     return 'empty';
 }
+
 
 function alien ()
 {
@@ -400,24 +415,49 @@ function alien ()
 // Space station interaction/dialogue.
 function space_station()
 {
-  var energy_avaliable = Math.floor(Math.random() * 100);
+  var energy_avaliable = Math.floor(Math.random() * 300);
   var price = energy_avaliable * 1.5;
   var answer = prompt("Welcome to the Musk-Tesla Energy Station! We have " + energy_avaliable + " units of energy to sell, for the low price of " + price + " credits! Would you like to purchase the energy? (Y/N)");
 
   if(answer.toUpperCase() == 'Y') 
   {
-    gameVars.ship.energy += energy_avaliable;
-    gameVars.ship.credits -= price;
-    alert("Thanks for your purchase! Come back again soon!");
+    if(gameVars.ship.credits >= price)
+    {
+      gameVars.ship.energy += energy_avaliable;
+      gameVars.ship.credits -= price;
+      alert("Thanks for your purchase!");
+    }
+    else
+      alert("Sorry, you don't have enough credits.")
   }
   else
     alert("Maybe another time!");
 
+  if(gameVars.ship.health)
+  {
+    var answer = prompt("...we also noticed your ship is damaged. We can repair it for only 300 credits. Would you like your ship repaired?")
+
+    if(gameVars.ship.credits >= price)
+    {
+      gameVars.ship.health = false;
+      gameVars.ship.credits -= 300;
+      alert("Your ship is good as new!");
+    }
+    else
+      alert("Sorry, you don't have enough credits.")
+  }
+  else
+    alert("I hope you know what you're doing...");
 }
+
 
 function decreaseEnergy(dist)
 {
-    gameVars.ship.energy -= 10*Math.abs(dist);
+    if(!gameVars.ship.health)
+      gameVars.ship.energy -= 10*Math.abs(dist);
+    else
+      gameVars.ship.energy -= 50*Math.abs(dist);
+
     if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false){
       die(1);
     }
@@ -450,7 +490,7 @@ function die(flag)
           window.location.reload();
         }
           else if(flag ==5){
-            alert("Asteroid Collision Destroy your ship. Game Over!");
+            alert("Asteroid collision destroyed your ship. Game Over!");
             window.location.reload();
           }
     //  window.location.reload();
@@ -671,8 +711,6 @@ function drawGame()
     }
 
     gameVars.ctx.font = "20px Georgia";
-    gameVars.ctx.fillStyle = "blue";
-    gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 30);
 
     gameVars.ctx.fillStyle = "blue";
     gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 55);
@@ -685,6 +723,18 @@ function drawGame()
 
     gameVars.ctx.fillStyle = "blue";
     gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30);
+
+    if(gameVars.ship.health)
+    {
+      gameVars.ctx.fillStyle = "blue";
+      gameVars.ctx.fillText("Your ship has been damaged.", 20, 30);
+    }
+    else
+    {
+      gameVars.ctx.fillStyle = "blue";
+      gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 30);
+    }
+
 
     drawMini();
 }
@@ -803,8 +853,17 @@ function drawGame(drctn)
     }
 
     gameVars.ctx.font = "20px Georgia";
-    gameVars.ctx.fillStyle = "blue";
-    gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 30);
+    
+    if(gameVars.ship.health)
+    {
+      gameVars.ctx.fillStyle = "blue";
+      gameVars.ctx.fillText("Your ship has been damaged.", 20, 30);
+    }
+    else
+    {
+      gameVars.ctx.fillStyle = "blue";
+      gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 30);
+    }
 
     gameVars.ctx.fillStyle = "blue";
     gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 55);
