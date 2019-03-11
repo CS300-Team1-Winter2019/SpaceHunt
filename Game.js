@@ -70,7 +70,7 @@ dock.width = 38;
 dock.height = 38;
 */
 
-var visited = [];  //Keeps visited coordinates 
+var visited = [];  //Keeps visited coordinates
 var visited_information = [];// Used to save and grab details of visited celestial artifacts for future load of game.
 
 var currDistance = 0;  //Values for the movement
@@ -251,7 +251,7 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
       createGame(init_game.fix_start, init_game.init_energy, init_game.init_supplies, init_game.init_credits,
           init_game.fix_wormhole, init_game.unlim_game, init_game.map_size, false);
     }
-  
+
     gameVars.ctx = document.getElementById('game').getContext("2d");
     miniVars.ctx = document.getElementById('minimap').getContext("2d");
     miniVars.tileSize = (192/mS);
@@ -269,7 +269,7 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
 
 
 /*
-Function used by loader to make sure that the gazetteer is 
+Function used by loader to make sure that the gazetteer is
 correctly populated based on visited celestial artifacts
 from saved game.
 */
@@ -400,7 +400,7 @@ function getObject(kind)
 /*
 Helper function that adds a particular object on the map
 */
-function addObject(obj) 
+function addObject(obj)
 {
   var entered = window.prompt("Where would you like to add the object?", "(0, 0)");
   var nums = entered.match(/\d+/g); //Regex for matching numbers, gets a list of strings containing only digits
@@ -409,7 +409,7 @@ function addObject(obj)
   var x = nums[0];
   var y = nums[1];
 
-  if((x + ':' + y) in gameVars.object_list) 
+  if((x + ':' + y) in gameVars.object_list)
   {
     alert("There's already something in that location!");
     return;
@@ -454,10 +454,10 @@ function collision(x,y)
       gameVars.ship.supplies += s;
       gameVars.gameMap.removeTile(x,y);
       return 'freighter';
-    case 5: 
+    case 5:
       alien();
       gameVars.gameMap.removeTile(x,y);
-      return 'dock';        
+      return 'dock';
     case 3:
       // space, so keep moving
       // Introduce one in 100 chance of randomly hitting a meteor shower.
@@ -470,7 +470,10 @@ function collision(x,y)
       break;
     case 111:
       var planet = gameVars.gameMap.getPlanetByCoords(x, y);
-      alert("Planet!");
+      alert("This is planet " + planet);
+      if(planet == "pentium5"){
+        alert("You've found the secret recipe on planet pentium5! YOU WIN!")
+      }
   }
   return 'empty';
 }
@@ -481,21 +484,21 @@ Helper function that gets called when ship encounters alien ship
 function alien()
 {
   var answer = prompt("Hey, I am a Casinian, do you want to play a game with me? You could earn a reward if you are lucky! (y or n)");
-  if (answer == 'y' || answer == 'Y') 
+  if (answer == 'y' || answer == 'Y')
   {
     var keepgoing = true;
-    while (keepgoing) 
+    while (keepgoing)
     {
       var input = prompt("Easy game. Guess my favorite number from 1-10. If you win, the number is your additional energy.")
       var result = Math.floor(Math.random() * 10 + 1)
 
-      if (input == result) 
+      if (input == result)
       {
         alert("Wow, you have more luck than I thought. Here's your reward energy: " + result)
         gameVars.ship.energy += result;
         keepgoing = false;
       }
-      else 
+      else
       {
         alert("Better luck next time!")
         keepgoing = false;
@@ -513,7 +516,7 @@ function space_station()
   var price = energy_avaliable * 1.5;
   var answer = prompt("Welcome to the Musk-Tesla Energy Station! We have " + energy_avaliable + " units of energy to sell, for the low price of " + price + " credits! Would you like to purchase the energy? (Y/N)");
 
-  if(answer.toUpperCase() == 'Y') 
+  if(answer.toUpperCase() == 'Y')
   {
     if(gameVars.ship.credits >= price)
     {
@@ -625,7 +628,7 @@ function startMove(x, y)
   decreaseSupplies();
   var gm = setInterval(function(){shipMove(gm, x, y, newX, newY);}, 1);
 }
-      
+
 /*
 Helper function that calculates direction of the ship movement:
 left=37 up=38 right=39 down=40
@@ -691,7 +694,7 @@ var shipMove = function(gm, x, y, newX, newY)
   //only other option is that we're done moving and have arrived at our location
   else
   {
-    alert("You have arrived at ("+newX+','+newY+').');
+//getting rid of this cause its too annoying    alert("You have arrived at ("+newX+','+newY+').');
     clearInterval(gm);
   }
 }
@@ -706,28 +709,28 @@ function move(e)
   switch(e.keyCode)
   {
     case 37:
-      if(gameVars.ship.posX - 1 >= 0 && gameVars.ship.posX - 1 <= gameVars.mapSize-1) 
+      if(gameVars.ship.posX - 1 >= 0 && gameVars.ship.posX - 1 <= gameVars.mapSize-1)
       {
         gameVars.ship.posX = gameVars.ship.posX-1;
-        collision(gameVars.ship.posX, gameVars.ship.posY); 
+        collision(gameVars.ship.posX, gameVars.ship.posY);
       }
       break;
     case 38:
-      if(gameVars.ship.posY - 1 >= 0 && gameVars.ship.posY - 1 <= gameVars.mapSize-1) 
+      if(gameVars.ship.posY - 1 >= 0 && gameVars.ship.posY - 1 <= gameVars.mapSize-1)
       {
         gameVars.ship.posY = gameVars.ship.posY-1;
-        collision(gameVars.ship.posX, gameVars.ship.posY); 
+        collision(gameVars.ship.posX, gameVars.ship.posY);
       }
       break;
     case 39:
-      if(gameVars.ship.posX + 1 >= 0 && gameVars.ship.posX + 1 <= gameVars.mapSize-1) 
+      if(gameVars.ship.posX + 1 >= 0 && gameVars.ship.posX + 1 <= gameVars.mapSize-1)
       {
         gameVars.ship.posX = gameVars.ship.posX+1;
-        collision(gameVars.ship.posX, gameVars.ship.posY); 
+        collision(gameVars.ship.posX, gameVars.ship.posY);
       }
       break;
     case 40:
-      if(gameVars.ship.posY + 1 >= 0 && gameVars.ship.posY + 1 <= gameVars.mapSize-1) 
+      if(gameVars.ship.posY + 1 >= 0 && gameVars.ship.posY + 1 <= gameVars.mapSize-1)
       {
         gameVars.ship.posY = gameVars.ship.posY+1;
         collision(gameVars.ship.posX, gameVars.ship.posY);
@@ -839,7 +842,7 @@ function drawGame(drctn)
       //Else something besides ship
       else
       {
-        if(!tile.vis) 
+        if(!tile.vis)
         {
           gameVars.ctx.fillStyle = "#848484";
           gameVars.ctx.fillRect(x * ts, y * ts, ts, ts);
@@ -867,7 +870,7 @@ function drawGame(drctn)
   }
 
   gameVars.ctx.font = "20px Georgia";
-  
+
   if(gameVars.ship.health)
   {
     gameVars.ctx.fillStyle = "blue";

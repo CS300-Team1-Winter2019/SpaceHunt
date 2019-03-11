@@ -14,7 +14,7 @@ class Tile
 Class represents the whole map used for the game
 */
 class Map
-{  
+{
     constructor(mS)
     {
         this.mapSize = mS;
@@ -36,10 +36,10 @@ class Map
         this.planets_by_name["eniac"] = {x: 0, y: 0};
         this.planets_by_coords[[0,0]] = "eniac";
     }
-    
+
 
     /*
-    Helper function that returns tile object 
+    Helper function that returns tile object
     */
     getTile(x, y)
     {
@@ -61,7 +61,7 @@ class Map
             var x = Math.floor(Math.random() * (this.mapSize/2)) + pentium_x*(this.mapSize/2);
             var y = Math.floor(Math.random() * (this.mapSize/2)) + pentium_y*(this.mapSize/2);
             if(this.planetPlacer[y] && this.planetPlacer[y].x == x)
-                i--;              
+                i--;
             else
             {
                 this.planetPlacer[y] = {x: x, type: "pentium"+i}
@@ -118,8 +118,8 @@ class Map
                 */
                 if(true)
                 {
-                    
-                    if(this.planetPlacer[i] && this.planetPlacer[i].x == j)
+
+                    if(this.planetPlacer[j] && this.planetPlacer[j].x == i)
                     {
                       newTile.val = 111;
                       row.push(newTile);
@@ -154,6 +154,8 @@ class Map
             }
             this.map.push(row);
         }
+      console.log(this.planets_by_name);
+      console.log(this.planets_by_coords);
     }
 
     /*
@@ -195,6 +197,13 @@ class Map
      {
          this.map[x][y].val = 3;
          return;
+     }
+
+     getPlanetByName(planet_name){
+       return this.planets_by_name[planet_name];
+     }
+     getPlanetByCoords(x, y){
+       return this.planets_by_coords[[x,y]];
      }
 
     /*
