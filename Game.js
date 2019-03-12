@@ -422,7 +422,12 @@ function addObject(obj)
 
   gameVars.object_list[(x + ':' + y)] = obj;
 }
-
+function descreaseHealth()
+{
+  gameVars.ship.health -= Math.floor(Math.random()*100)+50;
+  if(gameVars.ship.health <= 0 && gameVars.unlim_game == false)
+    die(3);
+}
 /*
 Helper function that checks if ship has encountered some object (collided)
 */
@@ -439,10 +444,12 @@ function collision(x,y)
     case 1:
       alert('You hit an asteroid! Oh no!');
       var coin_flip = Math.floor(Math.random() * 2);
+      //var h = Math.floor(Math.random()*100)+50;
       if(coin_flip == 0)
       {
         alert("Your ship was damaged by the asteroid!")
-        gameVars.ship.health = true;
+        descreaseHealth();
+        //gameVars.ship.health = true;
       }
       else
         die(5)
@@ -470,7 +477,8 @@ function collision(x,y)
       if(meteor_chance == 0)
       {
         alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
-        gameVars.ship.health = true;
+        //gameVars.ship.health = true;
+        descreaseHealth();
       }
       break;
     case 111:
@@ -892,10 +900,13 @@ function drawGame(drctn)
   }
 
   gameVars.ctx.fillStyle = "white";
+  gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 490);
+
+  gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 515);
 
   gameVars.ctx.fillStyle = "white";
-  gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies), 20, 540);
+  gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies) + "%", 20, 540);
 
   gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 565);
