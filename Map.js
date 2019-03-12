@@ -117,7 +117,6 @@ class Map
                 */
                 if(true)
                 {
-
                     if(this.planetPlacer[j] && this.planetPlacer[j].x == i)
                     {
                       newTile.val = 111;
@@ -171,7 +170,12 @@ class Map
                 var newTile = new Tile();
                 if(true)
                 {
-                    if((String(i) + ':' + String(j)) in gameVars.object_list)
+                    if(this.planetPlacer[j] && this.planetPlacer[j].x == i)
+                    {
+                      newTile.val = 111;
+                      row.push(newTile);
+                    }
+                    else if((String(i) + ':' + String(j)) in gameVars.object_list)
                     {
                         newTile.val = gameVars.object_list[String(i) + ':' + String(j)];
                         row.push(newTile);
