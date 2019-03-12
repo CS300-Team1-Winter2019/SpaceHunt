@@ -575,7 +575,7 @@ function space_station()
     {
       if(gameVars.ship.credits >= price)
       {
-        gameVars.ship.health = false;
+        gameVars.ship.health = 100;
         gameVars.ship.credits -= 300;
         alert("Your ship is good as new!");
       }
