@@ -890,7 +890,7 @@ function drawGame(drctn)
   gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 515);
 
   gameVars.ctx.fillStyle = "white";
-  gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies), 20, 540);
+  gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies) + "%", 20, 540);
 
   gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 565);

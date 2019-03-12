@@ -13,7 +13,7 @@ class Ship
         this.delayMove = 150;
 
         this.map_size = map_size;
-        this.energy = init_energy;;
+        this.energy = init_energy;
         this.supplies = init_supp;
         this.credits = init_creds;
 
