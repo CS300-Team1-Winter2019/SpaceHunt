@@ -72,7 +72,7 @@ class Map
         i -= 7;
         var planet_names = ["celeron", "xeon", "ryzen"];
 
-        for(i; i < 3; i++)
+        for(var i = 0; i < 3; i++)
         {
             var x = Math.floor(Math.random() * this.mapSize);
             var y = Math.floor(Math.random() * this.mapSize);
@@ -153,8 +153,6 @@ class Map
             }
             this.map.push(row);
         }
-      console.log(this.planets_by_name);
-      console.log(this.planets_by_coords);
     }
 
     /*
