@@ -20,8 +20,8 @@ class Ship
         // Modified from random to fixed per documentation.
         if(!fix_start)
         {
-            this.posX = 0;
-            this.posY = 1;
+            this.posX = 1;
+            this.posY = 0;
         }
     }
 

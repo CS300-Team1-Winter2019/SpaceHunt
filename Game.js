@@ -878,25 +878,25 @@ function drawGame(drctn)
   if(gameVars.ship.health)
   {
     gameVars.ctx.fillStyle = "white";
-    gameVars.ctx.fillText("Your ship has been damaged.", 20, 30);
+    gameVars.ctx.fillText("Your ship has been damaged.", 20, 590);
   }
   else
   {
     gameVars.ctx.fillStyle = "white";
-    gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 30);
+    gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 590);
   }
 
   gameVars.ctx.fillStyle = "white";
-  gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 55);
+  gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 515);
 
   gameVars.ctx.fillStyle = "white";
-  gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies), 20, 80);
+  gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies), 20, 540);
 
   gameVars.ctx.fillStyle = "white";
-  gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 105);
+  gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 565);
 
   gameVars.ctx.fillStyle = "white";
-  gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 450, 30);
+  gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 450, 590);
 }
 
 /*
