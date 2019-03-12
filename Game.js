@@ -674,7 +674,7 @@ var shipMove = function(gm, x, y, newX, newY)
   decreaseEnergy(1);
 
   //wormhole behavior
-  if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize)
+  if((nextX < 0 && newX < 0) || (nextX >= gameVars.mapSize && newX >= gameVars.mapSize) || (newY < 0 && nextY < 0) || (newY >= gameVars.mapSize &&nextY >= gameVars.mapSize))
   {
     gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
     makeVisible();
