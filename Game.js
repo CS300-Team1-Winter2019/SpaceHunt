@@ -324,11 +324,7 @@ function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
   miniVars.ctx = document.getElementById('minimap').getContext("2d");
   miniVars.tileSize = (192/mS);
 
-  makeVisible();
-  drawGame(38);
-
-  //addObjectsToList();
-
+  //add the planets to the initial list
   var eniac = gameVars.gameMap.getPlanetByName("eniac");
   addInitialObjects("Eniac", eniac.x, eniac.y);
 
@@ -340,6 +336,9 @@ function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
 
   var ryzen = gameVars.gameMap.getPlanetByName("ryzen");
   addInitialObjects("Ryzen", ryzen.x, ryzen.y);
+
+  makeVisible();
+  drawGame(38);
 }
 
 /*
@@ -348,6 +347,7 @@ Helper function that preloads initial planets to the list (so that the user know
 function addInitialObjects(name, x, y)
 {
   var currTile = gameVars.gameMap.getTile(x, y);
+
   var ul = document.getElementById("list");
   var li = document.createElement("li");
 
@@ -357,30 +357,6 @@ function addInitialObjects(name, x, y)
   visited.push(currTile);
   visited_information.push([x, y, name])
 }
-
-/*
-Adds all the visited/encountered objects to the list
-
-function addObjectsToList()
-{
-  for(var x = 0; x < gameVars.mapSize - 1; x++)
-  {
-    for(var y = 0; y < gameVars.mapSize - 1; y++)
-    {
-      if(gameVars.gameMap.getTile(x, y).val != 3 && gameVars.gameMap.getTile(x, y).val != 0)
-      {
-        var ul = document.getElementById("list");
-        var li = document.createElement("li");
-
-        var knd = getObject(gameVars.gameMap.getTile(x, y).val);
-        li.appendChild(document.createTextNode(x + " " + y + " " + knd));
-
-        ul.appendChild(li);
-      }
-    }
-  }
-}
-*/
 
 /*
 Adds all the visited object to the list and appends in-code visited list (to not add to the on-screen list multiple times)
