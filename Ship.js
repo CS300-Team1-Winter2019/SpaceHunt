@@ -17,10 +17,11 @@ class Ship
         this.supplies = init_supp;
         this.credits = init_creds;
 
+        // Modified from random to fixed per documentation.
         if(!fix_start)
         {
-            this.posX = Math.floor(Math.random() * (map_size - 2));
-            this.posY = Math.floor(Math.random() * (map_size - 2));
+            this.posX = 0;
+            this.posY = 1;
         }
     }
 

@@ -866,7 +866,7 @@ function drawGame(drctn)
             gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts);
         }
 
-        gameVars.ctx.strokeStyle = "red";
+        gameVars.ctx.strokeStyle = "blue";
         gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
       }
     }
@@ -874,27 +874,28 @@ function drawGame(drctn)
 
   gameVars.ctx.font = "20px Georgia";
 
+
   if(gameVars.ship.health)
   {
-    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillStyle = "white";
     gameVars.ctx.fillText("Your ship has been damaged.", 20, 30);
   }
   else
   {
-    gameVars.ctx.fillStyle = "blue";
+    gameVars.ctx.fillStyle = "white";
     gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 30);
   }
 
-  gameVars.ctx.fillStyle = "blue";
+  gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 55);
 
-  gameVars.ctx.fillStyle = "blue";
+  gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies), 20, 80);
 
-  gameVars.ctx.fillStyle = "blue";
+  gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 105);
 
-  gameVars.ctx.fillStyle = "blue";
+  gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 450, 30);
 }
 
