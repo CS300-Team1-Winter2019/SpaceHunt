@@ -37,7 +37,6 @@ class Map
         this.planets_by_coords[[0,0]] = "eniac";
     }
 
-
     /*
     Helper function that returns tile object
     */
@@ -73,7 +72,7 @@ class Map
         i -= 7;
         var planet_names = ["celeron", "xeon", "ryzen"];
 
-        for(i; i < 3; i++)
+        for(var i = 0; i < 3; i++)
         {
             var x = Math.floor(Math.random() * this.mapSize);
             var y = Math.floor(Math.random() * this.mapSize);
@@ -154,8 +153,6 @@ class Map
             }
             this.map.push(row);
         }
-      console.log(this.planets_by_name);
-      console.log(this.planets_by_coords);
     }
 
     /*
@@ -199,10 +196,19 @@ class Map
          return;
      }
 
-     getPlanetByName(planet_name){
+     /*
+     Helper function that returns tuple of planet coordinates (for supplied planet name)
+     */
+     getPlanetByName(planet_name)
+     {
        return this.planets_by_name[planet_name];
      }
-     getPlanetByCoords(x, y){
+
+     /*
+     Helper function to get one of the main planets coordinates
+     */
+     getPlanetByCoords(x, y)
+     {
        return this.planets_by_coords[[x,y]];
      }
 
