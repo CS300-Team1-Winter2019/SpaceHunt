@@ -228,8 +228,8 @@
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
-                width: 5em;
-                margin: 5px auto;
+                width: 6em;
+                margin: 15px auto;
 
                 display:none;
                 float: right;
@@ -240,8 +240,8 @@
             #distScroll
             {
                 display: none;
-                width: 30%;
-                height: 25%;
+                width: 31%;
+                height: 6cm;
                 float: right;
                 clear: both;
             }
@@ -256,8 +256,8 @@
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
-                width: 5em;
-                margin: 5px auto;
+                width: 6em;
+                margin: 15px auto;
 
                 display:none;
                 float: right;
@@ -348,7 +348,7 @@
         </div>
         <div class="stngs">
             <p>Initial Map Size (N x M):</p>
-            128<input type="range" min="128" max="1024" value="132" step="32" oninput="changeMap(this.value)">
+            128<input type="range" min="32" max="255" value="132" step="1" oninput="changeMap(this.value)">
             <output id="mapOut"></output>
         </div>
         <div class="stngs">

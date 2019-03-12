@@ -478,9 +478,9 @@ function collision(x,y)
       return 'dock';
     case 3:
       // space, so keep moving
-      // Introduce one in 100 chance of randomly hitting a meteor shower.
-      var meteor_chance = Math.floor(Math.random() * 100);
-      if(!meteor_chance)
+      // Introduce one in 30 chance of randomly hitting a meteor shower.
+      var meteor_chance = Math.floor(Math.random() * 200);
+      if(meteor_chance == 0)
       {
         alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
         gameVars.ship.health = true;
@@ -552,17 +552,20 @@ function space_station()
   {
     var answer = prompt("...we also noticed your ship is damaged. We can repair it for only 300 credits. Would you like your ship repaired?")
 
-    if(gameVars.ship.credits >= price)
+    if(answer.toUpperCase() == 'Y')
     {
-      gameVars.ship.health = false;
-      gameVars.ship.credits -= 300;
-      alert("Your ship is good as new!");
+      if(gameVars.ship.credits >= price)
+      {
+        gameVars.ship.health = false;
+        gameVars.ship.credits -= 300;
+        alert("Your ship is good as new!");
+      }
+      else
+        alert("Sorry, you don't have enough credits.")
     }
     else
-      alert("Sorry, you don't have enough credits.")
+      alert("I hope you know what you're doing...");
   }
-  else
-    alert("I hope you know what you're doing...");
 }
 
 /*
@@ -881,7 +884,7 @@ function drawGame(drctn)
             gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts);
         }
 
-        gameVars.ctx.strokeStyle = "red";
+        gameVars.ctx.strokeStyle = "blue";
         gameVars.ctx.strokeRect(x * ts, y * ts, ts, ts);
       }
     }
@@ -889,28 +892,29 @@ function drawGame(drctn)
 
   gameVars.ctx.font = "20px Georgia";
 
+
   if(gameVars.ship.health)
   {
-    gameVars.ctx.fillStyle = "blue";
-    gameVars.ctx.fillText("Your ship has been damaged.", 20, 30);
+    gameVars.ctx.fillStyle = "white";
+    gameVars.ctx.fillText("Your ship has been damaged.", 20, 590);
   }
   else
   {
-    gameVars.ctx.fillStyle = "blue";
-    gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 30);
+    gameVars.ctx.fillStyle = "white";
+    gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 590);
   }
 
-  gameVars.ctx.fillStyle = "blue";
-  gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 55);
+  gameVars.ctx.fillStyle = "white";
+  gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 515);
 
-  gameVars.ctx.fillStyle = "blue";
-  gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies), 20, 80);
+  gameVars.ctx.fillStyle = "white";
+  gameVars.ctx.fillText("Supplies: " + Math.round(gameVars.ship.supplies), 20, 540);
 
-  gameVars.ctx.fillStyle = "blue";
-  gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 105);
+  gameVars.ctx.fillStyle = "white";
+  gameVars.ctx.fillText("Credits: " + gameVars.ship.credits , 20, 565);
 
-  gameVars.ctx.fillStyle = "blue";
-  gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 460, 30);
+  gameVars.ctx.fillStyle = "white";
+  gameVars.ctx.fillText("Position: " + gameVars.ship.posX + ":" + gameVars.ship.posY, 450, 590);
 }
 
 /*
