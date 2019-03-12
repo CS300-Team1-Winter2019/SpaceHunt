@@ -264,6 +264,13 @@ Helper function that gets called when user presses SAVE button: in-game
 */
 function save()
 {
-    name = prompt("Please enter a name for your game: ", "My Game")
+
+    name = prompt("Please enter a name for your game: ", "My Game");
+
+    while(gameVars.saved_games.includes(name))
+    {
+        name = prompt("You already have a game named " + name + ". Please choose a different name.");
+    }
+    
     saveState(name)
 }
