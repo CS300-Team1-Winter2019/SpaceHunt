@@ -37,7 +37,6 @@ class Map
         this.planets_by_coords[[0,0]] = "eniac";
     }
 
-
     /*
     Helper function that returns tile object
     */
@@ -199,10 +198,19 @@ class Map
          return;
      }
 
-     getPlanetByName(planet_name){
+     /*
+     Helper function to get one of the main planets names
+     */
+     getPlanetByName(planet_name)
+     {
        return this.planets_by_name[planet_name];
      }
-     getPlanetByCoords(x, y){
+
+     /*
+     Helper function to get one of the main planets coordinates
+     */
+     getPlanetByCoords(x, y)
+     {
        return this.planets_by_coords[[x,y]];
      }
 

@@ -328,11 +328,28 @@ function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
   drawGame(38);
 
   //addObjectsToList();
+
+  gameVars.gameMap.getPlanetByName("celeron");
+  gameVars.gameMap.getPlanetByName("ryzen");
+  gameVars.gameMap.getPlanetByName("xeon");
+}
+
+function addInitialList(name, x, y)
+{
+  var ul = document.getElementById("list");
+  var li = document.createElement("li");
+
+  var knd = getObject(gameVars.gameMap.getTile(x, y).val);
+  li.appendChild(document.createTextNode("[" + x + ":" + y + "] " + knd));
+
+  ul.appendChild(li);
+  visited.push(currTile);
+  visited_information.push([x, y, knd])
 }
 
 /*
 Adds all the visited/encountered objects to the list
-*/
+
 function addObjectsToList()
 {
   for(var x = 0; x < gameVars.mapSize - 1; x++)
@@ -352,6 +369,7 @@ function addObjectsToList()
     }
   }
 }
+*/
 
 /*
 Adds all the visited object to the list and appends in-code visited list (to not add to the on-screen list multiple times)
@@ -694,7 +712,7 @@ var shipMove = function(gm, x, y, newX, newY)
   //only other option is that we're done moving and have arrived at our location
   else
   {
-//getting rid of this cause its too annoying    alert("You have arrived at ("+newX+','+newY+').');
+    //getting rid of this cause its too annoying    alert("You have arrived at ("+newX+','+newY+').');
     clearInterval(gm);
   }
 }
