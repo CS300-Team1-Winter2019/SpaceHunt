@@ -448,8 +448,8 @@ function collision(x,y)
       if(coin_flip == 0)
       {
         alert("Your ship was damaged by the asteroid!")
-        descreaseHealth();
-        //gameVars.ship.health = true;
+        //descreaseHealth();
+        gameVars.ship.health = true;
       }
       else
         die(5)
@@ -477,8 +477,8 @@ function collision(x,y)
       if(meteor_chance == 0)
       {
         alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
-        //gameVars.ship.health = true;
-        descreaseHealth();
+        gameVars.ship.health = true;
+        //descreaseHealth();
       }
       break;
     case 111:
@@ -551,7 +551,7 @@ function space_station()
     {
       if(gameVars.ship.credits >= price)
       {
-        gameVars.ship.health = 100;
+        gameVars.ship.health = false;
         gameVars.ship.credits -= 300;
         alert("Your ship is good as new!");
       }
@@ -898,10 +898,10 @@ function drawGame(drctn)
     gameVars.ctx.fillStyle = "white";
     gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 590);
   }
-
+/*
   gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 490);
-
+*/
   gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 515);
 

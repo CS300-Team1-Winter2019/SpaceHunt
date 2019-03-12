@@ -5,7 +5,7 @@ class Ship
 {
     constructor(fix_start, init_energy, init_supp, init_creds, map_size)
     {
-        this.health = 100;
+        this.health = false;
         this.sizeX = 50;
         this.sizeY = 50;
         this.posX = gameVars.startX; //Math.floor(Math.random() * 127); ->uncomment when random start
