@@ -329,22 +329,33 @@ function createGame(fS, iE, iS, iC, fW, uG, mS, fO)
 
   //addObjectsToList();
 
-  gameVars.gameMap.getPlanetByName("celeron");
-  gameVars.gameMap.getPlanetByName("ryzen");
-  gameVars.gameMap.getPlanetByName("xeon");
+  var eniac = gameVars.gameMap.getPlanetByName("eniac");
+  addInitialObjects("Eniac", eniac.x, eniac.y);
+
+  var celeron = gameVars.gameMap.getPlanetByName("celeron");
+  addInitialObjects("Celeron", celeron.x, celeron.y);
+
+  var xeon = gameVars.gameMap.getPlanetByName("xeon");
+  addInitialObjects("Xeon", xeon.x, xeon.y);
+
+  var ryzen = gameVars.gameMap.getPlanetByName("ryzen");
+  addInitialObjects("Ryzen", ryzen.x, ryzen.y);
 }
 
-function addInitialList(name, x, y)
+/*
+Helper function that preloads initial planets to the list (so that the user knows their location at start)
+*/
+function addInitialObjects(name, x, y)
 {
+  var currTile = gameVars.gameMap.getTile(x, y);
   var ul = document.getElementById("list");
   var li = document.createElement("li");
 
-  var knd = getObject(gameVars.gameMap.getTile(x, y).val);
-  li.appendChild(document.createTextNode("[" + x + ":" + y + "] " + knd));
+  li.appendChild(document.createTextNode("[" + x + ":" + y + "] " + name));
 
   ul.appendChild(li);
   visited.push(currTile);
-  visited_information.push([x, y, knd])
+  visited_information.push([x, y, name])
 }
 
 /*

@@ -199,7 +199,7 @@ class Map
      }
 
      /*
-     Helper function to get one of the main planets names
+     Helper function that returns tuple of planet coordinates (for supplied planet name)
      */
      getPlanetByName(planet_name)
      {
