@@ -267,7 +267,6 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
   }
 }
 
-
 /*
 Function used by loader to make sure that the gazetteer is
 correctly populated based on visited celestial artifacts
@@ -447,9 +446,10 @@ function collision(x,y)
       alert ('You hit a wormhole!');
       return 'wormhole';
     case 1:
-      alert('You hit an asteroid! Oh no!');
-      var coin_flip = Math.floor(Math.random() * 2);
+      //alert('You hit an asteroid!');
+      //var coin_flip = Math.floor(Math.random() * 2);
       //var h = Math.floor(Math.random()*100)+50;
+      /*
       if(coin_flip == 0)
       {
         alert("Your ship was damaged by the asteroid!")
@@ -458,8 +458,10 @@ function collision(x,y)
       }
       else
         die(5)
-
-      return 'asteroid';
+        */
+      die(5);
+      //return 'asteroid';
+      return null;
     case 2:
       space_station();
       return 'station';
