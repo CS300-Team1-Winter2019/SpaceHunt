@@ -70,6 +70,8 @@ dock.width = 38;
 dock.height = 38;
 */
 
+var meteors = new Image();
+
 var visited = [];  //Keeps visited coordinates
 var visited_information = [];// Used to save and grab details of visited celestial artifacts for future load of game.
 
@@ -116,6 +118,7 @@ var objects =
     planet      :["blue", 111],
     freighter   :["CHOCOLATE",4],
     dock        :["SALMON",5],
+    meteors     :["white", 6],
     currColor   : null,
 
     //sets currColor to be used in drawGame()
@@ -127,6 +130,7 @@ var objects =
         else if(index == 111){this.currColor = "blue"; }
         else if (index == 4){this.currColor = "CHOCOLATE";}
         else if (index == 5){this.currColor = "SALMON";}
+        else if(index == 6) {this.currColor = "white";}
         else { this.currColor = "rgba(0,0,0,.6)"; }
     }
 };
@@ -182,6 +186,10 @@ function preloadImages()
   dock.src = "images/dock.png";
   dock.width = 38;
   dock.height = 38;
+
+  meteors.src = "images/meteors.png";
+  meteors.width = 38;
+  meteors.height = 38;
 }
 
 /*
@@ -394,6 +402,8 @@ function getObject(kind)
       return "Freighter";
     case 5:
       return "Dock";
+    case 6:
+      return "Meteor Shower";
     case 111:
       return "Planet"
     default:
@@ -477,16 +487,9 @@ function collision(x,y)
       alien();
       //gameVars.gameMap.removeTile(x,y);
       return 'dock';
-    case 3:
-      // space, so keep moving
-      // Introduce one in 30 chance of randomly hitting a meteor shower.
-      var meteor_chance = Math.floor(Math.random() * 200);
-      if(meteor_chance == 0)
-      {
-        alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
-        gameVars.ship.health = true;
-        //descreaseHealth();
-      }
+    case 6:
+      alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
+      gameVars.ship.health = true;
       break;
     case 111:
       var planet = gameVars.gameMap.getPlanetByCoords(x, y);
@@ -891,6 +894,8 @@ function drawGame(drctn)
             gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts);
           else if(tile.val == 5)
             gameVars.ctx.drawImage(dock, x*ts, y*ts, ts, ts);
+          else if(tile.val == 6)
+            gameVars.ctx.drawImage(meteors, x*ts, y*ts, ts, ts);
           else if(tile.val == 111)
             gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts);
         }
