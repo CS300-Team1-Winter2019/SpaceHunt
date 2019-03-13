@@ -926,6 +926,8 @@ Is called from drawGame() function
 */
 function drawMini()
 {
+  //clear mini canvas before drawing again
+  miniVars.ctx.clearRect(0,0, 192, 192);
   var ts = miniVars.tileSize;
   for(var i = 0; i <= gameVars.mapSize-1; i++)
   {
