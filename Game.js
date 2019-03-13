@@ -446,10 +446,26 @@ function collision(x,y)
   switch(obj)
   {
     case 0:
-      alert ('You hit a wormhole!');
+      //Case 1: Wormhole is fixed -> worm to 25:25
+      if(gameVars.fix_wormhole)
+      {
+        alert ('You hit a wormhole! Wormed to [25:25]');
+        gameVars.ship.posX = 25;
+        gameVars.ship.posY = 25;
+      }
+      //Case 2: Random wormhole -> worm to random place on the map
+      else
+      {
+        var new_x = Math.floor(Math.random() * gameVars.mapSize);
+        var new_y = Math.floor(Math.random() * gameVars.mapSize);
+
+        alert ('You hit a wormhole! Wormed to [' + new_x + ':' + new_y + ']');
+        gameVars.ship.posX = new_x;
+        gameVars.ship.posY = new_y;
+      }
       return 'wormhole';
     case 1:
-      //alert('You hit an asteroid!');
+      //Hit an asteroid and died
       die(5);
       return null;
     case 2:
@@ -478,12 +494,6 @@ function collision(x,y)
       alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
       gameVars.ship.health = true;
       break;
-      /*
-    case 6:
-      alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
-      gameVars.ship.health = true;
-      break;
-      */
     case 111:
       var planet = gameVars.gameMap.getPlanetByCoords(x, y);
       alert("This is planet " + planet);
@@ -492,7 +502,6 @@ function collision(x,y)
         alert("You've found the secret recipe on planet pentium5! YOU WIN!");
         window.location.reload();
       }
-
   }
   return 'empty';
 }
