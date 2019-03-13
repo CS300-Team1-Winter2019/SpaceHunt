@@ -450,20 +450,7 @@ function collision(x,y)
       return 'wormhole';
     case 1:
       //alert('You hit an asteroid!');
-      //var coin_flip = Math.floor(Math.random() * 2);
-      //var h = Math.floor(Math.random()*100)+50;
-      /*
-      if(coin_flip == 0)
-      {
-        alert("Your ship was damaged by the asteroid!")
-        //descreaseHealth();
-        gameVars.ship.health = true;
-      }
-      else
-        die(5)
-        */
       die(5);
-      //return 'asteroid';
       return null;
     case 2:
       var option = prompt ("Do you want to play a game with the Casinian to earn some reward credits (1) or buy some extra energies (2)?");
@@ -476,7 +463,7 @@ function collision(x,y)
       else {
         alert ("You lost the chance of earning some credits. Better enter the correct number for choosing option next time");
       }
-      gameVars.gameMap.removeTile(x,y);
+      //gameVars.gameMap.removeTile(x,y);
       //space_station();
       return 'station';
     case 4:
@@ -500,9 +487,12 @@ function collision(x,y)
     case 111:
       var planet = gameVars.gameMap.getPlanetByCoords(x, y);
       alert("This is planet " + planet);
+      
       if(planet == "pentium5"){
-        alert("You've found the secret recipe on planet pentium5! YOU WIN!")
+        alert("You've found the secret recipe on planet pentium5! YOU WIN!");
+        window.location.reload();
       }
+
   }
   return 'empty';
 }
