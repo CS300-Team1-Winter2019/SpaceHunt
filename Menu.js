@@ -193,6 +193,7 @@ function changeFixMap(isFixed)
       document.getElementById("addStation").style.display="block";
       document.getElementById("addAst").style.display="block";
       document.getElementById("addFreighter").style.display="block";
+      document.getElementById("addMeteors").style.display="block";
     }
 
     else
@@ -201,6 +202,8 @@ function changeFixMap(isFixed)
       document.getElementById("addStation").style.display="none";
       document.getElementById("addAst").style.display="none";
       document.getElementById("addFreighter").style.display="none";
+      document.getElementById("addMeteors").style.display="none";
+
     }
 }
 
