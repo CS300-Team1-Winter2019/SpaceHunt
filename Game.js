@@ -422,12 +422,17 @@ function addObject(obj)
 
   gameVars.object_list[(x + ':' + y)] = obj;
 }
+
+/*
+Helper function that decreases ships health
+*/
 function descreaseHealth()
 {
   gameVars.ship.health -= Math.floor(Math.random()*100)+50;
   if(gameVars.ship.health <= 0 && gameVars.unlim_game == false)
     die(3);
 }
+
 /*
 Helper function that checks if ship has encountered some object (collided)
 */
