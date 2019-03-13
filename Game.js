@@ -118,7 +118,7 @@ var objects =
     space       :["rgba(0,0,0,.8)", 3],
     planet      :["blue", 111],
     freighter   :["CHOCOLATE",4],
-    meteors     :["white", 6],
+    meteors     :["white", 5],
     currColor   : null,
 
     //sets currColor to be used in drawGame()
@@ -129,7 +129,7 @@ var objects =
         else if(index == 2) { this.currColor = "purple"; }
         else if(index == 111){this.currColor = "blue"; }
         else if (index == 4){this.currColor = "CHOCOLATE";}
-        else if(index == 6) {this.currColor = "white";}
+        else if(index == 5) {this.currColor = "white";}
         else { this.currColor = "rgba(0,0,0,.6)"; }
     }
 };
