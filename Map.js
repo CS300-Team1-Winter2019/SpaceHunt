@@ -23,7 +23,6 @@ class Map
         this.maxWorms = 200;
         this.maxStations = 500;
         this.maxFreighter = 500;
-        this.maxDock = 500;
         this.maxMeteors = 25;
 
         //all new
@@ -103,7 +102,7 @@ class Map
                 //Random position at which something will be placed
                 var randPlacer = Math.floor(Math.random() * this.mapSize);
                 //number of things e.g.: planets, holes, stations etc = # of colors
-                var maxChoices = 7;
+                var maxChoices = 6;
                 //Gives a starting range for random num: e.g: 2-4
                 var startAt = 0;
                 //Create new tile
@@ -129,8 +128,7 @@ class Map
                         if(this.maxAsteroids <= 0) { maxChoices--; startAt = 2; }
                         if(this.maxStations <= 0) { maxChoices--; startAt = 3; }
                         if(this.maxFreighter <= 0) { maxChoices--; startAt = 4; }
-                        if(this.maxDock <= 0) { maxChoices--; startAt = 5; }
-                        if(this.maxMeteors <= 0) { maxChoices --; startAt = 6; }
+                        if(this.maxMeteors <= 0) { maxChoices --; startAt = 5; }
 
 
                         var choice = Math.floor((Math.random() * maxChoices) + startAt);
@@ -139,7 +137,6 @@ class Map
                         if(choice == 1) { this.maxAsteroids--; }
                         if(choice == 2) { this.maxStations--; }
                         if(choice == 4) { this.maxFreighter--; }
-                        if(choice == 5) { this.maxDock--;}
                         if(choice == 6) { this.maxMeteors--; }
 
 
@@ -230,6 +227,6 @@ class Map
         this.maxWorms = obj.maxWorms;
         this.maxStations = obj.maxStations;
         this.maxFreighter = obj.maxFreighter;
-        this.maxDock = obj.maxDock;
+        //this.maxDock = obj.maxDock;
     }
 }

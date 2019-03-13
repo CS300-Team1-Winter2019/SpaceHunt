@@ -49,6 +49,7 @@ station.width = 38;
 station.height = 38;
 */
 
+
 var freighter = new Image();
 /*
 freighter.src = "images/freighter.png";
@@ -63,7 +64,7 @@ wormhole.width = 38;
 wormhole.height = 38;
 */
 
-var dock = new Image();
+//var dock = new Image();
 /*
 dock.src = "images/dock.png";
 dock.width = 38;
@@ -117,7 +118,6 @@ var objects =
     space       :["rgba(0,0,0,.8)", 3],
     planet      :["blue", 111],
     freighter   :["CHOCOLATE",4],
-    dock        :["SALMON",5],
     meteors     :["white", 6],
     currColor   : null,
 
@@ -129,7 +129,6 @@ var objects =
         else if(index == 2) { this.currColor = "purple"; }
         else if(index == 111){this.currColor = "blue"; }
         else if (index == 4){this.currColor = "CHOCOLATE";}
-        else if (index == 5){this.currColor = "SALMON";}
         else if(index == 6) {this.currColor = "white";}
         else { this.currColor = "rgba(0,0,0,.6)"; }
     }
@@ -182,10 +181,6 @@ function preloadImages()
   wormhole.src = "images/wormhole.png";
   wormhole.width = 38;
   wormhole.height = 38;
-
-  dock.src = "images/dock.png";
-  dock.width = 38;
-  dock.height = 38;
 
   meteors.src = "images/meteors.png";
   meteors.width = 38;
@@ -401,8 +396,6 @@ function getObject(kind)
     case 4:
       return "Freighter";
     case 5:
-      return "Dock";
-    case 6:
       return "Meteor Shower";
     case 111:
       return "Planet"
@@ -473,7 +466,18 @@ function collision(x,y)
       //return 'asteroid';
       return null;
     case 2:
-      space_station();
+      var option = prompt ("Do you want to play a game with the Casinian to earn some reward credits (1) or buy some extra energies (2)?");
+      if (option == 2) {
+        space_station();
+      }
+      else if (option == 1) {
+        alien();
+      }
+      else {
+        alert ("You lost the chance of earning some credits. Better enter the correct number for choosing option next time");
+      }
+      gameVars.gameMap.removeTile(x,y);
+      //space_station();
       return 'station';
     case 4:
       var s = Math.floor(Math.random()*100)+20;
@@ -484,13 +488,15 @@ function collision(x,y)
       gameVars.gameMap.removeTile(x,y);
       return 'freighter';
     case 5:
-      alien();
-      //gameVars.gameMap.removeTile(x,y);
-      return 'dock';
+      alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
+      gameVars.ship.health = true;
+      break;
+      /*
     case 6:
       alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
       gameVars.ship.health = true;
       break;
+      */
     case 111:
       var planet = gameVars.gameMap.getPlanetByCoords(x, y);
       alert("This is planet " + planet);
@@ -512,18 +518,19 @@ function alien()
     var keepgoing = true;
     while (keepgoing)
     {
-      var input = prompt("Easy game. Guess my favorite number from 1-10. If you win, the number is your additional energy.")
+      var input = prompt("Easy game. Guess my favorite number from 1-10. If you win, the number is your additional credits, but you will lose some energies if you lose")
       var result = Math.floor(Math.random() * 10 + 1)
 
       if (input == result)
       {
-        alert("Wow, you have more luck than I thought. Here's your reward energy: " + result)
-        gameVars.ship.energy += result;
+        alert("Wow, you have more luck than I thought. Here's your reward credits " + result)
+        gameVars.ship.credits += result;
         keepgoing = false;
       }
       else
       {
-        alert("Better luck next time!")
+        alert("Better luck next time! Your credit has been deducted by " + result)
+        gameVars.ship.credits -= result;
         keepgoing = false;
       }
     }
@@ -893,8 +900,6 @@ function drawGame(drctn)
           else if(tile.val == 4)
             gameVars.ctx.drawImage(freighter, x*ts, y*ts, ts, ts);
           else if(tile.val == 5)
-            gameVars.ctx.drawImage(dock, x*ts, y*ts, ts, ts);
-          else if(tile.val == 6)
             gameVars.ctx.drawImage(meteors, x*ts, y*ts, ts, ts);
           else if(tile.val == 111)
             gameVars.ctx.drawImage(planet, x*ts, y*ts, ts, ts);
