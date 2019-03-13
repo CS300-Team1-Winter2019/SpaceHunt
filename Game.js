@@ -913,7 +913,6 @@ function drawGame(drctn)
 
   gameVars.ctx.font = "20px Georgia";
 
-
   if(gameVars.ship.health)
   {
     gameVars.ctx.fillStyle = "white";

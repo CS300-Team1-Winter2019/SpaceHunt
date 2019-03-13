@@ -137,7 +137,7 @@ class Map
                         if(choice == 1) { this.maxAsteroids--; }
                         if(choice == 2) { this.maxStations--; }
                         if(choice == 4) { this.maxFreighter--; }
-                        if(choice == 6) { this.maxMeteors--; }
+                        if(choice == 5) { this.maxMeteors--; }
 
 
                         newTile.val = choice;
