@@ -453,8 +453,8 @@ function collision(x,y)
       if(coin_flip == 0)
       {
         alert("Your ship was damaged by the asteroid!")
-        descreaseHealth();
-        //gameVars.ship.health = true;
+        //descreaseHealth();
+        gameVars.ship.health = true;
       }
       else
         die(5)
@@ -482,8 +482,8 @@ function collision(x,y)
       if(meteor_chance == 0)
       {
         alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
-        //gameVars.ship.health = true;
-        descreaseHealth();
+        gameVars.ship.health = true;
+        //descreaseHealth();
       }
       break;
     case 111:
@@ -679,7 +679,7 @@ var shipMove = function(gm, x, y, newX, newY)
   decreaseEnergy(1);
 
   //wormhole behavior
-  if(nextX < 0 || nextX >= gameVars.mapSize || nextY < 0 || nextY >= gameVars.mapSize)
+  if((nextX < 0 && newX < 0) || (nextX >= gameVars.mapSize && newX >= gameVars.mapSize) || (newY < 0 && nextY < 0) || (newY >= gameVars.mapSize &&nextY >= gameVars.mapSize))
   {
     gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
     makeVisible();
@@ -903,10 +903,10 @@ function drawGame(drctn)
     gameVars.ctx.fillStyle = "white";
     gameVars.ctx.fillText("Your ship is in excellent condition.", 20, 590);
   }
-
+/*
   gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Health: " + gameVars.ship.health, 20, 490);
-
+*/
   gameVars.ctx.fillStyle = "white";
   gameVars.ctx.fillText("Energy: " + gameVars.ship.energy, 20, 515);
 
