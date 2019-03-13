@@ -102,7 +102,7 @@ class Map
                 //Random position at which something will be placed
                 var randPlacer = Math.floor(Math.random() * this.mapSize);
                 //number of things e.g.: planets, holes, stations etc = # of colors
-                var maxChoices = 8;
+                var maxChoices = 6;
                 //Gives a starting range for random num: e.g: 2-4
                 var startAt = 0;
                 //Create new tile
