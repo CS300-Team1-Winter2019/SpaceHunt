@@ -575,14 +575,22 @@ Helper function that decreases energy
 */
 function decreaseEnergy(dist)
 {
-  if(!gameVars.unlim_game)
+  //Case 1: decrease energy up till 0 when unlimited play
+  if(gameVars.unlim_game && gameVars.ship.energy >= 0)
   {
     if(!gameVars.ship.health)
       gameVars.ship.energy -= 10*Math.abs(dist);
     else
       gameVars.ship.energy -= 50*Math.abs(dist);
-
-    if(gameVars.ship.energy <= 0 && gameVars.unlim_game == false)
+  }
+  //Case 2: else decrease till 0 and DIE
+  else if(!gameVars.unlim_game)
+  {
+    if(!gameVars.ship.health)
+      gameVars.ship.energy -= 10*Math.abs(dist);
+    else
+      gameVars.ship.energy -= 50*Math.abs(dist);
+    if(gameVars.ship.energy <= 0)
       die(1);
   }
 }
