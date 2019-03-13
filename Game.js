@@ -598,7 +598,7 @@ Helper function that decreases energy
 function decreaseEnergy(dist)
 {
   //Case 1: decrease energy up till 0 when unlimited play
-  if(gameVars.unlim_game && gameVars.ship.energy >= 0)
+  if(gameVars.unlim_game && gameVars.ship.energy > 0)
   {
     if(!gameVars.ship.health)
       gameVars.ship.energy -= 10*Math.abs(dist);
@@ -792,6 +792,7 @@ function move(e)
     default: break;
   }
   decreaseEnergy(1);
+  decreaseSupplies();
   makeVisible();
   drawGame(e.keyCode);
 }
