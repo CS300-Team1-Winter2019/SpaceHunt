@@ -700,7 +700,7 @@ var shipMove = function(gm, x, y, newX, newY)
   //wormhole behavior
   if((nextX < 0 && newX < 0) || (nextX >= gameVars.mapSize && newX >= gameVars.mapSize) || (newY < 0 && nextY < 0) || (newY >= gameVars.mapSize &&nextY >= gameVars.mapSize))
   {
-    gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
+    outOfMap();
     makeVisible();
     drawGame(calculateKeyCode(x, y));
     clearInterval(gm);
