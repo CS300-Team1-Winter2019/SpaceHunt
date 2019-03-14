@@ -237,5 +237,9 @@ class Map
         this.maxStations = obj.maxStations;
         this.maxFreighter = obj.maxFreighter;
         //this.maxDock = obj.maxDock;
+
+        this.planetPlacer = obj.planetPlacer;
+        this.planets_by_name = obj.planets_by_name;
+        this.planets_by_coords = obj.planets_by_coords;
     }
 }

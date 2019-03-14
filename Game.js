@@ -257,7 +257,7 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
 
     gameVars.ctx = document.getElementById('game').getContext("2d");
     miniVars.ctx = document.getElementById('minimap').getContext("2d");
-    miniVars.tileSize = (192/mS);
+    miniVars.tileSize = (192/gameVars.mapSize);
     drawGame(38);
     populate_gazetteer();
   }
@@ -592,7 +592,8 @@ function decreaseEnergy(dist)
   if(gameVars.unlim_game && gameVars.ship.energy > 0)
   {
     if(!gameVars.ship.health)
-      gameVars.ship.energy -= 10*Math.abs(dist);
+      //gameVars.ship.energy -= 10*Math.abs(dist);
+        gameVars.ship.energy -= 10;
     else
       gameVars.ship.energy -= 50*Math.abs(dist);
   }
@@ -600,7 +601,8 @@ function decreaseEnergy(dist)
   else if(!gameVars.unlim_game)
   {
     if(!gameVars.ship.health)
-      gameVars.ship.energy -= 10*Math.abs(dist);
+      //gameVars.ship.energy -= 10*Math.abs(dist);
+      gameVars.ship.energy -= 10;
     else
       gameVars.ship.energy -= 50*Math.abs(dist);
     if(gameVars.ship.energy <= 0)
@@ -676,6 +678,8 @@ function startMove(x, y)
   //seems like cleaner control.
   decreaseSupplies();
   var gm = setInterval(function(){shipMove(gm, x, y, newX, newY);}, 1);
+
+  gameVars.ship.energy += 10;
 }
 
 /*
@@ -746,6 +750,7 @@ var shipMove = function(gm, x, y, newX, newY)
     //getting rid of this cause its too annoying    alert("You have arrived at ("+newX+','+newY+').');
     clearInterval(gm);
   }
+
 }
 
 /*

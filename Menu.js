@@ -257,7 +257,7 @@ function load()
     document.getElementById("sensBtn").style.display = "block";
     document.getElementById("saveBtn").style.display = "block";
     document.getElementById("list").style.display = "block";
-    document.getElementById("music").style.display = "block";
+    //document.getElementById("music").style.display = "block";
 
     drawGame();
 }
@@ -267,13 +267,18 @@ Helper function that gets called when user presses SAVE button: in-game
 */
 function save()
 {
-
     name = prompt("Please enter a name for your game: ", "My Game");
 
-    while(gameVars.saved_games.includes(name))
+    loadSaves();
+
+    if(gameVars.saved_games != null)
     {
-        name = prompt("You already have a game named " + name + ". Please choose a different name.");
+        while(gameVars.saved_games.includes(name))
+        {
+            name = prompt("You already have a game named " + name + ". Please choose a different name.");
+        }
     }
     
+    //gameVars.saved_games.push(name);
     saveState(name)
 }

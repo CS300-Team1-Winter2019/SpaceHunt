@@ -7,7 +7,10 @@
 function loadSaves()
 {
 	if(Storage !== void(0))
-		gameVars.saved_games = JSON.parse(localStorage.getItem("saved_games"))
+		gameVars.saved_games = JSON.parse(localStorage.getItem("saved_games"));
+	
+	if(!gameVars.saved_games)
+		gameVars.saved_games = []
 }
 
 
@@ -47,6 +50,7 @@ function loadState(name)
     	gameVars.mapSize = JSON.parse(localStorage.getItem(name.concat("mapsize")));
     	gameVars.fix_wormhole = JSON.parse(localStorage.getItem(name.concat("wormholemode")));
 
+
     	// Loading array of visited items.
     	visited = JSON.parse(localStorage.getItem(name.concat("visited")));
     	visited_information = JSON.parse(localStorage.getItem(name.concat("visited_info")));
@@ -83,6 +87,7 @@ function saveState(name)
 		localStorage.setItem(name.concat("playmode"), JSON.stringify(gameVars.unlim_game));
 		localStorage.setItem(name.concat("mapsize"), JSON.stringify(gameVars.mapSize));
 		localStorage.setItem(name.concat("wormholemode"), JSON.stringify(gameVars.fix_wormhole));
+
 
 		// Saving array of visited items.
 		localStorage.setItem(name.concat("visited"), JSON.stringify(visited));
