@@ -366,7 +366,7 @@ Adds all the visited object to the list and appends in-code visited list (to not
 function addObjectsToList(x, y)
 {
   var currTile = gameVars.gameMap.getTile(x, y);
-  if(currTile.val != 3 && !visited.includes(currTile))
+  if(currTile.val != 3 && !visited.includes(currTile) && !visited_information.includes[x, y, getObject(gameVars.gameMap.getTile(x, y).val)])
   {
     var ul = document.getElementById("list");
     var li = document.createElement("li");
@@ -449,9 +449,10 @@ function collision(x,y)
       //Case 1: Wormhole is fixed -> worm to 25:25
       if(gameVars.fix_wormhole)
       {
-        alert ('You hit a wormhole! Wormed to [25:25]');
-        gameVars.ship.posX = 25;
-        gameVars.ship.posY = 25;
+        var middle = Math.floor(gameVars.mapSize/2)
+        alert ('You hit a wormhole! Wormed to [' + middle +':' + middle + ']');
+        gameVars.ship.posX = middle;
+        gameVars.ship.posY = middle;
       }
       //Case 2: Random wormhole -> worm to random place on the map
       else
@@ -466,7 +467,10 @@ function collision(x,y)
       return 'wormhole';
     case 1:
       //Hit an asteroid and died
-      die(5);
+      if(gameVars.unlim_game == true)
+        alert("You hit an asteroid, BUT you are invincible. Play on!")
+      else
+        die(5);
       return null;
     case 2:
       var option = prompt ("Do you want to play a game with the Casinian to earn some reward credits (1) or buy some extra energies (2)?");
@@ -491,7 +495,7 @@ function collision(x,y)
       gameVars.gameMap.removeTile(x,y);
       return 'freighter';
     case 5:
-      alert("Uh-oh, you hit one of those notorious invisible meteor storms! Your ship has taken damage.")
+      alert("Uh-oh, you hit one of those notorious meteor storms! Your ship has taken damage.")
       gameVars.ship.health = true;
       break;
     case 111:
@@ -619,30 +623,35 @@ Helper function that alerts the user the reason of death (end of the game)
 */
 function die(flag)
 {
-  if(flag ==1)
+  // Catch-all to make sure unlimited play users do not 
+  // end up dying.
+  if(gameVars.unlim_game == false)
   {
-    alert("You run out of Energy. Game Over!");
-    window.location.reload();
-  }
-  else if(flag ==2)
-  {
-    alert("You run out of Supplies. Game Over!");
-    window.location.reload();
-  }
-  else if(flag ==3)
-  { //this could add in decreasehealth() function.
-    alert("You are destoryed and No health. Game Over!");
-    window.location.reload();
-  }
-  else if(flag ==4)
-  { //this cound add in BadMax choose kill ship.
-    alert("You are killed by BadMax. Game Over!");
-    window.location.reload();
-  }
-  else if(flag ==5)
-  {
-    alert("Asteroid collision destroyed your ship. Game Over!");
-    window.location.reload();
+    if(flag ==1)
+    {
+      alert("You run out of Energy. Game Over!");
+      window.location.reload();
+    }
+    else if(flag ==2)
+    {
+      alert("You run out of Supplies. Game Over!");
+      window.location.reload();
+    }
+    else if(flag ==3)
+    { //this could add in decreasehealth() function.
+      alert("You are destoryed and No health. Game Over!");
+      window.location.reload();
+    }
+    else if(flag ==4)
+    { //this cound add in BadMax choose kill ship.
+      alert("You are killed by BadMax. Game Over!");
+      window.location.reload();
+    }
+    else if(flag ==5)
+    {
+      alert("Asteroid collision destroyed your ship. Game Over!");
+      window.location.reload();
+    }
   }
 }
 
@@ -990,7 +999,7 @@ function drawMini()
       }
       else
       {
-        if(!tile.vis) { miniVars.ctx.fillStyle = "rgba(100,100,100,.3)"; }
+        if(!tile.vis) { miniVars.ctx.fillStyle = "rgba(100,100,100,.7)"; }
         else
         {
           objects.updateColor(tile.val);

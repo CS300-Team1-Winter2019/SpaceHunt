@@ -147,11 +147,10 @@
             #newGame, #backBtn, #settBtn, #creditBtn
             {
                 text-align: center;
-                vertical-align: middle;
-                border: 2px solid goldenrod;
+                border: 2px solid rgba(50,50,50,1);
                 border-radius: 7px;
-                background-color: gold;
-                color: orangeRed;
+                background-color: rgba(184,184,184,.7);
+                color: rgba(50,50,50,1);
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
@@ -162,10 +161,10 @@
             {
                 text-align: center;
                 vertical-align: middle;
-                border: 2px solid goldenrod;
+                border: 2px solid rgba(50,50,50,1);
                 border-radius: 7px;
-                background-color: gold;
-                color: orangeRed;
+                background-color: rgba(184,184,184,.7);
+                color: rgba(50,50,50,1);
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
@@ -175,14 +174,16 @@
             #theHead
             {
                 margin: auto;
-                color: orange;
+                color: gray;
+                font-weight: bold;
                 font-size: 2em;
                 font-family: "Courier New";
             }
             #credits
             {
                 margin: auto;
-                color: orange;
+                color: gray;
+                font-weight: bold;
                 font-size: 1em;
                 font-family: "Courier New";
                 display: none;
@@ -194,10 +195,10 @@
             {
                 text-align: center;
                 vertical-align: middle;
-                border: 2px solid goldenrod;
+                border: 2px solid rgba(50,50,50,1);
                 border-radius: 7px;
-                background-color: gold;
-                color: orangeRed;
+                background-color: rgba(184,184,184,.7);
+                color: rgba(50,50,50,1);
                 font-size: 32px;
                 font-weight: bold;
                 font-family: "Courier New";
@@ -318,14 +319,14 @@
         </div>
 
         <div id="theHead">Welcome to Space Hunt!</div>
-        <div id="newGame" onclick="runGame()" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'">New Game</div>
+        <div id="newGame" onclick="runGame()" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'">New Game</div>
 
 
-        <div id="loadBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="load()">Load</div>
+        <div id="loadBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="load()">Load</div>
 
 
-        <div id="settBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="settMen()">Settings</div>
-        <div id="creditBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="showCredits()">Credits</div>
+        <div id="settBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="settMen()">Settings</div>
+        <div id="creditBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="showCredits()">Credits</div>
         <div id="credits">Testing</div>
         <div id="main">
         <div id="score"></div>
@@ -360,7 +361,7 @@
             </label>
         </div>
         <div class="optional"
-        id="setStart" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="setStartPos()">Set Start Position</div>
+        id="setStart" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="setStartPos()">Set Start Position</div>
         <div class="stngs">
             <p>Fixed Wormhole Behavior</p>
             <label class="switch">
@@ -383,18 +384,18 @@
             </label>
         </div>
         <div class="optional"
-        id="addWorm" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="addObject(0)">Add Wormhole</div>
+        id="addWorm" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="addObject(0)">Add Wormhole</div>
         <div class="optional"
-        id="addStation" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="addObject(2)">Add Station</div>
+        id="addStation" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="addObject(2)">Add Station</div>
         <div class="optional"
-        id="addAst" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="addObject(1)">Add Asteroid</div>
+        id="addAst" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="addObject(1)">Add Asteroid</div>
         <div class="optional"
-        id="addFreighter" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="addObject(4)">Add Freighter</div>
+        id="addFreighter" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="addObject(4)">Add Freighter</div>
 
         <div class="optional"
-        id="addMeteors" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="addObject(5)">Add Meteors</div>
+        id="addMeteors" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="addObject(5)">Add Meteors</div>
         
 
-        <div id="backBtn" onmouseover="this.style.backgroundColor = 'goldenrod'" onmouseout="this.style.backgroundColor = 'gold'" onclick="goBack()">Back</div>
+        <div id="backBtn" onmouseover="this.style.backgroundColor = 'rgba(184,184,184,1)'" onmouseout="this.style.backgroundColor = 'rgba(184,184,184,0.7)'" onclick="goBack()">Back</div>
     </body>
 </html>

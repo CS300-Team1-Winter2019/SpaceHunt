@@ -135,14 +135,21 @@ class Map
 
                         var choice = Math.floor((Math.random() * maxChoices) + startAt);
 
+                    
+                        console.log(choice)
+
                         if(choice == 0) { this.maxWorms--; }
                         if(choice == 1) { this.maxAsteroids--; }
                         if(choice == 2) { this.maxStations--; }
                         if(choice == 4) { this.maxFreighter--; }
                         if(choice == 5) { this.maxMeteors--; }
 
+                        // Siphoning out invalid values.
+                        if(choice <= 5)
+                            newTile.val = choice;
+                        else
+                            newTile.val = 3;
 
-                        newTile.val = choice;
                         row.push(newTile);
                     }
                     else
