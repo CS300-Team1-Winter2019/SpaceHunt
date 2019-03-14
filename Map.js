@@ -42,7 +42,9 @@ class Map
     */
     getTile(x, y)
     {
-        return this.map[x][y];
+        if(x >= 0 && x < this.mapSize && y >= 0 && y < this.mapSize)
+            return this.map[x][y];
+        else return null;
     }
 
     /*

@@ -441,7 +441,7 @@ Helper function that checks if ship has encountered some object (collided)
 function collision(x,y)
 {
   var tile = gameVars.gameMap.getTile(x, y);
-  var obj = tile.val;
+  var obj = tile.val; 
 
   switch(obj)
   {
@@ -486,7 +486,7 @@ function collision(x,y)
       var s = Math.floor(Math.random()*100)+20;
       var e = Math.floor(Math.random()*100)+50;
       alert("You took on the the abandoned freighter's " + s + " supplies and " + e + " energies.");
-      gameVars.ship.energy += e; // increase eneryy by 5
+      gameVars.ship.energy += e; // increase energy by 5
       gameVars.ship.supplies += s;
       gameVars.gameMap.removeTile(x,y);
       return 'freighter';
@@ -754,6 +754,8 @@ function move(e)
         gameVars.ship.posX = gameVars.ship.posX-1;
         collision(gameVars.ship.posX, gameVars.ship.posY);
       }
+      else
+        outOfMap();
       break;
     case 38:
       if(gameVars.ship.posY - 1 >= 0 && gameVars.ship.posY - 1 <= gameVars.mapSize-1)
@@ -761,6 +763,8 @@ function move(e)
         gameVars.ship.posY = gameVars.ship.posY-1;
         collision(gameVars.ship.posX, gameVars.ship.posY);
       }
+      else
+        outOfMap();
       break;
     case 39:
       if(gameVars.ship.posX + 1 >= 0 && gameVars.ship.posX + 1 <= gameVars.mapSize-1)
@@ -768,6 +772,8 @@ function move(e)
         gameVars.ship.posX = gameVars.ship.posX+1;
         collision(gameVars.ship.posX, gameVars.ship.posY);
       }
+      else
+        outOfMap();
       break;
     case 40:
       if(gameVars.ship.posY + 1 >= 0 && gameVars.ship.posY + 1 <= gameVars.mapSize-1)
@@ -775,6 +781,8 @@ function move(e)
         gameVars.ship.posY = gameVars.ship.posY+1;
         collision(gameVars.ship.posX, gameVars.ship.posY);
       }
+      else
+        outOfMap();
       break;
     default: break;
   }
@@ -782,6 +790,23 @@ function move(e)
   decreaseSupplies();
   makeVisible();
   drawGame(e.keyCode);
+}
+
+/*
+Helper function for wormhole behavior when ship moves out of the map
+*/
+function outOfMap()
+{
+  if(gameVars.fix_wormhole)
+  {
+    gameVars.ship.posX = Math.floor(gameVars.mapSize / 2);
+    gameVars.ship.posY = Math.floor(gameVars.mapSize / 2);
+  }
+  else
+  {
+    gameVars.ship.posX = Math.floor(Math.random() * gameVars.mapSize);
+    gameVars.ship.posY = Math.floor(Math.random() * gameVars.mapSize);
+  }
 }
 
 /*
