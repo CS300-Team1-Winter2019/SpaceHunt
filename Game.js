@@ -259,7 +259,9 @@ function loadSaved(fS, Sl, iE, iS, iC, fW, uG, mS, fO)
     miniVars.ctx = document.getElementById('minimap').getContext("2d");
     miniVars.tileSize = (192/gameVars.mapSize);
     drawGame(38);
-    populate_gazetteer();
+
+    if(i < 3)
+      populate_gazetteer();
   }
   else
   {
@@ -735,7 +737,11 @@ var shipMove = function(gm, x, y, newX, newY)
 
       if(tileOccupant == 'wormhole')
       {
-        gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
+        if(gameVars.fix_wormhole)
+          gameVars.ship.move(Math.floor(gameVars.mapSize / 2), Math.floor(gameVars.mapSize / 2));
+        else
+          gameVars.ship.move(Math.floor(Math.random() * (gameVars.mapSize - 2)), Math.floor(Math.random() * (gameVars.mapSize - 2)));
+
         makeVisible();
         drawGame(calculateKeyCode(x, y));
         clearInterval(gm);
